@@ -120,6 +120,8 @@ The ALE-Bench paper and its provenance record are preserved under [`papers`](pap
 
 The [`rated AtCoder heuristic problem catalog`](docs/atcoder-heuristic-catalog.md) documents all 72 rated contests through August 12, 2026, including the original ALE-Bench full and lite selections.
 
+The [`ARS-10 discovery suite proposal`](docs/ars-10-proposal.md) defines a provisional ten-problem subset with complete genre coverage and the validation required before promotion.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
