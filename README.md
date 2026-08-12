@@ -1,0 +1,129 @@
+# Autonomous Research Speedrun
+
+Submit the researcher, not the answer.
+
+Autonomous Research Speedrun, or ARS, is a proposed living benchmark and leaderboard for autonomous research systems. It measures how quickly a complete system can discover competitive solutions to optimization problems.
+
+Most optimization benchmarks evaluate only the final submitted solution. The model, harness, prompts, memory, experiment loop, and search strategy that produced it are ignored. ARS reverses that relationship:
+
+```text
+Current:  submit the solution, ignore the harness and model
+ARS:      submit the harness and model, ignore the final solution
+```
+
+The goal is to evaluate the researcher itself.
+
+## Motivation
+
+Keller Jordan's modded-nanoGPT work demonstrates a compelling training and optimization speedrun format. An autonomous agent can repeatedly modify code, run experiments, inspect results, and search for improvements. The benchmark supplies the optimization environment, while the autoresearch system supplies the search policy.
+
+That environment is deep and highly optimized. ARS aims to complement it with a broader suite of algorithm-engineering problems and a leaderboard centered on the capabilities of the autonomous research system.
+
+## Initial benchmark suite
+
+The first proposed suite is ARS-AHC, built from AtCoder Heuristic Contest problems.
+
+These problems are a strong fit because they:
+
+- reward iterative algorithm and implementation improvements
+- have objective, automatically evaluated scores
+- include historical human submissions and timestamps
+- span a variety of optimization structures
+- support repeated experiments within practical compute budgets
+
+ALE-Bench already packages 40 historical AtCoder Heuristic Contest problems for autonomous algorithm-engineering evaluation. ARS-AHC could build on that infrastructure, initially using a carefully selected subset of roughly 8 to 12 problems to make frequent benchmark runs affordable.
+
+## What is measured
+
+The main result is wall-clock efficiency against historical human performance.
+
+For each problem, historical AtCoder submissions can be used to reconstruct contestants' best-so-far score trajectories. An ARS run can then be compared with human percentile curves and reported in terms such as:
+
+```text
+Median human:  8 minutes
+Top 10% human: 47 minutes
+Top 1% human:  2 hours 16 minutes
+```
+
+The complete score-versus-wall-clock curve should remain a first-class result. A possible aggregate metric is the geometric mean time-to-threshold across problems.
+
+Every run should also report the resources used:
+
+- model and harness configuration
+- inference cost and token counts
+- evaluation CPU-seconds
+- number of candidate programs evaluated
+- model-call and evaluation concurrency
+- total wall-clock time
+
+These measurements make systems with different architectures easier to understand without collapsing every tradeoff into one number.
+
+## Tracks
+
+### Controlled model track
+
+All entrants use the same minimal harness and resource limits. Only the model varies.
+
+This track isolates model capability as much as practical.
+
+### Single-model system track
+
+Entrants may submit any harness and model combination, but only one model inference may run at a time.
+
+This track measures agent architecture, prompting, memory, experiment selection, and other system design choices without allowing massive parallel sampling to dominate. It is the clearest track for comparing time to human performance.
+
+### Unlimited system track
+
+Entrants submit the complete harness and model system with unrestricted concurrent model calls.
+
+This track measures practical wall-clock performance under normal deployment, including parallel research agents, ensembles, branching strategies, and other scaling techniques.
+
+## Evaluation integrity
+
+The agent should iterate on development instances that are separate from the fixed official evaluation set. Official runs should use hidden or system-held test instances where the underlying problem format permits it.
+
+This separation reduces benchmark-instance hill climbing and rewards research strategies that generalize beyond the examples visible during development.
+
+Reproducible runs should preserve the effective configuration, model identifiers, prompts, timing data, optimizer or search parameters, source hashes, and generated artifacts needed for audit.
+
+## Design principles
+
+- Evaluate the autonomous research system rather than a hand-selected final artifact.
+- Preserve score trajectories instead of reporting only the final score.
+- Compare machine progress with historical human progress over equal wall-clock time.
+- Make inference, evaluation, and concurrency costs visible.
+- Support both controlled scientific comparisons and practical unrestricted systems.
+- Keep the suite affordable enough for frequent reruns as models and harnesses improve.
+- Prefer held-out evaluation and reproducible execution over benchmark-specific tuning.
+
+## Relationship to existing work
+
+```text
+Keller-style speedruns
+  Deep, highly optimized autoresearch environments
+
+ARS-AHC
+  A broad autonomous-research speedrun suite
+```
+
+ARS is not intended to replace solution leaderboards or static algorithm benchmarks. It asks a different question:
+
+> Given a problem, a budget, and access to experiments, how quickly can an autonomous research system make progress?
+
+## Status
+
+ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
+
+Likely early work includes:
+
+1. Audit ALE-Bench and the available historical AtCoder data.
+2. Select representative candidate problems with reliable scoring and timelines.
+3. Reconstruct and validate human best-so-far percentile curves.
+4. Define timing, concurrency, compute, and inference accounting rules.
+5. Build a minimal reference harness and end-to-end runner.
+6. Run baseline systems and test whether the proposed metrics are stable.
+7. Publish a versioned benchmark specification when the methodology is validated.
+
+## Short description
+
+Autonomous Research Speedrun is a living benchmark for measuring how quickly AI research systems can improve solutions to optimization problems. Its first proposed suite, ARS-AHC, compares complete harness-and-model systems against historical human progress on AtCoder Heuristic Contests.
