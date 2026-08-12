@@ -1,0 +1,232 @@
+# Four-hour suite test plan
+
+Status: planned discovery experiment. No suite has been selected.
+
+## Decision to make
+
+ARS will test whether its primary speedrun benchmark should use:
+
+1. a short-contest-only Sprint suite, or
+2. the mixed short and long ARS-10 breadth proposal.
+
+Both candidates will receive the same four-hour agent wall-clock cap per problem. We will select one only after auditing human trajectories, evaluator cost, ranking stability, and coverage. A third outcome, using Sprint as the primary leaderboard and ARS-10 as a separate promotion suite, remains explicitly allowed.
+
+## Metric under test
+
+The primary comparison is equal elapsed wall-clock from problem release:
+
+```text
+t = 0: the human contestant and autonomous system receive the problem
+t > 0: compare their best-so-far scores at equal elapsed time
+```
+
+Each agent run stops after four hours. Historical human trajectories are truncated at the same point even when the original contest lasted several days.
+
+Required checkpoints are:
+
+- 10 minutes
+- 30 minutes
+- 1 hour
+- 2 hours
+- 4 hours
+
+The full best-so-far score curve remains the canonical result. Checkpoints are summaries, not substitutes for the curve.
+
+## Why four hours
+
+Four hours matches the dominant AtCoder short-contest format and keeps repeated agent runs practical. It also gives the benchmark a consistent speedrun horizon instead of assigning agents the original 4 to 367 hour contest duration.
+
+Contest length is not treated as a direct measure of evaluator cost, model-token demand, or problem difficulty. Those quantities will be measured separately.
+
+## Candidate suites
+
+### Candidate A: Sprint
+
+A short-contest-only subset drawn from contests with an original duration of at most six hours.
+
+The exact Sprint membership is intentionally not fixed yet. Candidate selection occurs only after the source and cost audit. The subset should aim for:
+
+- reliable timestamped human submissions through four hours
+- comparable agent and human scoring instances
+- useful score resolution throughout the four-hour window
+- low and stable evaluator CPU cost
+- varied research behaviors and problem structures
+- limited overlap with development or tuning problems
+
+### Candidate B: ARS-10 breadth
+
+The current [ARS-10 proposal](ars-10-proposal.md) contains six short and four long contests and covers all ten ALE-Bench genres once.
+
+Every problem still receives only four hours of agent time. The original long-contest duration is not reproduced.
+
+### Candidate C: split roles
+
+If neither suite dominates, ARS may use:
+
+- Sprint for frequent development and the primary human speedrun leaderboard
+- ARS-10 breadth for less frequent promotion and generalization runs
+
+This is a first-class outcome, not a fallback to conceal an inconclusive comparison.
+
+## Hypotheses
+
+### H1: Sprint has cleaner human comparability
+
+Short-contest participants are more likely to work continuously over the measured four hours. Their timestamped score trajectories may therefore be a better approximation of active human research time than the first four hours of a multi-day contest.
+
+Falsifier: the audited long problems have equally usable early trajectories after accounting for participation, delayed starts, and scoring differences.
+
+### H2: Sprint is cheaper at equal agent wall-clock
+
+Short problems may have lower evaluator cost or simpler operational requirements, but contest duration alone does not establish this.
+
+Falsifier: measured evaluator CPU, candidate throughput, model tokens, or operational failure rates are not materially lower than for the mixed suite.
+
+### H3: ARS-10 has better capability coverage
+
+The mixed suite may reveal system strengths and weaknesses hidden by a short-only suite, especially for inference under feedback and long-contest problem structures.
+
+Falsifier: a constrained short-only subset achieves comparable coverage and ranking stability.
+
+### H4: Four hours is long enough to rank systems
+
+Most useful separation between systems and against humans should emerge within the common four-hour window.
+
+Falsifier: rankings remain unstable at four hours or mixed-suite long problems show material, system-dependent improvements only after four hours.
+
+## Phase 1: source and comparability audit
+
+Audit every candidate problem before running agents.
+
+For each problem, record:
+
+- official start time and duration
+- judge type and interaction protocol
+- provisional and final scoring rules
+- whether system tests differ from in-contest tests
+- availability of timestamped submissions and scores
+- number of active contestants at each checkpoint
+- delayed-entry and first-submission distributions
+- whether best-so-far trajectories can be reconstructed without future information
+- availability of separate development and official evaluation instances
+- scorer determinism and seed policy
+- expected evaluator CPU per candidate program
+
+Exclude a problem from human speedrun claims when the agent score cannot be made comparable with the historical human score. It may remain eligible for a system-only breadth track.
+
+## Phase 2: human trajectory reconstruction
+
+For each surviving problem:
+
+1. Reconstruct each contestant's chronological best-so-far score curve.
+2. Normalize timestamps relative to contest start.
+3. Preserve contestants with no submission yet as missing rather than assigning them a fabricated score.
+4. Report both all-entrant and active-contestant percentile curves.
+5. Quantify the effect of delayed starts and first-submission censoring.
+6. Validate representative trajectories against the official standings and submission history.
+7. Freeze the transformation code and source hashes before agent promotion runs.
+
+The primary human reference population must be declared before results are inspected. Alternative populations are sensitivity analyses.
+
+## Phase 3: evaluator cost audit
+
+Run fixed baseline programs through each evaluator using declared discovery seeds.
+
+Measure:
+
+- evaluator CPU-seconds per case and per candidate
+- wall time and peak memory
+- public and private case counts
+- candidate evaluations per hour
+- score variance across seed subsets
+- setup, container, and failure overhead
+
+Use reduced seeds only if rank and score stability remain adequate. Seed reduction is a separate causal factor from problem-subset selection and should be tested separately.
+
+## Phase 4: system discovery runs
+
+Run a small, diverse panel of frozen systems on the union of both candidate suites. Use the same system configuration, model-call concurrency rule, hardware allocation, evaluator policy, and four-hour cap for every problem.
+
+At minimum, include systems expected to differ in:
+
+- base model capability
+- memory and context management
+- experiment selection
+- code-search strategy
+- use of evaluator feedback
+
+Record:
+
+- score-versus-wall-clock curve
+- time to each human percentile threshold
+- model input, output, and cached tokens
+- inference cost
+- evaluator CPU-seconds
+- candidate programs evaluated
+- model and evaluator concurrency
+- failures, restarts, and idle time
+
+Discovery runs may tune the experimental protocol, but they cannot serve as promotion evidence.
+
+## Phase 5: suite comparison
+
+Compare Sprint and ARS-10 breadth using:
+
+- Spearman and Kendall system-rank correlation with the broader audited pool
+- pairwise ranking inversion rate, especially for close systems
+- bootstrap confidence intervals over problems and seeds
+- rank stability at 1, 2, and 4 hours
+- genre and research-behavior coverage
+- human-trajectory completeness and comparability
+- evaluator CPU, model tokens, inference cost, and end-to-end wall time
+- operational failure rate
+- sensitivity to any single problem
+
+Also test constrained alternative short subsets. Do not compare only one hand-selected Sprint suite against one hand-selected mixed suite.
+
+## Promotion run
+
+Before the promotion run:
+
+1. Freeze the candidate suites and exclusions.
+2. Freeze the human reference population and trajectory transformation.
+3. Freeze seeds, evaluator configuration, checkpoints, and resource policy.
+4. Declare acceptance thresholds from discovery evidence.
+5. Use held-out systems, repetitions, seeds, or problems not used to choose the suite.
+6. Label the run as promotion before execution.
+
+The smallest acceptable promotion design should include repeated runs for enough systems to estimate pairwise rank uncertainty. A single run per system is not sufficient evidence for close rankings.
+
+## Proposed acceptance criteria
+
+Numeric thresholds will be fixed after Phase 4, before promotion. The chosen primary suite should at minimum:
+
+- preserve broad-pool system ordering with high rank correlation
+- keep pairwise inversions low enough for the intended leaderboard resolution
+- produce stable rankings by four hours
+- have usable and comparable human trajectories for every scored problem
+- meet the declared evaluator and inference budget
+- avoid domination by one problem or one narrow research behavior
+
+If Sprint meets these criteria, it becomes the leading candidate for the primary speedrun suite. If ARS-10 materially improves ranking or capability coverage at acceptable cost, it remains a primary-suite candidate. If the tradeoff is real, use Candidate C and keep the roles separate.
+
+## Stop limits and premise audit
+
+- Allow at most two failed interventions at any data-access, trajectory, or evaluator gate before auditing the premise and forming a new hypothesis.
+- Set a per-problem source-audit limit before starting the audit.
+- Set a per-system run-cost ceiling before discovery runs.
+- Do not extend the four-hour cap during this experiment. A longer-horizon study is a separate declared experiment.
+- Evidence that human and agent scores cannot be made comparable is scope-escape evidence for removing that problem from the human speedrun track.
+
+## Outputs
+
+The experiment should produce:
+
+- a versioned problem-audit table
+- reproducible human trajectory data and transformation code
+- evaluator cost and variance measurements
+- frozen discovery and promotion manifests
+- suite-ranking and pairwise-stability analysis
+- a written decision selecting Sprint, ARS-10 breadth, split roles, or neither
+
+Until those outputs exist, the four-hour cutoff and both suites remain hypotheses under test.
