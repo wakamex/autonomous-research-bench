@@ -31,6 +31,10 @@ The resulting balance is:
 
 Problem metadata and official sources are available in the [rated AtCoder heuristic problem catalog](atcoder-heuristic-catalog.md).
 
+The [four-hour submission snapshot](../sources/atcoder/submissions-4h/README.md)
+lists cumulative submission and participant counts for all ten problems and
+preserves the underlying timestamped metadata.
+
 ## Changes from ALE-Bench lite
 
 | Remove | Duplicated genre | Add | Previously missing genre |

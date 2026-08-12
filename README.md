@@ -124,6 +124,8 @@ The [`ARS-10 discovery suite proposal`](docs/ars-10-proposal.md) defines a provi
 
 The [`four-hour suite test plan`](docs/four-hour-suite-test-plan.md) compares a short-only Sprint suite with the mixed ARS-10 proposal under an equal four-hour wall-clock cap.
 
+The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md) preserve timestamped public submission metadata for all 72 rated contests and summarize the proposed ARS-10 at the cutoff.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
