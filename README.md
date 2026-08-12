@@ -118,6 +118,8 @@ ARS is not intended to replace solution leaderboards or static algorithm benchma
 
 The ALE-Bench paper and its provenance record are preserved under [`papers`](papers/README.md).
 
+The [`rated AtCoder heuristic problem catalog`](docs/atcoder-heuristic-catalog.md) documents all 72 rated contests through August 12, 2026, including the original ALE-Bench full and lite selections.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
