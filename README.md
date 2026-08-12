@@ -46,12 +46,12 @@ The main result is wall-clock efficiency against historical human performance.
 For each problem, historical AtCoder submissions can be used to reconstruct contestants' best-so-far score trajectories. An ARS run can then be compared with human percentile curves and reported in terms such as:
 
 ```text
-Median human:  8 minutes
-Top 10% human: 47 minutes
-Top 1% human:  2 hours 16 minutes
+Time to human 4h P50:  8 minutes
+Time to human 4h P90: 47 minutes
+Time to human 4h P99: 2 hours 16 minutes
 ```
 
-The complete score-versus-wall-clock curve should remain a first-class result. A possible aggregate metric is the geometric mean time-to-threshold across problems.
+Each target is fixed from the distribution of one best submission per human at four hours. The complete score-versus-wall-clock curve and same-time human percentiles at fixed checkpoints remain first-class results. A possible aggregate metric is the geometric mean time-to-threshold across problems that reached the target, reported with the target attainment rate.
 
 Every run should also report the resources used:
 

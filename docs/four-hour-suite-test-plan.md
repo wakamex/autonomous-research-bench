@@ -32,6 +32,22 @@ Required checkpoints are:
 
 The full best-so-far score curve remains the canonical result. Checkpoints are summaries, not substitutes for the curve.
 
+The provisional time-to-threshold metrics use the human score distribution at
+four elapsed hours. For each problem, compute the P50, P90, and P99 score from
+one best submission per human at four hours. Then report when the agent first
+submitted a candidate whose comparable benchmark score reached each fixed
+threshold:
+
+```text
+Time to human 4h P50
+Time to human 4h P90
+Time to human 4h P99
+```
+
+A threshold not reached within four hours is right-censored, not assigned a
+fabricated completion time. Same-time human percentiles at the required
+checkpoints remain a separate view of progress.
+
 ## Why four hours
 
 Four hours matches the dominant AtCoder short-contest format and keeps repeated agent runs practical. It also gives the benchmark a consistent speedrun horizon instead of assigning agents the original 4 to 367 hour contest duration.
@@ -113,7 +129,7 @@ For each problem, record:
 - provisional and final scoring rules
 - whether system tests differ from in-contest tests
 - availability of timestamped submissions and scores
-- number of active contestants at each checkpoint
+- number of humans represented at each checkpoint
 - delayed-entry and first-submission distributions
 - whether best-so-far trajectories can be reconstructed without future information
 - availability of separate development and official evaluation instances
@@ -170,7 +186,7 @@ At minimum, include systems expected to differ in:
 Record:
 
 - score-versus-wall-clock curve
-- time to each human percentile threshold
+- time to human 4h P50, P90, and P99
 - model input, output, and cached tokens
 - inference cost
 - evaluator CPU-seconds
@@ -199,6 +215,12 @@ Also test constrained alternative short subsets. Do not compare only one hand-se
 For the Inference ablation, report pairwise ranking changes, uncertainty, unique
 system failures, human-score comparability, and incremental cost. Decide whether
 to retain AHC030 during discovery, then freeze that decision before promotion.
+
+Discovery should initially retain the full score curve, five fixed checkpoints,
+and all three four-hour human thresholds. Before promotion, remove redundant or
+unstable summaries and freeze the smallest metric set that still explains
+meaningful system differences. Discovery outputs cannot be silently promoted
+after the metric set is narrowed.
 
 ## Promotion run
 
