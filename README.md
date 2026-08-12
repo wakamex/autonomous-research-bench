@@ -31,7 +31,13 @@ These problems are a strong fit because they:
 - span a variety of optimization structures
 - support repeated experiments within practical compute budgets
 
-ALE-Bench already packages 40 historical AtCoder Heuristic Contest problems for autonomous algorithm-engineering evaluation. ARS-AHC could build on that infrastructure, initially using a carefully selected subset of roughly 8 to 12 problems to make frequent benchmark runs affordable.
+[ALE-Bench](https://github.com/SakanaAI/ALE-Bench) already packages 40 historical AtCoder Heuristic Contest problems for autonomous algorithm-engineering evaluation. ARS-AHC could build on that infrastructure, initially using a carefully selected subset of roughly 8 to 12 problems to make frequent benchmark runs affordable.
+
+ALE-Bench is included as a pinned Git submodule under `third_party/ALE-Bench`. After cloning ARS, initialize it with:
+
+```sh
+git submodule update --init --recursive
+```
 
 ## What is measured
 
