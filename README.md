@@ -128,6 +128,8 @@ The [`Sprint-9 plus Inference proposal`](docs/sprint-9-plus-inference-proposal.m
 
 The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md) preserve timestamped public submission metadata for all 72 rated contests and summarize the proposed ARS-10 at the cutoff.
 
+The [`human reference compiler`](docs/human-reference.md) reconstructs fixed-time percentiles and four-hour human thresholds. The [`run event schema`](docs/run-event-schema.md) defines the append-only contract for future runners.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.

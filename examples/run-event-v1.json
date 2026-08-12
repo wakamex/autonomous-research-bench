@@ -1,0 +1,14 @@
+{
+  "schema_version": "ars.run-event.v1",
+  "run_id": "example-ahc044-run",
+  "sequence": 0,
+  "event_type": "run.started",
+  "elapsed_seconds": 0,
+  "recorded_at": "2026-08-12T18:00:00Z",
+  "payload": {
+    "problem_id": "ahc044",
+    "suite_id": "sprint-9-discovery",
+    "track": "single-model",
+    "system_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  }
+}
