@@ -47,7 +47,7 @@ be interpreted as 6,240 unique people across the whole suite.
 The participation split is already useful evidence for the suite experiment.
 The four long contests have hundreds of early submissions, but markedly fewer
 than the short contests. The next audit should compare first-submission timing,
-active-contestant definitions, and score-trajectory resolution rather than use
+best-submission trajectory resolution, and scoring comparability rather than use
 submission volume alone to accept or reject a problem.
 
 ## Completeness and scoring limits
@@ -60,8 +60,9 @@ The `point` field is the score attached to each public submission in AtCoder
 Problems. For long contests in particular, provisional submission scores may
 not be directly comparable with final standings or ALE-Bench private-system
 scores. The planned trajectory audit must establish the correct score transform
-and historical reference population before these files support human-percentile
-claims.
+before these files support human-percentile claims. At each elapsed-time cutoff,
+the reference will group submissions made by then by user and retain one
+best-so-far result per human.
 
 To reproduce the snapshot, run:
 

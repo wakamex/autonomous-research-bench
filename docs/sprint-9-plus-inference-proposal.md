@@ -86,7 +86,7 @@ twice from the same frozen results:
 Evaluate AHC030 on:
 
 - score comparability between historical submissions and the agent evaluator
-- first-submission censoring and human percentile stability
+- best-submission-per-human trajectory density and percentile stability
 - evaluator CPU, candidate throughput, token use, and operational failures
 - unique system failures or strengths not exposed by the other nine problems
 - changes in pairwise system ordering and ranking uncertainty

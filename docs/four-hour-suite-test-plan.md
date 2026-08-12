@@ -128,13 +128,17 @@ For each surviving problem:
 
 1. Reconstruct each contestant's chronological best-so-far score curve.
 2. Normalize timestamps relative to contest start.
-3. Preserve contestants with no submission yet as missing rather than assigning them a fabricated score.
-4. Report both all-entrant and active-contestant percentile curves.
-5. Quantify the effect of delayed starts and first-submission censoring.
+3. At each elapsed time, include every human who has submitted by that time and
+   retain exactly that human's best scored submission so far.
+4. Treat a human with only non-scored results by that time as a bottom-ranked
+   no-score state rather than inventing a numeric score.
+5. Do not add contestants using submissions made after the elapsed-time cutoff.
 6. Validate representative trajectories against the official standings and submission history.
 7. Freeze the transformation code and source hashes before agent promotion runs.
 
-The primary human reference population must be declared before results are inspected. Alternative populations are sensitivity analyses.
+This best-submission-per-human construction is the only human reference
+population. ARS will not publish separate all-entrant and active-contestant
+percentiles.
 
 ## Phase 3: evaluator cost audit
 
@@ -201,7 +205,7 @@ to retain AHC030 during discovery, then freeze that decision before promotion.
 Before the promotion run:
 
 1. Freeze the candidate suites and exclusions.
-2. Freeze the human reference population and trajectory transformation.
+2. Freeze the best-submission-per-human trajectory transformation.
 3. Freeze seeds, evaluator configuration, checkpoints, and resource policy.
 4. Declare acceptance thresholds from discovery evidence.
 5. Use held-out systems, repetitions, seeds, or problems not used to choose the suite.
