@@ -116,6 +116,8 @@ ARS is not intended to replace solution leaderboards or static algorithm benchma
 
 > Given a problem, a budget, and access to experiments, how quickly can an autonomous research system make progress?
 
+The ALE-Bench paper and its provenance record are preserved under [`papers`](papers/README.md).
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
