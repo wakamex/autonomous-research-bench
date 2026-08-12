@@ -6,7 +6,7 @@ Status: planned discovery experiment. No suite has been selected.
 
 ARS will test whether its primary speedrun benchmark should use:
 
-1. a short-contest-only Sprint suite, or
+1. the rule-selected Sprint-9 plus Inference suite, with a Sprint-9 ablation, or
 2. the mixed short and long ARS-10 breadth proposal.
 
 Both candidates will receive the same four-hour agent wall-clock cap per problem. We will select one only after auditing human trajectories, evaluator cost, ranking stability, and coverage. A third outcome, using Sprint as the primary leaderboard and ARS-10 as a separate promotion suite, remains explicitly allowed.
@@ -40,11 +40,15 @@ Contest length is not treated as a direct measure of evaluator cost, model-token
 
 ## Candidate suites
 
-### Candidate A: Sprint
+### Candidate A: Sprint-9 plus Inference
 
-A short-contest-only subset drawn from contests with an original duration of at most six hours.
+The [Sprint-9 plus Inference proposal](sprint-9-plus-inference-proposal.md)
+selects the latest rated contest lasting at most six hours in each of the nine
+categories represented by short contests, then adds the latest Inference
+contest. Inference has no short contest in the current catalog.
 
-The exact Sprint membership is intentionally not fixed yet. Candidate selection occurs only after the source and cost audit. The subset should aim for:
+The candidate is frozen from the August 12, 2026 catalog. Eligibility still
+requires:
 
 - reliable timestamped human submissions through four hours
 - comparable agent and human scoring instances
@@ -52,6 +56,10 @@ The exact Sprint membership is intentionally not fixed yet. Candidate selection 
 - low and stable evaluator CPU cost
 - varied research behaviors and problem structures
 - limited overlap with development or tuning problems
+
+The same discovery results will be aggregated both with and without AHC030.
+This tests whether Inference contributes enough distinct capability signal to
+justify the tenth problem and the only long-contest exception.
 
 ### Candidate B: ARS-10 breadth
 
@@ -78,7 +86,7 @@ Falsifier: the audited long problems have equally usable early trajectories afte
 
 ### H2: Sprint is cheaper at equal agent wall-clock
 
-Short problems may have lower evaluator cost or simpler operational requirements, but contest duration alone does not establish this.
+The nine short problems may have lower evaluator cost or simpler operational requirements, but contest duration alone does not establish this. AHC030 is measured separately so its incremental cost is visible.
 
 Falsifier: measured evaluator CPU, candidate throughput, model tokens, or operational failure rates are not materially lower than for the mixed suite.
 
@@ -170,7 +178,7 @@ Discovery runs may tune the experimental protocol, but they cannot serve as prom
 
 ## Phase 5: suite comparison
 
-Compare Sprint and ARS-10 breadth using:
+Compare Sprint-9, Sprint-9 plus Inference, and ARS-10 breadth using:
 
 - Spearman and Kendall system-rank correlation with the broader audited pool
 - pairwise ranking inversion rate, especially for close systems
@@ -183,6 +191,10 @@ Compare Sprint and ARS-10 breadth using:
 - sensitivity to any single problem
 
 Also test constrained alternative short subsets. Do not compare only one hand-selected Sprint suite against one hand-selected mixed suite.
+
+For the Inference ablation, report pairwise ranking changes, uncertainty, unique
+system failures, human-score comparability, and incremental cost. Decide whether
+to retain AHC030 during discovery, then freeze that decision before promotion.
 
 ## Promotion run
 

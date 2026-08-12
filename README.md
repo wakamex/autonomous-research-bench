@@ -122,7 +122,9 @@ The [`rated AtCoder heuristic problem catalog`](docs/atcoder-heuristic-catalog.m
 
 The [`ARS-10 discovery suite proposal`](docs/ars-10-proposal.md) defines a provisional ten-problem subset with complete genre coverage and the validation required before promotion.
 
-The [`four-hour suite test plan`](docs/four-hour-suite-test-plan.md) compares a short-only Sprint suite with the mixed ARS-10 proposal under an equal four-hour wall-clock cap.
+The [`four-hour suite test plan`](docs/four-hour-suite-test-plan.md) compares Sprint-9, Sprint-9 plus Inference, and the mixed ARS-10 proposal under an equal four-hour wall-clock cap.
+
+The [`Sprint-9 plus Inference proposal`](docs/sprint-9-plus-inference-proposal.md) uses a deterministic latest-per-category rule and tests whether its one long Inference problem should remain after discovery.
 
 The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md) preserve timestamped public submission metadata for all 72 rated contests and summarize the proposed ARS-10 at the cutoff.
 
