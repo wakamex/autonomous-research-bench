@@ -134,6 +134,8 @@ The [`trajectory replay scorer and AHC044 adapter`](docs/replay-scorer.md) turn 
 
 The [`first fixed AHC044 discovery baseline`](results/discovery/ahc044-aop-fixed-v2/README.md) preserves its candidate, public and private evaluations, event trajectory, replay score, and reproduction identity.
 
+The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARS.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
