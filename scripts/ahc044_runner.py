@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import os
 import time
 import uuid
@@ -27,6 +28,30 @@ def load_state(run_dir: Path) -> dict[str, object]:
 
 def elapsed(state: dict[str, object]) -> float:
     return time.monotonic() - float(state["started_monotonic"])
+
+
+def benchmark_timing(state: dict[str, object]) -> dict[str, float]:
+    elapsed_seconds = max(elapsed(state), 0.0)
+    remaining_seconds = max(
+        float(state["duration_seconds"]) - elapsed_seconds, 0.0
+    )
+    return {
+        "elapsed_seconds": round(elapsed_seconds, 6),
+        "remaining_seconds": round(remaining_seconds, 6),
+    }
+
+
+def continuation_prompt(state: dict[str, object]) -> str:
+    remaining_seconds = math.floor(benchmark_timing(state)["remaining_seconds"])
+    return (
+        "Continue working on the task. "
+        f"Time remaining: {remaining_seconds:,} seconds."
+    )
+
+
+def print_continuation_prompt(args: argparse.Namespace) -> None:
+    state = load_state(args.run_dir.resolve())
+    print(continuation_prompt(state))
 
 
 def init_run(args: argparse.Namespace) -> None:
@@ -165,14 +190,16 @@ def submit(args: argparse.Namespace) -> None:
             )
         except Exception as error:  # noqa: BLE001 - evaluator failures must become durable events
             evaluation = evaluation_error(error)
+        timing = benchmark_timing(state)
         append_event(
             run_dir,
             "evaluation.completed",
-            elapsed(state),
+            timing["elapsed_seconds"],
             {
                 "evaluation_id": f"public-{candidate_id}",
                 "candidate_id": candidate_id,
                 "visibility": "public",
+                **timing,
                 **evaluation,
             },
         )
@@ -181,7 +208,11 @@ def submit(args: argparse.Namespace) -> None:
         ) + float(evaluation["cpu_seconds"])
         atomic_json(run_dir / "state.json", state)
         append_resource_event(run_dir, state)
-    print(json.dumps({"candidate_id": candidate_id, **evaluation}, sort_keys=True))
+    print(
+        json.dumps(
+            {"candidate_id": candidate_id, **timing, **evaluation}, sort_keys=True
+        )
+    )
 
 
 def append_resource_event(run_dir: Path, state: dict[str, object]) -> None:
@@ -311,6 +342,9 @@ def parser() -> argparse.ArgumentParser:
     submit_command.add_argument("--language", default="cpp23")
     submit_command.add_argument("--workers", type=int, default=1)
     submit_command.set_defaults(function=submit)
+    prompt = commands.add_parser("continuation-prompt")
+    prompt.add_argument("--run-dir", type=Path, required=True)
+    prompt.set_defaults(function=print_continuation_prompt)
     stop = commands.add_parser("stop")
     stop.add_argument("--run-dir", type=Path, required=True)
     stop.add_argument("--aop-result", type=Path, required=True)

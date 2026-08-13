@@ -30,10 +30,12 @@ uv run --no-project python -m scripts.score_run RUN/events.jsonl \
 
 ## AHC044 adapter
 
-[`ahc044_runner.py`](../scripts/ahc044_runner.py) provides four commands:
+[`ahc044_runner.py`](../scripts/ahc044_runner.py) provides five commands:
 
 - `init` starts the monotonic run clock and event log.
-- `submit` archives a candidate, timestamps it, and returns its public score.
+- `submit` archives a candidate, timestamps it, and returns its public score and
+  benchmark clock.
+- `continuation-prompt` prints a neutral prompt containing the current time left.
 - `stop` imports AOP token, cost, duration, and terminal status data.
 - `private-evaluate` scores every archived candidate after the run.
 
@@ -41,6 +43,19 @@ The adapter uses the ALE-Bench 50-case public evaluator during research and
 the 150-case private evaluator after the run. AHC044 has no post-contest system
 test, so the private score basis matches the official historical score scale.
 Private results are never returned to the live research system.
+
+Every public evaluation response includes `elapsed_seconds` and
+`remaining_seconds`, measured after evaluation finishes. If the model ends a
+turn before the benchmark deadline, the supervisor may resume the exact session
+with the output of `continuation-prompt`:
+
+```text
+Continue working on the task. Time remaining: 7,088 seconds.
+```
+
+This contract is independent of the agent harness. It supplies the clock but
+does not prescribe an experiment policy, add warning phases, or force a final
+submission.
 
 ALE-Bench does not report evaluator CPU-seconds for public or private calls, so
 those resource values remain zero in the current adapter. Evaluation wall time,

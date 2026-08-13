@@ -13,6 +13,6 @@ Submit a candidate for timestamped public evaluation with:
 ```
 
 The submission command archives the exact source before evaluation. Its JSON
-output contains the 50-case public score available to the research system.
-Private scores are calculated only after the run and are never shown to the
-research system.
+output contains the 50-case public score plus `elapsed_seconds` and
+`remaining_seconds` from the benchmark clock. Private scores are calculated
+only after the run and are never shown to the research system.

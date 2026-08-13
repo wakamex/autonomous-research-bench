@@ -1,16 +1,38 @@
 import hashlib
+import io
 import json
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from scripts.ahc044_runner import init_run, private_evaluate, stop_run, submit
+from scripts.ahc044_runner import (
+    continuation_prompt,
+    init_run,
+    private_evaluate,
+    stop_run,
+    submit,
+)
 from scripts.ars_events import read_events
 
 
 class Ahc044RunnerTest(unittest.TestCase):
+    def test_continuation_prompt_reports_floor_of_time_left(self):
+        state = {"started_monotonic": 1000.0, "duration_seconds": 8100}
+        with patch("scripts.ahc044_runner.time.monotonic", return_value=1011.1):
+            self.assertEqual(
+                continuation_prompt(state),
+                "Continue working on the task. Time remaining: 8,088 seconds.",
+            )
+
+        with patch("scripts.ahc044_runner.time.monotonic", return_value=9200.0):
+            self.assertEqual(
+                continuation_prompt(state),
+                "Continue working on the task. Time remaining: 0 seconds.",
+            )
+
     def test_timeout_is_a_normal_deadline_stop(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -68,12 +90,26 @@ class Ahc044RunnerTest(unittest.TestCase):
                 "performance": None,
                 "score_basis": "test public",
             }
-            with patch("scripts.ahc044_runner.evaluate", return_value=public):
-                submit(
-                    SimpleNamespace(
-                        run_dir=run_dir, source=source, language="cpp23", workers=1
+            output = io.StringIO()
+            with redirect_stdout(output):
+                with patch("scripts.ahc044_runner.evaluate", return_value=public):
+                    submit(
+                        SimpleNamespace(
+                            run_dir=run_dir,
+                            source=source,
+                            language="cpp23",
+                            workers=1,
+                        )
                     )
-                )
+            public_response = json.loads(output.getvalue())
+            self.assertGreaterEqual(public_response["elapsed_seconds"], 0)
+            self.assertGreaterEqual(public_response["remaining_seconds"], 0)
+            self.assertAlmostEqual(
+                public_response["elapsed_seconds"]
+                + public_response["remaining_seconds"],
+                60,
+                places=5,
+            )
 
             aop_result = root / "aop.json"
             aop_result.write_text(
@@ -114,6 +150,20 @@ class Ahc044RunnerTest(unittest.TestCase):
             self.assertEqual(
                 submitted["payload"]["source_sha256"],
                 hashlib.sha256(source.read_bytes()).hexdigest(),
+            )
+            public_event = next(
+                event
+                for event in events
+                if event["event_type"] == "evaluation.completed"
+                and event["payload"]["visibility"] == "public"
+            )
+            self.assertEqual(
+                public_event["payload"]["elapsed_seconds"],
+                public_response["elapsed_seconds"],
+            )
+            self.assertEqual(
+                public_event["payload"]["remaining_seconds"],
+                public_response["remaining_seconds"],
             )
             private_event = next(
                 event
