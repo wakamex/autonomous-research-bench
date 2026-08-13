@@ -132,6 +132,8 @@ The [`human reference compiler`](docs/human-reference.md) reconstructs fixed-tim
 
 The [`trajectory replay scorer and AHC044 adapter`](docs/replay-scorer.md) turn timestamped candidate submissions into checkpoint percentiles and time-to-human-4h results.
 
+The [`first fixed AHC044 discovery baseline`](results/discovery/ahc044-aop-fixed-v2/README.md) preserves its candidate, public and private evaluations, event trajectory, replay score, and reproduction identity.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.

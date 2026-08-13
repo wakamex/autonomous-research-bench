@@ -116,6 +116,18 @@ def evaluate(
         session.close()
 
 
+def evaluation_error(error: Exception) -> dict[str, object]:
+    return {
+        "judge_result": "INTERNAL_ERROR",
+        "score": None,
+        "wall_seconds": 0.0,
+        "cpu_seconds": 0.0,
+        "rank": None,
+        "performance": None,
+        "score_basis": f"evaluation error: {type(error).__name__}: {error}",
+    }
+
+
 def submit(args: argparse.Namespace) -> None:
     run_dir = args.run_dir.resolve()
     with event_lock(run_dir):
@@ -152,15 +164,7 @@ def submit(args: argparse.Namespace) -> None:
                 content.decode(), args.language, "public", args.workers
             )
         except Exception as error:  # noqa: BLE001 - evaluator failures must become durable events
-            evaluation = {
-                "judge_result": "INTERNAL_ERROR",
-                "score": None,
-                "wall_seconds": 0.0,
-                "cpu_seconds": 0.0,
-                "rank": None,
-                "performance": None,
-                "score_basis": f"evaluation error: {type(error).__name__}: {error}",
-            }
+            evaluation = evaluation_error(error)
         append_event(
             run_dir,
             "evaluation.completed",
@@ -214,13 +218,23 @@ def stop_run(args: argparse.Namespace) -> None:
             }
         )
         atomic_json(run_dir / "state.json", state)
+        timed_out = bool(aop_result.get("timed_out"))
+        if timed_out:
+            model_status = "cancelled"
+            stop_reason = "deadline"
+        elif aop_result.get("succeeded"):
+            model_status = "completed"
+            stop_reason = "completed"
+        else:
+            model_status = "failed"
+            stop_reason = "failed"
         append_event(
             run_dir,
             "model_call.completed",
             elapsed(state),
             {
                 "call_id": "aop-agent",
-                "status": "completed" if aop_result.get("succeeded") else "failed",
+                "status": model_status,
                 "input_tokens": state["input_tokens"],
                 "output_tokens": state["output_tokens"],
                 "cached_tokens": state["cached_tokens"],
@@ -232,7 +246,7 @@ def stop_run(args: argparse.Namespace) -> None:
             run_dir,
             "run.stopped",
             elapsed(state),
-            {"reason": "completed" if aop_result.get("succeeded") else "failed"},
+            {"reason": stop_reason},
         )
 
 
@@ -249,12 +263,15 @@ def private_evaluate(args: argparse.Namespace) -> None:
         candidate_id = candidate.stem
         if candidate_id in existing:
             continue
-        evaluation = evaluate(
-            candidate.read_text(encoding="utf-8"),
-            args.language,
-            "private",
-            args.workers,
-        )
+        try:
+            evaluation = evaluate(
+                candidate.read_text(encoding="utf-8"),
+                args.language,
+                "private",
+                args.workers,
+            )
+        except Exception as error:  # noqa: BLE001 - continue through every candidate
+            evaluation = evaluation_error(error)
         with event_lock(run_dir):
             state = load_state(run_dir)
             append_event(

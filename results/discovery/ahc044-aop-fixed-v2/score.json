@@ -1,0 +1,92 @@
+{
+  "schema_version": "ars.run-score.v1",
+  "run_id": "ahc044-aop-fixed-v2",
+  "problem_id": "ahc044",
+  "score_direction": "maximize",
+  "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
+  "checkpoints": [
+    {
+      "elapsed_seconds": 600,
+      "agent_score": 1541672,
+      "candidate_id": "candidate-0001",
+      "human_count": 151,
+      "human_percentile": {
+        "lower": 7.28476821192053,
+        "midrank": 18.211920529801326,
+        "upper": 29.13907284768212
+      }
+    },
+    {
+      "elapsed_seconds": 1800,
+      "agent_score": 1541672,
+      "candidate_id": "candidate-0001",
+      "human_count": 402,
+      "human_percentile": {
+        "lower": 2.985074626865672,
+        "midrank": 6.218905472636815,
+        "upper": 9.45273631840796
+      }
+    },
+    {
+      "elapsed_seconds": 3600,
+      "agent_score": 1541672,
+      "candidate_id": "candidate-0001",
+      "human_count": 637,
+      "human_percentile": {
+        "lower": 3.610675039246468,
+        "midrank": 5.1020408163265305,
+        "upper": 6.593406593406593
+      }
+    },
+    {
+      "elapsed_seconds": 7200,
+      "agent_score": 1541672,
+      "candidate_id": "candidate-0001",
+      "human_count": 842,
+      "human_percentile": {
+        "lower": 2.375296912114014,
+        "midrank": 3.0285035629453683,
+        "upper": 3.681710213776722
+      }
+    },
+    {
+      "elapsed_seconds": 14400,
+      "agent_score": 1541672,
+      "candidate_id": "candidate-0001",
+      "human_count": 1012,
+      "human_percentile": {
+        "lower": 2.6679841897233203,
+        "midrank": 3.1126482213438735,
+        "upper": 3.5573122529644268
+      }
+    }
+  ],
+  "time_to_human_4h": [
+    {
+      "target": "p50",
+      "score": 136730318,
+      "status": "right-censored",
+      "elapsed_seconds": null,
+      "candidate_id": null,
+      "censor_seconds": 14400
+    },
+    {
+      "target": "p90",
+      "score": 148472162,
+      "status": "right-censored",
+      "elapsed_seconds": null,
+      "candidate_id": null,
+      "censor_seconds": 14400
+    },
+    {
+      "target": "p99",
+      "score": 149730504,
+      "status": "right-censored",
+      "elapsed_seconds": null,
+      "candidate_id": null,
+      "censor_seconds": 14400
+    }
+  ],
+  "submitted_candidates": 1,
+  "privately_scored_candidates": 1
+}

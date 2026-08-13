@@ -11,6 +11,37 @@ from scripts.ars_events import read_events
 
 
 class Ahc044RunnerTest(unittest.TestCase):
+    def test_timeout_is_a_normal_deadline_stop(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            run_dir = root / "run"
+            init_run(
+                SimpleNamespace(
+                    run_dir=run_dir,
+                    run_id="deadline-run",
+                    duration=60,
+                    suite_id="test",
+                    track="single-model",
+                    model="test-model",
+                    system_manifest_sha256="0" * 64,
+                )
+            )
+            aop_result = root / "aop.json"
+            aop_result.write_text(json.dumps({"succeeded": False, "timed_out": True}))
+            stop_run(SimpleNamespace(run_dir=run_dir, aop_result=aop_result))
+
+            events = read_events(run_dir / "events.jsonl")
+            model_stop = next(
+                event
+                for event in events
+                if event["event_type"] == "model_call.completed"
+            )
+            run_stop = next(
+                event for event in events if event["event_type"] == "run.stopped"
+            )
+            self.assertEqual(model_stop["payload"]["status"], "cancelled")
+            self.assertEqual(run_stop["payload"]["reason"], "deadline")
+
     def test_end_to_end_event_recording(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
