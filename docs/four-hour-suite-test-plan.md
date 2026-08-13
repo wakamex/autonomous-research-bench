@@ -129,7 +129,7 @@ For each problem, record:
 - provisional and final scoring rules
 - whether system tests differ from in-contest tests
 - availability of timestamped submissions and scores
-- number of humans represented at each checkpoint
+- fixed cohort size, plus humans submitted and scored at each checkpoint
 - delayed-entry and first-submission distributions
 - whether best-so-far trajectories can be reconstructed without future information
 - availability of separate development and official evaluation instances

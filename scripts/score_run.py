@@ -66,11 +66,7 @@ def human_scores(reference: dict[str, object], elapsed: int) -> list[int]:
     trajectories = reference.get("trajectories")
     if not isinstance(trajectories, list):
         raise TypeError("human reference has no trajectories")
-    return [
-        score_at(user, elapsed)
-        for user in trajectories
-        if int(user["first_submission_seconds"]) <= elapsed
-    ]
+    return [score_at(user, elapsed) for user in trajectories]
 
 
 def percentile_with_ties(scores: list[int], agent_score: int) -> dict[str, float]:
@@ -185,6 +181,7 @@ def replay(
         "schema_version": "ars.run-score.v1",
         "run_id": events[0]["run_id"],
         "problem_id": reference["problem_id"],
+        "human_cohort": reference.get("cohort"),
         "score_direction": "maximize",
         "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
         "checkpoints": checkpoints,

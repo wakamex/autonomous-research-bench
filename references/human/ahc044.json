@@ -1,58 +1,75 @@
 {
   "method": {
-    "population": "users with at least one submission by the elapsed-time cutoff",
-    "per_human_value": "highest AC score submitted by the cutoff; zero for failed-only humans",
+    "population": "fixed cohort of users with at least one submission by the configured cohort cutoff",
+    "cohort_seconds": 14400,
+    "per_human_value": "highest AC score submitted by the elapsed-time cutoff; zero before a first scored submission",
     "score_direction": "maximize",
     "percentile": "ascending nearest-rank: sorted_scores[ceil(p * n) - 1]"
+  },
+  "cohort": {
+    "cutoff_seconds": 14400,
+    "selection": "first submission at or before the cohort cutoff",
+    "precomputed_trajectory_count": 1012,
+    "source_humans": 1012,
+    "cohort_humans": 1012,
+    "excluded_humans": 0,
+    "source_submissions": 7843,
+    "submissions_by_cutoff": 7843,
+    "source_max_elapsed_seconds": 14400
   },
   "checkpoints": [
     {
       "elapsed_seconds": 600,
-      "humans": 151,
+      "humans": 1012,
+      "humans_submitted": 151,
       "humans_with_score": 141,
       "submissions": 169,
       "score_percentiles": {
-        "p50": 112722734,
-        "p90": 112722738,
-        "p99": 144701614
+        "p50": 0,
+        "p90": 81253586,
+        "p99": 112722738
       }
     },
     {
       "elapsed_seconds": 1800,
-      "humans": 402,
+      "humans": 1012,
+      "humans_submitted": 402,
       "humans_with_score": 392,
       "submissions": 622,
       "score_percentiles": {
-        "p50": 112722734,
-        "p90": 125741594,
-        "p99": 146699040
+        "p50": 0,
+        "p90": 112722738,
+        "p99": 141071162
       }
     },
     {
       "elapsed_seconds": 3600,
-      "humans": 637,
+      "humans": 1012,
+      "humans_submitted": 637,
       "humans_with_score": 618,
       "submissions": 1439,
       "score_percentiles": {
-        "p50": 112722738,
-        "p90": 138332064,
-        "p99": 148358722
+        "p50": 101430556,
+        "p90": 135007154,
+        "p99": 147080008
       }
     },
     {
       "elapsed_seconds": 7200,
-      "humans": 842,
+      "humans": 1012,
+      "humans_submitted": 842,
       "humans_with_score": 825,
       "submissions": 3192,
       "score_percentiles": {
-        "p50": 127460686,
-        "p90": 146498184,
-        "p99": 149527164
+        "p50": 118826980,
+        "p90": 145595608,
+        "p99": 149467772
       }
     },
     {
       "elapsed_seconds": 14400,
       "humans": 1012,
+      "humans_submitted": 1012,
       "humans_with_score": 987,
       "submissions": 7843,
       "score_percentiles": {
@@ -29641,7 +29658,7 @@
       ]
     }
   ],
-  "schema_version": "ars.human-reference.v1",
+  "schema_version": "ars.human-reference.v2",
   "problem_id": "ahc044",
   "source": {
     "submissions_file": "sources/atcoder/submissions-4h/ahc044.csv.gz",

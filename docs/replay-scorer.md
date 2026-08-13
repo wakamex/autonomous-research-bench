@@ -6,7 +6,8 @@ scores against a frozen human reference.
 For each 10, 30, 60, 120, and 240 minute checkpoint, it selects the highest
 private score among candidates submitted by that time. Evaluation completion
 time does not affect checkpoint eligibility. It reports the agent score and its
-human percentile among one best-so-far score per represented human.
+human percentile among one best-so-far score per member of the fixed four-hour
+human cohort. Humans who have not submitted by the checkpoint have score zero.
 
 Human ties produce an interval:
 

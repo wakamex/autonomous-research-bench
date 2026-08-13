@@ -17,6 +17,7 @@ from pathlib import Path
 
 DEFAULT_CHECKPOINTS = (600, 1800, 3600, 7200, 14400)
 DEFAULT_PERCENTILES = (50, 90, 99)
+DEFAULT_COHORT_SECONDS = 14400
 
 
 def sha256(path: Path) -> str:
@@ -49,10 +50,19 @@ def compile_reference(
     rows: Iterable[dict[str, str]],
     checkpoints: tuple[int, ...] = DEFAULT_CHECKPOINTS,
     percentiles: tuple[int, ...] = DEFAULT_PERCENTILES,
+    cohort_seconds: int = DEFAULT_COHORT_SECONDS,
 ) -> dict[str, object]:
-    ordered = sorted(
-        rows, key=lambda row: (int(row["elapsed_seconds"]), int(row["id"]))
+    if cohort_seconds < 0:
+        raise ValueError("cohort cutoff cannot be negative")
+    if any(checkpoint > cohort_seconds for checkpoint in checkpoints):
+        raise ValueError("checkpoints cannot extend beyond the cohort cutoff")
+    all_ordered = sorted(
+        rows,
+        key=lambda row: (int(row["elapsed_seconds"]), int(row["id"])),
     )
+    ordered = [
+        row for row in all_ordered if int(row["elapsed_seconds"]) <= cohort_seconds
+    ]
     users: dict[str, dict[str, object]] = {}
     for row in ordered:
         user_id = row["user_id"].casefold()
@@ -77,13 +87,8 @@ def compile_reference(
 
     checkpoint_results = []
     for checkpoint in checkpoints:
-        represented = [
-            user
-            for user in users.values()
-            if int(user["first_submission_seconds"]) <= checkpoint
-        ]
         scores = []
-        for user in represented:
+        for user in users.values():
             improvements = user["improvements"]
             if not isinstance(improvements, list):
                 raise TypeError("invalid improvements state")
@@ -96,6 +101,10 @@ def compile_reference(
             {
                 "elapsed_seconds": checkpoint,
                 "humans": len(scores),
+                "humans_submitted": sum(
+                    int(user["first_submission_seconds"]) <= checkpoint
+                    for user in users.values()
+                ),
                 "humans_with_score": sum(score > 0 for score in scores),
                 "submissions": sum(
                     int(row["elapsed_seconds"]) <= checkpoint for row in ordered
@@ -110,12 +119,27 @@ def compile_reference(
     trajectories = sorted(
         users.values(), key=lambda user: str(user["user_id"]).casefold()
     )
+    source_users = {row["user_id"].casefold() for row in all_ordered}
     return {
         "method": {
-            "population": "users with at least one submission by the elapsed-time cutoff",
-            "per_human_value": "highest AC score submitted by the cutoff; zero for failed-only humans",
+            "population": "fixed cohort of users with at least one submission by the configured cohort cutoff",
+            "cohort_seconds": cohort_seconds,
+            "per_human_value": "highest AC score submitted by the elapsed-time cutoff; zero before a first scored submission",
             "score_direction": "maximize",
             "percentile": "ascending nearest-rank: sorted_scores[ceil(p * n) - 1]",
+        },
+        "cohort": {
+            "cutoff_seconds": cohort_seconds,
+            "selection": "first submission at or before the cohort cutoff",
+            "precomputed_trajectory_count": len(trajectories),
+            "source_humans": len(source_users),
+            "cohort_humans": len(users),
+            "excluded_humans": len(source_users) - len(users),
+            "source_submissions": len(all_ordered),
+            "submissions_by_cutoff": len(ordered),
+            "source_max_elapsed_seconds": max(
+                (int(row["elapsed_seconds"]) for row in all_ordered), default=None
+            ),
         },
         "checkpoints": checkpoint_results,
         "trajectories": trajectories,
@@ -185,6 +209,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--submissions", type=Path)
     parser.add_argument("--ale-bench-zip", type=Path)
     parser.add_argument("--minimum-match-fraction", type=float, default=0.99)
+    parser.add_argument("--cohort-seconds", type=int, default=DEFAULT_COHORT_SECONDS)
     parser.add_argument("--output", type=Path)
     return parser.parse_args()
 
@@ -196,10 +221,10 @@ def main() -> None:
     )
     output = args.output or Path(f"references/human/{args.problem}.json")
     rows = read_submissions(submissions)
-    reference = compile_reference(rows)
+    reference = compile_reference(rows, cohort_seconds=args.cohort_seconds)
     reference.update(
         {
-            "schema_version": "ars.human-reference.v1",
+            "schema_version": "ars.human-reference.v2",
             "problem_id": args.problem,
             "source": {
                 "submissions_file": str(submissions),

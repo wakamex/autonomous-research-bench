@@ -27,6 +27,7 @@ class ReplayScoreTest(unittest.TestCase):
                 {"first_submission_seconds": 1, "improvements": [[1, 20, 3]]},
                 {"first_submission_seconds": 1, "improvements": [[1, 20, 4]]},
                 {"first_submission_seconds": 1, "improvements": []},
+                {"first_submission_seconds": 100, "improvements": [[100, 40, 5]]},
             ],
             "checkpoints": [
                 {
@@ -68,7 +69,8 @@ class ReplayScoreTest(unittest.TestCase):
         result = replay(events, self.reference)
         first = result["checkpoints"][0]
         self.assertEqual(first["agent_score"], 20)
-        self.assertEqual(first["human_percentile"]["midrank"], 75.0)
+        self.assertEqual(first["human_count"], 5)
+        self.assertEqual(first["human_percentile"]["midrank"], 80.0)
         thresholds = {item["target"]: item for item in result["time_to_human_4h"]}
         self.assertEqual(thresholds["p50"]["elapsed_seconds"], 5)
         self.assertEqual(thresholds["p90"]["status"], "right-censored")

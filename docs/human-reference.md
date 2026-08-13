@@ -1,9 +1,10 @@
 # Human reference compiler
 
 The human reference compiler reconstructs one best-so-far score trajectory per
-public submitter. At an elapsed-time cutoff, it includes users with at least one
-submission by then. A user's value is their highest `AC` score by the cutoff, or
-the no-score value zero when all of their submissions have failed.
+public submitter in a fixed cohort: everyone who submitted at least once during
+the official four-hour contest. At every elapsed-time cutoff, every cohort member
+is included. A user's value is their highest `AC` score by the cutoff, or zero
+before their first scored submission and while all submissions have failed.
 
 Percentiles use the ascending nearest-rank definition:
 
@@ -11,8 +12,17 @@ Percentiles use the ascending nearest-rank definition:
 sorted_scores[ceil(percentile / 100 * population_size) - 1]
 ```
 
-This makes P90 the score at or above 90 percent of represented humans. The
-definition is frozen in each generated reference artifact.
+This makes P90 the score at or above 90 percent of the fixed cohort. Because
+every individual trajectory is nondecreasing and the denominator never changes,
+each percentile score threshold is also nondecreasing. The definition is frozen
+in each generated reference artifact.
+
+Each artifact precomputes the selected cohort as its `trajectories` list. Its
+`cohort` summary separately records total users and submissions present in the
+source, users admitted or excluded by the desired cutoff, submissions by that
+cutoff, and the source's maximum elapsed time. This makes shorter cutoff audits
+cheap and makes it clear whether the source actually covers the full comparison
+window. Use `--cohort-seconds` to compile a different fixed cohort.
 
 ## AHC044 result
 
@@ -20,13 +30,13 @@ The initial artifact is [`ahc044.json`](../references/human/ahc044.json). It was
 compiled from 7,843 public submissions by 1,012 humans. At four hours, 987 had a
 scored submission.
 
-| Elapsed | Humans | Scored humans | P50 | P90 | P99 |
-| --- | ---: | ---: | ---: | ---: | ---: |
-| 10m | 151 | 141 | 112,722,734 | 112,722,738 | 144,701,614 |
-| 30m | 402 | 392 | 112,722,734 | 125,741,594 | 146,699,040 |
-| 1h | 637 | 618 | 112,722,738 | 138,332,064 | 148,358,722 |
-| 2h | 842 | 825 | 127,460,686 | 146,498,184 | 149,527,164 |
-| 4h | 1,012 | 987 | 136,730,318 | 148,472,162 | 149,730,504 |
+| Elapsed | Cohort | Submitted | Scored | P50 | P90 | P99 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 10m | 1,012 | 151 | 141 | 0 | 81,253,586 | 112,722,738 |
+| 30m | 1,012 | 402 | 392 | 0 | 112,722,738 | 141,071,162 |
+| 1h | 1,012 | 637 | 618 | 101,430,556 | 135,007,154 | 147,080,008 |
+| 2h | 1,012 | 842 | 825 | 118,826,980 | 145,595,608 | 149,467,772 |
+| 4h | 1,012 | 1,012 | 987 | 136,730,318 | 148,472,162 | 149,730,504 |
 
 The four-hour row defines the provisional time-to-human-4h targets.
 

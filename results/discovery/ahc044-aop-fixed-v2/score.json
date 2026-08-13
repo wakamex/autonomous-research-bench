@@ -2,6 +2,17 @@
   "schema_version": "ars.run-score.v1",
   "run_id": "ahc044-aop-fixed-v2",
   "problem_id": "ahc044",
+  "human_cohort": {
+    "cutoff_seconds": 14400,
+    "selection": "first submission at or before the cohort cutoff",
+    "precomputed_trajectory_count": 1012,
+    "source_humans": 1012,
+    "cohort_humans": 1012,
+    "excluded_humans": 0,
+    "source_submissions": 7843,
+    "submissions_by_cutoff": 7843,
+    "source_max_elapsed_seconds": 14400
+  },
   "score_direction": "maximize",
   "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
   "checkpoints": [
@@ -9,44 +20,44 @@
       "elapsed_seconds": 600,
       "agent_score": 1541672,
       "candidate_id": "candidate-0001",
-      "human_count": 151,
+      "human_count": 1012,
       "human_percentile": {
-        "lower": 7.28476821192053,
-        "midrank": 18.211920529801326,
-        "upper": 29.13907284768212
+        "lower": 86.16600790513834,
+        "midrank": 87.79644268774703,
+        "upper": 89.42687747035573
       }
     },
     {
       "elapsed_seconds": 1800,
       "agent_score": 1541672,
       "candidate_id": "candidate-0001",
-      "human_count": 402,
+      "human_count": 1012,
       "human_percentile": {
-        "lower": 2.985074626865672,
-        "midrank": 6.218905472636815,
-        "upper": 9.45273631840796
+        "lower": 61.462450592885375,
+        "midrank": 62.74703557312253,
+        "upper": 64.03162055335969
       }
     },
     {
       "elapsed_seconds": 3600,
       "agent_score": 1541672,
       "candidate_id": "candidate-0001",
-      "human_count": 637,
+      "human_count": 1012,
       "human_percentile": {
-        "lower": 3.610675039246468,
-        "midrank": 5.1020408163265305,
-        "upper": 6.593406593406593
+        "lower": 39.32806324110672,
+        "midrank": 40.26679841897233,
+        "upper": 41.205533596837945
       }
     },
     {
       "elapsed_seconds": 7200,
       "agent_score": 1541672,
       "candidate_id": "candidate-0001",
-      "human_count": 842,
+      "human_count": 1012,
       "human_percentile": {
-        "lower": 2.375296912114014,
-        "midrank": 3.0285035629453683,
-        "upper": 3.681710213776722
+        "lower": 18.774703557312254,
+        "midrank": 19.31818181818182,
+        "upper": 19.861660079051383
       }
     },
     {
