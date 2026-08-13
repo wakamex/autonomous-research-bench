@@ -1,0 +1,33 @@
+{
+  "schema_version": "ars.recovered-usage.v1",
+  "run_id": "ahc044-aop-fixed-v2",
+  "aop_run_id": "8a373edf-5c3f-4141-819c-35e8f396d4a5",
+  "codex_session_id": "019ffa3a-7ff7-73c0-9f68-599ab9b24b3e",
+  "method": "clanker-analytics Codex rollout parser, exact session and UTC time gate",
+  "time_gate": {
+    "start_inclusive": "2026-08-13T08:26:05.548115Z",
+    "end_inclusive": "2026-08-13T08:31:05.599258Z"
+  },
+  "observed_token_events": {
+    "count": 22,
+    "first_at": "2026-08-13T08:26:18.273Z",
+    "last_at": "2026-08-13T08:30:53.192Z"
+  },
+  "tokens": {
+    "input": 500417,
+    "cached_input": 466176,
+    "uncached_input": 34241,
+    "output": 13540,
+    "total_processed": 513957,
+    "cache_adjusted": 94399,
+    "cache_adjusted_definition": "uncached_input + 0.1 * cached_input + output, rounded to nearest token"
+  },
+  "source": {
+    "tool": "clanker-analytics",
+    "tool_version": "0.2.6",
+    "repository_commit": "a18409de23da4b2e4611d56f9cdda0872ee4524e",
+    "parser_sha256": "714d3d42c028fdfd8d27c97e6f34c5a89c1676e4bb439c1a64de897bcab81580",
+    "rollout_sha256": "6a2512286795a3d5359a3dc5d074bf44ffae9dc6b700a7af4b1651cb44d396cd"
+  },
+  "supersedes": "Zero token fields in aop-result.json and events.jsonl; those files preserve raw AOP 0.1.1 output."
+}
