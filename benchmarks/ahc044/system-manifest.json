@@ -1,0 +1,18 @@
+{
+  "schema_version": "ars.system-manifest.v1",
+  "name": "aop-codex-fixed-baseline-v1",
+  "status": "discovery",
+  "harness": "AOP 0.1.2",
+  "agent": "codex",
+  "model": "gpt-5.4-mini",
+  "effort": "medium",
+  "duration_seconds": 300,
+  "track": "single-model",
+  "problem_id": "ahc044",
+  "candidate_file": "benchmarks/ahc044/solution.cpp",
+  "public_evaluator": "ALE-Bench public, 50 cases",
+  "private_evaluator": "ALE-Bench private, 150 cases",
+  "evaluator_workers": 1,
+  "agent_network_policy": "Prompt-prohibited but not technically isolated in AOP 0.1.2",
+  "human_steering": false
+}

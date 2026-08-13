@@ -130,6 +130,8 @@ The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md)
 
 The [`human reference compiler`](docs/human-reference.md) reconstructs fixed-time percentiles and four-hour human thresholds. The [`run event schema`](docs/run-event-schema.md) defines the append-only contract for future runners.
 
+The [`trajectory replay scorer and AHC044 adapter`](docs/replay-scorer.md) turn timestamped candidate submissions into checkpoint percentiles and time-to-human-4h results.
+
 ## Status
 
 ARS is currently a design-stage project. The first milestone is to validate the benchmark methodology on a small set of AtCoder Heuristic Contest problems before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.

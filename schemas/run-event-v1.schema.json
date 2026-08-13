@@ -92,7 +92,10 @@
         "evaluation_id": {"type": "string"}, "candidate_id": {"type": "string"},
         "visibility": {"enum": ["public", "private-post-run"]}, "judge_result": {"type": "string"},
         "score": {"type": ["integer", "null"]}, "wall_seconds": {"type": "number", "minimum": 0},
-        "cpu_seconds": {"type": "number", "minimum": 0}
+        "cpu_seconds": {"type": "number", "minimum": 0},
+        "rank": {"type": ["integer", "null"], "minimum": 1},
+        "performance": {"type": ["integer", "null"]},
+        "score_basis": {"type": "string"}
       }
     },
     "resourceUpdated": {
