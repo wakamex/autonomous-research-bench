@@ -41,6 +41,14 @@ repeated errors, monologues, alternating loops, and repeated context failures.
 It can stop or redirect an unproductive run. The thresholds and patterns are
 documented in the [official OpenHands guide](https://docs.openhands.dev/sdk/guides/agent-stuck-detector).
 
+Terminal-Bench's GPT-2 code-golf run is a useful counterexample to assuming a
+last-second success implies good time awareness. GPT-5.4 reconstructed GPT-2
+inference from raw weights and fixed a minification bug with about 35 seconds
+left in a 15-minute task, but the published prompt and trajectory contain no
+overall countdown or deadline reminder. Harbor supplied the external timeout
+and scored the durable file in the workspace. See the locally preserved
+[`gpt2-codegolf case study`](../sources/time-budget-benchmarks/gpt2-codegolf.md).
+
 ## Useful design pattern
 
 The common pattern is layered:
@@ -74,6 +82,9 @@ ARS should make the run reliable without rescuing poor time management:
   evaluation response. Standardized warnings at fixed fractions of the budget
   are reasonable in the controlled track; custom scheduling remains part of the
   submitted harness in system tracks.
+- Do not mistake a visible clock in logs for a deadline-aware policy. The agent
+  needs remaining time in its actionable context and enough latency reserve to
+  archive a known-good candidate.
 - Archive a candidate before public evaluation, as the current adapter does. A
   candidate accepted before the deadline remains eligible even if evaluation
   finishes afterward or the live agent is terminated.
