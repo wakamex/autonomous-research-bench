@@ -2,3 +2,4 @@
 .aop/
 __pycache__/
 *.py[cod]
+/.aop/
