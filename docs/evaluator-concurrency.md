@@ -19,7 +19,10 @@ For each problem and evaluator configuration:
    execution, judging, and cleanup.
 6. Continue through near-ties. Stop when a worker count's median wall time is
    at least 5 percent slower than the best median seen.
-7. Select the fastest measured worker count and freeze it for that problem and
+7. Check the fastest counts with a fixed CPU-budget fixture and a
+   wall-budgeted search fixture. Reject counts that change a standalone
+   candidate's verdict or materially reduce the work available to each case.
+8. Select the fastest eligible worker count and freeze it for that problem and
    benchmark version.
 
 The procedure uses a median to limit sensitivity to one slow process launch.
@@ -43,12 +46,17 @@ AHC044 therefore uses 16 public evaluator workers for the next discovery
 protocol.
 
 The native runner reproduces candidate 13's score and reduces its 16-worker
-median from 19.293 seconds to 3.082 seconds. An exploratory native sweep found
-that launching every case concurrently can reduce this lightweight candidate's
-raw batch latency further, but it also changes the CPU available to time-based
-solutions. ARS therefore retains 16 workers, matching the 3950X physical core
-count, until a promotion audit includes representative near-time-limit
-solutions rather than optimizing around one lightweight candidate.
+median from 19.293 seconds to about 3.1 seconds. The completed-runner
+[discovery sweep](../results/discovery/ahc044-native-workers-3950x-v1/README.md)
+found a raw end-to-end optimum of 2.824 seconds at 32 workers. Fifty workers
+was effectively tied at 2.829 seconds.
+
+The calibration audit does not support raising the public default. A candidate
+that consumes 1.5 seconds of process CPU took up to 1.93 seconds wall at 32
+workers and timed out at 50, despite being accepted in 1.51 seconds standalone.
+A wall-budgeted search also received less CPU and a lower score as concurrency
+increased. ARS therefore retains 16 public workers, matching the 3950X physical
+core count. Thirty-two is reported separately as the raw throughput optimum.
 
 Rerun the sweep when any causal input changes, including problem, case count,
 evaluator implementation, compiler, sandbox, CPU topology, or case caching.

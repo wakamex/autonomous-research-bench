@@ -1,0 +1,55 @@
+{
+  "schema_version": "ars.evaluator-calibration.v1",
+  "status": "discovery",
+  "problem_id": "ahc044",
+  "problem_package_sha256": "e91ddcd5ef1a5b89b375bf35ba5eba30b52602b4bb28c7146395b266a85f85af",
+  "cpu_model": "AMD Ryzen 9 3950X 16-Core Processor",
+  "physical_cores": 16,
+  "logical_cpus": 32,
+  "cpu_budget": {
+    "source": "benchmarks/ahc044/calibration/cpu-budget.cpp",
+    "source_sha256": "ea38072232e95a51ced6f191dcd4d603d5e601c4f6bb17a5b3338550d963ccaa",
+    "process_cpu_budget_seconds": 1.5,
+    "standalone": {
+      "wall_seconds": 1.51,
+      "user_seconds": 1.45,
+      "system_seconds": 0.04,
+      "judge_result": "ACCEPTED",
+      "score": 10154
+    },
+    "batch_trials": [
+      {"workers": 16, "repeat": 1, "wall_seconds": 6.891698989, "cpu_seconds": 75.077586, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 16, "repeat": 2, "wall_seconds": 6.925419975, "cpu_seconds": 75.080167, "max_case_wall_seconds": 1.516089167, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 16, "repeat": 3, "wall_seconds": 6.872221011, "cpu_seconds": 75.081244, "max_case_wall_seconds": 1.514395999, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 32, "repeat": 1, "wall_seconds": 3.92701385, "cpu_seconds": 75.088979, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 32, "repeat": 2, "wall_seconds": 3.909391874, "cpu_seconds": 75.079563, "max_case_wall_seconds": 1.926790821, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 32, "repeat": 3, "wall_seconds": 3.973132555, "cpu_seconds": 75.091287, "max_case_wall_seconds": 1.828008362, "judge_result": "ACCEPTED", "score": 507388},
+      {"workers": 50, "repeat": 1, "wall_seconds": 3.169887627, "cpu_seconds": 43.625673, "judge_result": "TIME_LIMIT_EXCEEDED"},
+      {"workers": 50, "repeat": 2, "wall_seconds": 3.187553844, "cpu_seconds": 40.640824, "max_case_wall_seconds": 2.352120502, "judge_result": "TIME_LIMIT_EXCEEDED", "accepted_cases": 17, "timed_out_cases": 33},
+      {"workers": 50, "repeat": 3, "wall_seconds": 3.164980647, "cpu_seconds": 36.151338, "max_case_wall_seconds": 2.352454389, "judge_result": "TIME_LIMIT_EXCEEDED", "accepted_cases": 8, "timed_out_cases": 42}
+    ]
+  },
+  "wall_budget": {
+    "source": "benchmarks/ahc044/calibration/wall-budget.cpp",
+    "source_sha256": "7ab8ebb5a1b82a35d2da11471e1bc8a6a1fbf8198f9537f780c29565495fb61d",
+    "wall_budget_seconds": 1.45,
+    "batch_trials": [
+      {"workers": 16, "repeat": 1, "wall_seconds": 7.607672974, "cpu_seconds": 73.93337, "judge_result": "ACCEPTED", "score": 49231880},
+      {"workers": 16, "repeat": 2, "wall_seconds": 7.603993242, "cpu_seconds": 73.940757, "judge_result": "ACCEPTED", "score": 49232110},
+      {"workers": 16, "repeat": 3, "wall_seconds": 7.585881415, "cpu_seconds": 73.882706, "judge_result": "ACCEPTED", "score": 49231880},
+      {"workers": 32, "repeat": 1, "wall_seconds": 4.640986668, "cpu_seconds": 73.365215, "judge_result": "ACCEPTED", "score": 49231708},
+      {"workers": 32, "repeat": 2, "wall_seconds": 4.6865302, "cpu_seconds": 71.038757, "judge_result": "ACCEPTED", "score": 49230832},
+      {"workers": 32, "repeat": 3, "wall_seconds": 4.637080561, "cpu_seconds": 70.293842, "judge_result": "ACCEPTED", "score": 49230832},
+      {"workers": 50, "repeat": 1, "wall_seconds": 3.160378911, "cpu_seconds": 47.984883, "judge_result": "ACCEPTED", "score": 49221664},
+      {"workers": 50, "repeat": 2, "wall_seconds": 3.323769266, "cpu_seconds": 38.624365, "judge_result": "ACCEPTED", "score": 49215726},
+      {"workers": 50, "repeat": 3, "wall_seconds": 3.45535053, "cpu_seconds": 45.508101, "judge_result": "ACCEPTED", "score": 49220698}
+    ]
+  },
+  "official_tester_process": {
+    "tester_sha256": "ee8671be7057267bef3e98d0a1ba4b7378240980e69fbdfa038f362bd3e66a9e",
+    "case": "0000.txt",
+    "invocations_per_repeat": 1000,
+    "wall_seconds": [3.76, 3.44, 3.44, 3.67, 3.42],
+    "median_milliseconds_per_invocation": 3.44
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "cases": 50,
+  "clear_decrease_percent": 5.0,
+  "cpu_model": "AMD Ryzen 9 3950X 16-Core Processor",
+  "logical_cpus": 32,
+  "measurements": [
+    {
+      "cases_per_second": 4.362375768640206,
+      "median_wall_seconds": 11.461644446000001,
+      "trials": [
+        {
+          "compile_seconds": 2.817468942,
+          "cpu_seconds": 8.501230999999999,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 12.088842211
+        },
+        {
+          "compile_seconds": 2.322297623,
+          "cpu_seconds": 8.362627999999997,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 11.389406184999999
+        },
+        {
+          "compile_seconds": 2.5390524,
+          "cpu_seconds": 8.207885000000001,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 11.461644446000001
+        },
+        {
+          "compile_seconds": 2.402925063,
+          "cpu_seconds": 8.209579,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 11.302055713
+        },
+        {
+          "compile_seconds": 2.338000896,
+          "cpu_seconds": 8.427252,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 11.481715828
+        }
+      ],
+      "workers": 1
+    },
+    {
+      "cases_per_second": 4.584916705547242,
+      "median_wall_seconds": 10.905323523,
+      "trials": [
+        {
+          "compile_seconds": 2.6408966769999997,
+          "cpu_seconds": 8.717724,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 7.501225406
+        },
+        {
+          "compile_seconds": 2.387346554,
+          "cpu_seconds": 8.446805000000001,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 7.011682794
+        },
+        {
+          "compile_seconds": 3.377424987,
+          "cpu_seconds": 9.585912999999998,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 10.905323523
+        },
+        {
+          "compile_seconds": 6.996185565,
+          "cpu_seconds": 9.405469000000002,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 14.867449562000001
+        },
+        {
+          "compile_seconds": 5.586987518,
+          "cpu_seconds": 9.473031000000002,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 13.251500612000001
+        }
+      ],
+      "workers": 2
+    },
+    {
+      "cases_per_second": 5.3994308336203325,
+      "median_wall_seconds": 9.260235299,
+      "trials": [
+        {
+          "compile_seconds": 5.949012098,
+          "cpu_seconds": 9.466842,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 10.261057375
+        },
+        {
+          "compile_seconds": 5.184185952,
+          "cpu_seconds": 9.448437999999998,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 9.05856133
+        },
+        {
+          "compile_seconds": 5.546422497,
+          "cpu_seconds": 9.618714000000002,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 9.260235299
+        },
+        {
+          "compile_seconds": 5.4941718139999995,
+          "cpu_seconds": 9.39115,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 9.206866971
+        },
+        {
+          "compile_seconds": 6.112386857,
+          "cpu_seconds": 9.483341,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 10.142815879
+        }
+      ],
+      "workers": 4
+    },
+    {
+      "cases_per_second": 5.983960710194816,
+      "median_wall_seconds": 8.355669835,
+      "trials": [
+        {
+          "compile_seconds": 5.5295853489999995,
+          "cpu_seconds": 9.527969,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 8.203376604999999
+        },
+        {
+          "compile_seconds": 6.041627728,
+          "cpu_seconds": 9.441998000000002,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 8.355669835
+        },
+        {
+          "compile_seconds": 6.524720577,
+          "cpu_seconds": 9.401125000000002,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 8.96771282
+        },
+        {
+          "compile_seconds": 6.14144594,
+          "cpu_seconds": 9.510439000000002,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 8.687818875
+        },
+        {
+          "compile_seconds": 5.390522676,
+          "cpu_seconds": 9.473776,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 7.626204454
+        }
+      ],
+      "workers": 8
+    },
+    {
+      "cases_per_second": 7.2053435527570215,
+      "median_wall_seconds": 6.9392943769999995,
+      "trials": [
+        {
+          "compile_seconds": 5.700517317,
+          "cpu_seconds": 9.468284999999996,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 7.284074599
+        },
+        {
+          "compile_seconds": 5.26199467,
+          "cpu_seconds": 9.463789000000004,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 6.9392943769999995
+        },
+        {
+          "compile_seconds": 5.847458218,
+          "cpu_seconds": 9.442798999999999,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 7.358133802999999
+        },
+        {
+          "compile_seconds": 5.092145406,
+          "cpu_seconds": 9.396517999999997,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 6.467594345
+        },
+        {
+          "compile_seconds": 3.673775143,
+          "cpu_seconds": 9.053953000000002,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 4.491152809
+        }
+      ],
+      "workers": 16
+    },
+    {
+      "cases_per_second": 15.132753334646715,
+      "median_wall_seconds": 3.30409139,
+      "trials": [
+        {
+          "compile_seconds": 2.686252815,
+          "cpu_seconds": 9.103139999999998,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 3.30409139
+        },
+        {
+          "compile_seconds": 2.819628441,
+          "cpu_seconds": 9.144583999999998,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 3.479797116
+        },
+        {
+          "compile_seconds": 2.7003005509999998,
+          "cpu_seconds": 9.078442999999998,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 3.2984796939999996
+        },
+        {
+          "compile_seconds": 2.671517745,
+          "cpu_seconds": 9.092554,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 3.251295945
+        },
+        {
+          "compile_seconds": 2.808184154,
+          "cpu_seconds": 9.079436,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 3.384744872
+        }
+      ],
+      "workers": 32
+    },
+    {
+      "cases_per_second": 16.615776426026837,
+      "median_wall_seconds": 3.009188299,
+      "trials": [
+        {
+          "compile_seconds": 2.634575806,
+          "cpu_seconds": 9.092242999999998,
+          "repeat": 1,
+          "score": 49189250,
+          "wall_seconds": 3.201003956
+        },
+        {
+          "compile_seconds": 2.424959609,
+          "cpu_seconds": 9.046284999999996,
+          "repeat": 2,
+          "score": 49189250,
+          "wall_seconds": 2.965265933
+        },
+        {
+          "compile_seconds": 2.473046938,
+          "cpu_seconds": 9.045577,
+          "repeat": 3,
+          "score": 49189250,
+          "wall_seconds": 3.009188299
+        },
+        {
+          "compile_seconds": 2.514234153,
+          "cpu_seconds": 9.035575,
+          "repeat": 4,
+          "score": 49189250,
+          "wall_seconds": 3.059666462
+        },
+        {
+          "compile_seconds": 2.408796385,
+          "cpu_seconds": 9.097747,
+          "repeat": 5,
+          "score": 49189250,
+          "wall_seconds": 2.930429679
+        }
+      ],
+      "workers": 50
+    }
+  ],
+  "problem_id": "ahc044",
+  "problem_package_sha256": "e91ddcd5ef1a5b89b375bf35ba5eba30b52602b4bb28c7146395b266a85f85af",
+  "repeats_per_worker_count": 5,
+  "runner": "native-rust",
+  "schema_version": "ars.evaluator-worker-sweep.v2",
+  "selected_workers": 50,
+  "source": "results/discovery/ahc044-aop-luna-low-20m-v3/candidates/candidate-0013.cpp",
+  "source_sha256": "1d28ee098ba85fcf1f6656e72e9ced0e039ec8f4f0057e143a3d847fb5272b87",
+  "status": "discovery",
+  "stop_reason": "all_cases_concurrent",
+  "stop_rule": "continue through near-ties and stop when median wall time is at least clear_decrease_percent slower than the best median seen",
+  "worker_sequence": "powers of two"
+}
