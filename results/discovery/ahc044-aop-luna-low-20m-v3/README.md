@@ -56,9 +56,10 @@ can use the same or greater declared concurrency for operational efficiency.
 A post-run fixed-starter counterfactual then tested that provisional setting.
 The starter retained the exact public score of 507,388 while wall time fell
 from 51.592 seconds at one worker to 18.696 seconds at eight workers, a 2.76x
-speedup. `public-concurrency-audit.json` preserves the measurement. Eight public
-workers are therefore the explicit setting for the next discovery run, but not
-retroactively for this trajectory.
+speedup. `public-concurrency-audit.json` preserves the measurement. A later
+[power-of-two sweep](../ahc044-evaluator-workers-3950x/README.md) on the best
+candidate selected 16 workers for the next discovery run. Neither setting is
+applied retroactively to this trajectory.
 
 ## Infrastructure preflight
 

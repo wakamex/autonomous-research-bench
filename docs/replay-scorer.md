@@ -73,11 +73,12 @@ public evaluations occupied most of the live research window, making public
 worker count an important protocol parameter rather than an implementation
 detail.
 
-A fixed-starter public audit confirmed the effect directly: the score remained
-507,388 while wall time fell from 51.6 seconds with one worker to 18.7 seconds
-with eight workers on the 32-CPU discovery host. The next AHC044 discovery
-protocol therefore uses eight public workers, subject to reevaluation when the
-host or suite changes.
+A fixed-starter public audit first confirmed the effect directly. A subsequent
+[power-of-two sweep](evaluator-concurrency.md) on a representative candidate
+selected 16 public workers for the next AHC044 discovery protocol. Median wall
+time fell from 59.8 seconds at one worker to 19.3 seconds at 16, then increased
+slightly at 32. The setting must be reevaluated when the host, problem, case
+count, evaluator, or session lifecycle changes.
 
 The first fixed discovery smoke is retained under
 [`results/discovery`](../results/discovery). It also exposed two accounting

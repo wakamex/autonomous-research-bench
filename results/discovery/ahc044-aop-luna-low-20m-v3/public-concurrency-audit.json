@@ -7,5 +7,5 @@
   "wall_seconds_workers_8": 18.696202788996743,
   "wall_speedup": 2.759527996,
   "host_logical_cpus": 32,
-  "conclusion": "Use eight public evaluator workers in the next declared discovery protocol and hold it constant across compared systems"
+  "conclusion": "Eight workers clearly outperform one and motivated the later full power-of-two sweep; the full sweep selected 16"
 }
