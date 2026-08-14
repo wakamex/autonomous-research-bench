@@ -1,0 +1,8 @@
+{
+  "status": "discovery",
+  "score_semantics": "ALE-Bench deterministic 150-case private sum",
+  "candidate_0001_through_0007_workers": 1,
+  "candidate_0008_through_0015_workers": 8,
+  "change_reason": "Private post-run concurrency does not affect the agent trajectory or candidate eligibility; increased after seven durable results to reduce operational wall time",
+  "public_evaluator_workers": 1
+}

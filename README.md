@@ -134,6 +134,8 @@ The [`trajectory replay scorer and AHC044 adapter`](docs/replay-scorer.md) turn 
 
 The [`first fixed AHC044 discovery baseline`](results/discovery/ahc044-aop-fixed-v2/README.md) preserves its candidate, public and private evaluations, event trajectory, replay score, and reproduction identity.
 
+The [`20-minute Luna continuation run`](results/discovery/ahc044-aop-luna-low-20m-v3/README.md) validates exact-session continuation, resumed-turn usage accounting, 15-candidate trajectory replay, and the evaluator-concurrency policy.
+
 The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARS.
 
 ## Status

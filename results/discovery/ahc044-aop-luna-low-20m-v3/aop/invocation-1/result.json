@@ -1,0 +1,63 @@
+{
+  "api_equivalent_cost": {
+    "amount_usd": 0.0376622,
+    "currency": "USD",
+    "estimated": true,
+    "long_context_pricing": true,
+    "model": "gpt-5.6-luna",
+    "priced_as": "gpt-5.6-luna",
+    "pricing_retrieved_at": 1786645705.7804384,
+    "pricing_source": "https://models.dev/api.json",
+    "pricing_version": "models-dev-2026-08-13-320b8930ed08"
+  },
+  "artifacts": [],
+  "billing": {
+    "actual_cost_known": false,
+    "credential_source": "chatgpt-oauth",
+    "detected_by": "codex login status",
+    "route": "subscription"
+  },
+  "command": [
+    "codex",
+    "exec",
+    "--json",
+    "--color",
+    "never",
+    "--dangerously-bypass-approvals-and-sandbox",
+    "--output-last-message",
+    "/code/ARS/.aop/scratch/ars-ahc044-luna-low-20m-v3/.codex-last-message-550bf962-bed9-4058-a4dc-b2f11459ff79.txt",
+    "-C",
+    "/code/ARS/.aop/worktrees/ars-ahc044-luna-low-20m-v3",
+    "--model",
+    "gpt-5.6-luna",
+    "--config",
+    "model_reasoning_effort=low",
+    "-"
+  ],
+  "duration_seconds": 301.138121,
+  "effort": "low",
+  "error": null,
+  "exit_code": 0,
+  "final_message": "Improved `benchmarks/ahc044/solution.cpp`.\n\nBest public score: 48,868,578, up from 507,388. The best candidate was submitted and accepted.",
+  "finished_at": "2026-08-14T05:26:33.248260+00:00",
+  "inference_provider": null,
+  "inputs": [],
+  "mode": "agent",
+  "model": "gpt-5.6-luna",
+  "provider": "codex",
+  "provider_duration_seconds": null,
+  "run_id": "550bf962-bed9-4058-a4dc-b2f11459ff79",
+  "session_id": "019ffeb7-e432-7051-b062-89de8ee613b4",
+  "started_at": "2026-08-14T05:21:32.077254+00:00",
+  "succeeded": true,
+  "task": "ars-ahc044-luna-low-20m-v3",
+  "time_to_first_event_seconds": 0.488408,
+  "time_to_first_response_seconds": 8.37833,
+  "timed_out": false,
+  "usage": {
+    "cached_input_tokens": 360960,
+    "input_tokens": 399935,
+    "output_tokens": 4241,
+    "reasoning_output_tokens": 1945
+  }
+}

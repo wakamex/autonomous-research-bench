@@ -234,26 +234,43 @@ def append_resource_event(run_dir: Path, state: dict[str, object]) -> None:
 
 def stop_run(args: argparse.Namespace) -> None:
     run_dir = args.run_dir.resolve()
-    aop_result = json.loads(args.aop_result.read_text(encoding="utf-8"))
-    usage = aop_result.get("usage") or {}
-    cost = aop_result.get("api_equivalent_cost") or {}
+    result_paths = (
+        args.aop_result
+        if isinstance(args.aop_result, list)
+        else [args.aop_result]
+    )
+    aop_results = [
+        json.loads(path.read_text(encoding="utf-8")) for path in result_paths
+    ]
+    final_result = aop_results[-1]
+
+    def usage_total(field: str) -> int:
+        return sum(
+            int((result.get("usage") or {}).get(field, 0))
+            for result in aop_results
+        )
+
+    cost_usd = sum(
+        float((result.get("api_equivalent_cost") or {}).get("amount_usd", 0) or 0)
+        for result in aop_results
+    )
     with event_lock(run_dir):
         state = load_state(run_dir)
         state.update(
             {
-                "model_calls": 1,
-                "input_tokens": int(usage.get("input_tokens", 0)),
-                "output_tokens": int(usage.get("output_tokens", 0)),
-                "cached_tokens": int(usage.get("cached_input_tokens", 0)),
-                "cost_usd": float(cost.get("amount_usd", 0) or 0),
+                "model_calls": len(aop_results),
+                "input_tokens": usage_total("input_tokens"),
+                "output_tokens": usage_total("output_tokens"),
+                "cached_tokens": usage_total("cached_input_tokens"),
+                "cost_usd": cost_usd,
             }
         )
         atomic_json(run_dir / "state.json", state)
-        timed_out = bool(aop_result.get("timed_out"))
+        timed_out = bool(final_result.get("timed_out"))
         if timed_out:
             model_status = "cancelled"
             stop_reason = "deadline"
-        elif aop_result.get("succeeded"):
+        elif final_result.get("succeeded"):
             model_status = "completed"
             stop_reason = "completed"
         else:
@@ -347,7 +364,7 @@ def parser() -> argparse.ArgumentParser:
     prompt.set_defaults(function=print_continuation_prompt)
     stop = commands.add_parser("stop")
     stop.add_argument("--run-dir", type=Path, required=True)
-    stop.add_argument("--aop-result", type=Path, required=True)
+    stop.add_argument("--aop-result", type=Path, action="append", required=True)
     stop.set_defaults(function=stop_run)
     private = commands.add_parser("private-evaluate")
     private.add_argument("--run-dir", type=Path, required=True)

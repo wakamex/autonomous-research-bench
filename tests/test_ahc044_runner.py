@@ -64,6 +64,49 @@ class Ahc044RunnerTest(unittest.TestCase):
             self.assertEqual(model_stop["payload"]["status"], "cancelled")
             self.assertEqual(run_stop["payload"]["reason"], "deadline")
 
+    def test_stop_aggregates_resumed_aop_invocations(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            run_dir = root / "run"
+            init_run(
+                SimpleNamespace(
+                    run_dir=run_dir,
+                    run_id="resumed-run",
+                    duration=60,
+                    suite_id="test",
+                    track="single-model",
+                    model="test-model",
+                    system_manifest_sha256="0" * 64,
+                )
+            )
+            results = []
+            for number, values in enumerate(((100, 20, 30, 0.5), (200, 40, 60, 0.75))):
+                path = root / f"aop-{number}.json"
+                input_tokens, output_tokens, cached_tokens, cost = values
+                path.write_text(
+                    json.dumps(
+                        {
+                            "succeeded": True,
+                            "usage": {
+                                "input_tokens": input_tokens,
+                                "output_tokens": output_tokens,
+                                "cached_input_tokens": cached_tokens,
+                            },
+                            "api_equivalent_cost": {"amount_usd": cost},
+                        }
+                    )
+                )
+                results.append(path)
+
+            stop_run(SimpleNamespace(run_dir=run_dir, aop_result=results))
+
+            state = json.loads((run_dir / "state.json").read_text())
+            self.assertEqual(state["model_calls"], 2)
+            self.assertEqual(state["input_tokens"], 300)
+            self.assertEqual(state["output_tokens"], 60)
+            self.assertEqual(state["cached_tokens"], 90)
+            self.assertEqual(state["cost_usd"], 1.25)
+
     def test_end_to_end_event_recording(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)

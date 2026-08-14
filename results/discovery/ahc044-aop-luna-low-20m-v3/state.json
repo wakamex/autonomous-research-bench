@@ -1,0 +1,13 @@
+{
+  "cached_tokens": 2118912,
+  "cost_usd": 0.17315188,
+  "duration_seconds": 1200.0,
+  "input_tokens": 2263216,
+  "model_calls": 2,
+  "output_tokens": 17041,
+  "private_evaluator_cpu_seconds": 311.64,
+  "public_evaluator_cpu_seconds": 102.44000000000001,
+  "run_id": "ahc044-aop-luna-low-20m-v3",
+  "started_at": "2026-08-14T05:21:24.441155+00:00",
+  "started_monotonic": 95809.999023759
+}

@@ -1,0 +1,3 @@
+Improved `benchmarks/ahc044/solution.cpp`.
+
+Best public score: 48,868,578, up from 507,388. The best candidate was submitted and accepted.

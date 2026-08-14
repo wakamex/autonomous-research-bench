@@ -1,0 +1,3 @@
+Improved [solution.cpp](/code/ARS/.aop/worktrees/ars-ahc044-luna-low-20m-v3/benchmarks/ahc044/solution.cpp).
+
+Final best public score: 49,184,804, up from the 507,388 starter. The final candidate was accepted and passes `git diff --check`.

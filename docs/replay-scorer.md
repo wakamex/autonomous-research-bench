@@ -57,10 +57,27 @@ This contract is independent of the agent harness. It supplies the clock but
 does not prescribe an experiment policy, add warning phases, or force a final
 submission.
 
-ALE-Bench does not report evaluator CPU-seconds for public or private calls, so
-those resource values remain zero in the current adapter. Evaluation wall time,
-case count, worker count, image version, and host configuration must be retained
-until direct container CPU accounting is added.
+The adapter sums ALE-Bench's reported case execution times as evaluator
+CPU-seconds. Very fast cases can be reported as zero, so evaluation wall time,
+case count, worker count, image version, and host configuration must also be
+retained.
+
+Evaluator concurrency has two different roles. Public evaluation happens on
+the benchmark clock, so its worker count changes research throughput and must
+be frozen identically across compared systems. Private evaluation happens only
+after the agent stops and cannot affect its trajectory, so it may use higher
+declared concurrency for operational efficiency. The first 20-minute AHC044
+discovery run reduced private candidate wall time from 129 to 201 seconds at
+one worker to about 40 seconds at eight workers. It also found that serial
+public evaluations occupied most of the live research window, making public
+worker count an important protocol parameter rather than an implementation
+detail.
+
+A fixed-starter public audit confirmed the effect directly: the score remained
+507,388 while wall time fell from 51.6 seconds with one worker to 18.7 seconds
+with eight workers on the 32-CPU discovery host. The next AHC044 discovery
+protocol therefore uses eight public workers, subject to reevaluation when the
+host or suite changes.
 
 The first fixed discovery smoke is retained under
 [`results/discovery`](../results/discovery). It also exposed two accounting

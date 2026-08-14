@@ -1,0 +1,11 @@
+{
+  "status": "post-run-discovery-audit",
+  "candidate": "unchanged starter",
+  "public_score_workers_1": 507388,
+  "wall_seconds_workers_1": 51.59229525500268,
+  "public_score_workers_8": 507388,
+  "wall_seconds_workers_8": 18.696202788996743,
+  "wall_speedup": 2.759527996,
+  "host_logical_cpus": 32,
+  "conclusion": "Use eight public evaluator workers in the next declared discovery protocol and hold it constant across compared systems"
+}

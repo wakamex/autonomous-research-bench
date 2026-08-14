@@ -1,0 +1,61 @@
+{
+  "api_equivalent_cost": {
+    "amount_usd": 0.13548968,
+    "currency": "USD",
+    "estimated": true,
+    "long_context_pricing": true,
+    "model": "gpt-5.6-luna",
+    "priced_as": "gpt-5.6-luna",
+    "pricing_retrieved_at": 1786645705.7804384,
+    "pricing_source": "https://models.dev/api.json",
+    "pricing_version": "models-dev-2026-08-13-320b8930ed08"
+  },
+  "artifacts": [],
+  "billing": {
+    "actual_cost_known": false,
+    "credential_source": "chatgpt-oauth",
+    "detected_by": "codex login status",
+    "route": "subscription"
+  },
+  "command": [
+    "codex",
+    "exec",
+    "--json",
+    "--color",
+    "never",
+    "--dangerously-bypass-approvals-and-sandbox",
+    "--output-last-message",
+    "/code/ARS/.aop/scratch/ars-ahc044-luna-low-20m-v3/.codex-last-message-2bf81a5f-a68a-4bb1-a706-e6f65ba47185.txt",
+    "-C",
+    "/code/ARS/.aop/worktrees/ars-ahc044-luna-low-20m-v3",
+    "resume",
+    "019ffeb7-e432-7051-b062-89de8ee613b4",
+    "-"
+  ],
+  "duration_seconds": 854.48851,
+  "effort": "low",
+  "error": null,
+  "exit_code": 0,
+  "final_message": "Improved [solution.cpp](/code/ARS/.aop/worktrees/ars-ahc044-luna-low-20m-v3/benchmarks/ahc044/solution.cpp).\n\nFinal best public score: 49,184,804, up from the 507,388 starter. The final candidate was accepted and passes `git diff --check`.",
+  "finished_at": "2026-08-14T05:41:05.423387+00:00",
+  "inference_provider": null,
+  "inputs": [],
+  "mode": "agent",
+  "model": "gpt-5.6-luna",
+  "provider": "codex",
+  "provider_duration_seconds": null,
+  "run_id": "2bf81a5f-a68a-4bb1-a706-e6f65ba47185",
+  "session_id": "019ffeb7-e432-7051-b062-89de8ee613b4",
+  "started_at": "2026-08-14T05:26:50.902297+00:00",
+  "succeeded": true,
+  "task": "ars-ahc044-luna-low-20m-v3",
+  "time_to_first_event_seconds": 0.418014,
+  "time_to_first_response_seconds": 15.258504,
+  "timed_out": false,
+  "usage": {
+    "cached_input_tokens": 1757952,
+    "input_tokens": 1863281,
+    "output_tokens": 12800,
+    "reasoning_output_tokens": 4625
+  }
+}
