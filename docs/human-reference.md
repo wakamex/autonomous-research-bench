@@ -55,9 +55,15 @@ score. ARS intentionally uses every public submitter represented by the
 timestamped source. The artifact records both unmatched multisets and source
 hashes so this choice remains auditable.
 
-Reproduce the artifact after downloading the cited ALE-Bench archive:
+Reproduce the fixed-cohort portion with the native runner:
 
 ```sh
-uv run --no-project scripts/build_human_reference.py \
-  --ale-bench-zip /path/to/ahc044.zip
+ars build-human-reference \
+  --problem-id ahc044 \
+  --submissions sources/atcoder/submissions-4h/ahc044.csv.gz \
+  --problem problems/ahc044 \
+  --output references/human/ahc044.json
 ```
+
+The AHC044 problem package preserves the final standings and rank-performance
+tables. The benchmark no longer loads an ALE-Bench archive at runtime.

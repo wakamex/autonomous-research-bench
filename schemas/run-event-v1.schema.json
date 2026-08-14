@@ -93,11 +93,20 @@
         "visibility": {"enum": ["public", "private-post-run"]}, "judge_result": {"type": "string"},
         "score": {"type": ["integer", "null"]}, "wall_seconds": {"type": "number", "minimum": 0},
         "cpu_seconds": {"type": "number", "minimum": 0},
+        "compile_seconds": {"type": "number", "minimum": 0},
+        "cases": {"type": "integer", "minimum": 1},
+        "workers": {"type": "integer", "minimum": 1},
+        "sandbox": {"enum": ["bwrap", "none"]},
         "elapsed_seconds": {"type": "number", "minimum": 0},
         "remaining_seconds": {"type": "number", "minimum": 0},
         "rank": {"type": ["integer", "null"], "minimum": 1},
         "performance": {"type": ["integer", "null"]},
-        "score_basis": {"type": "string"}
+        "score_basis": {"type": "string"},
+        "source_sha256": {"$ref": "#/$defs/sha256"},
+        "candidate_binary_sha256": {"type": "string", "pattern": "^$|^[0-9a-f]{64}$"},
+        "tester_sha256": {"$ref": "#/$defs/sha256"},
+        "problem_package_sha256": {"$ref": "#/$defs/sha256"},
+        "compiler": {"type": "string"}
       }
     },
     "resourceUpdated": {

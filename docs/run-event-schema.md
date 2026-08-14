@@ -20,6 +20,10 @@ submitted candidates happen after the run and use `private-post-run`; their
 scores must not be returned to the live system. This permits private
 best-so-far reconstruction without leaking benchmark feedback.
 
+Native evaluation events also retain the source, compiled candidate, tester,
+and problem-package hashes plus the effective compiler identity. Case bundles
+separately hash the generator, tester, seeds, and generated inputs.
+
 The schema defines these events:
 
 - `run.started`

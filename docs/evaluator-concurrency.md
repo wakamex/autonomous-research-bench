@@ -15,14 +15,14 @@ For each problem and evaluator configuration:
    two.
 3. Run three complete repetitions at each worker count.
 4. Require every trial to return the identical score.
-5. Compare median end-to-end evaluator wall time, including session setup,
-   compilation, cases, judging, and cleanup.
+5. Compare median end-to-end evaluator wall time, including compilation, case
+   execution, judging, and cleanup.
 6. Continue through near-ties. Stop when a worker count's median wall time is
    at least 5 percent slower than the best median seen.
 7. Select the fastest measured worker count and freeze it for that problem and
    benchmark version.
 
-The procedure uses a median to limit sensitivity to one slow container launch.
+The procedure uses a median to limit sensitivity to one slow process launch.
 The 5 percent boundary prevents ordinary timing noise from ending the sweep.
 Near-ties are reported rather than treated as precise estimates. The selected
 count is not retuned per model, harness, or submitted solution after system
@@ -36,12 +36,19 @@ operational efficiency as long as it is declared and scores remain identical.
 ## Current AHC044 result
 
 The [3950X worker sweep](../results/discovery/ahc044-evaluator-workers-3950x/README.md)
-tested candidate 13 from the Luna run. Median public wall time fell from 59.771
+tested candidate 13 through the former ALE-Bench evaluator. Median public wall time fell from 59.771
 seconds at one worker to 19.293 seconds at 16 workers and was effectively tied
 at 32. At 64 workers it increased to 20.954 seconds, an 8.61 percent regression.
 AHC044 therefore uses 16 public evaluator workers for the next discovery
 protocol.
 
+The native runner reproduces candidate 13's score and reduces its 16-worker
+median from 19.293 seconds to 3.082 seconds. An exploratory native sweep found
+that launching every case concurrently can reduce this lightweight candidate's
+raw batch latency further, but it also changes the CPU available to time-based
+solutions. ARS therefore retains 16 workers, matching the 3950X physical core
+count, until a promotion audit includes representative near-time-limit
+solutions rather than optimizing around one lightweight candidate.
+
 Rerun the sweep when any causal input changes, including problem, case count,
-evaluator image or implementation, CPU topology, container runtime, or whether
-sessions and containers persist across submissions.
+evaluator implementation, compiler, sandbox, CPU topology, or case caching.

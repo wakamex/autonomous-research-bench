@@ -1,1 +1,2 @@
 sources/atcoder/statements/*.html -whitespace
+problems/ahc044/tools/** whitespace=-blank-at-eof

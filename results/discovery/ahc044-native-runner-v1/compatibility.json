@@ -1,0 +1,41 @@
+{
+  "schema_version": "ars.native-compatibility.v1",
+  "status": "discovery",
+  "problem_id": "ahc044",
+  "problem_package_sha256": "e91ddcd5ef1a5b89b375bf35ba5eba30b52602b4bb28c7146395b266a85f85af",
+  "hardware": "AMD Ryzen 9 3950X, 16 cores, 32 threads",
+  "workers": 16,
+  "sandbox": "bubblewrap",
+  "private_score_comparison": [
+    {"candidate": "candidate-0001", "ale": 1541672, "native": 1541672},
+    {"candidate": "candidate-0002", "ale": 146704300, "native": 146704300},
+    {"candidate": "candidate-0003", "ale": 124448368, "native": 124448368},
+    {"candidate": "candidate-0004", "ale": 146704300, "native": 146704300},
+    {"candidate": "candidate-0005", "ale": 146708300, "native": 146708300},
+    {"candidate": "candidate-0006", "ale": 146707746, "native": 146707746},
+    {"candidate": "candidate-0007", "ale": 147042498, "native": 147042498},
+    {"candidate": "candidate-0008", "ale": 147280712, "native": 147280712},
+    {"candidate": "candidate-0009", "ale": 147280712, "native": 147280712},
+    {"candidate": "candidate-0010", "ale": 147295882, "native": 147295882},
+    {"candidate": "candidate-0011", "ale": 147333490, "native": 147333490},
+    {"candidate": "candidate-0012", "ale": 147419676, "native": 147419676},
+    {"candidate": "candidate-0013", "ale": 147488854, "native": 147488854},
+    {"candidate": "candidate-0014", "ale": 147465132, "native": 147465132},
+    {"candidate": "candidate-0015", "ale": 147475278, "native": 147475278}
+  ],
+  "public_performance": {
+    "candidate": "candidate-0013",
+    "score": 49189250,
+    "native_trials_seconds": [3.082005861, 3.187658622, 3.042587252],
+    "native_median_seconds": 3.082005861,
+    "ale_trials_seconds": [19.292878783977358, 19.083491626020987, 19.435150803008582],
+    "ale_median_seconds": 19.292878783977358,
+    "speedup": 6.259844936737893,
+    "wall_reduction_percent": 84.0251634009146
+  },
+  "analytics_parity": {
+    "human_reference": "exact, including standings validation metadata",
+    "trajectory_replay": "exact",
+    "historical_rank_examples": "exact"
+  }
+}
