@@ -21,5 +21,5 @@ only after the run and are never shown to the research system.
 Sixteen public evaluator workers are the current discovery setting. A
 power-of-two sweep on the reference 3950X reduced median evaluation time for a
 representative candidate from 59.8 seconds at one worker to 19.3 seconds at 16.
-Performance decreased slightly at 32 workers. Compared systems must use the
-same worker count.
+Thirty-two workers were effectively tied, while 64 was 8.61 percent slower.
+Compared systems must use the same worker count.

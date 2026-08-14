@@ -2,6 +2,7 @@
   "schema_version": "ars.evaluator-worker-sweep.v1",
   "status": "discovery",
   "completed_at": "2026-08-14T18:12:16.533811+00:00",
+  "extended_at": "2026-08-14T14:30:02-04:00",
   "problem_id": "ahc044",
   "visibility": "public",
   "public_cases": 50,
@@ -10,9 +11,10 @@
   "language": "cpp23",
   "repeats_per_worker_count": 3,
   "worker_sequence": "powers of two",
-  "stop_rule": "stop after the first worker count whose median wall time is not lower than the preceding count",
+  "clear_decrease_percent": 5.0,
+  "stop_rule": "continue through near-ties and stop when median wall time is at least 5 percent slower than the best median seen",
   "selected_workers": 16,
-  "stop_reason": "median_performance_decreased",
+  "stop_reason": "clear_median_performance_decrease",
   "cpu_model": "AMD Ryzen 9 3950X 16-Core Processor",
   "logical_cpus": 32,
   "kernel": "6.17.9-300.fc43.x86_64",
@@ -167,6 +169,31 @@
       ],
       "median_wall_seconds": 19.31441140800598,
       "public_cases_per_second": 2.588740549415583
+    },
+    {
+      "workers": 64,
+      "trials": [
+        {
+          "repeat": 1,
+          "wall_seconds": 20.954355702997418,
+          "cpu_seconds": 9.01,
+          "score": 49189250
+        },
+        {
+          "repeat": 2,
+          "wall_seconds": 20.899470602016663,
+          "cpu_seconds": 8.870000000000001,
+          "score": 49189250
+        },
+        {
+          "repeat": 3,
+          "wall_seconds": 22.168061570002465,
+          "cpu_seconds": 8.9,
+          "score": 49189250
+        }
+      ],
+      "median_wall_seconds": 20.954355702997418,
+      "public_cases_per_second": 2.3861387440725625
     }
   ]
 }

@@ -27,7 +27,8 @@ def parser() -> argparse.ArgumentParser:
     root.add_argument("--source", type=Path, required=True)
     root.add_argument("--output", type=Path, required=True)
     root.add_argument("--repeats", type=int, default=3)
-    root.add_argument("--max-workers", type=int, default=64)
+    root.add_argument("--max-workers", type=int, default=128)
+    root.add_argument("--clear-decrease-percent", type=float, default=5.0)
     root.add_argument("--language", default="cpp23")
     return root
 
@@ -38,6 +39,8 @@ def main() -> None:
         raise ValueError("repeats must be positive")
     if args.max_workers < 1 or args.max_workers & (args.max_workers - 1):
         raise ValueError("max-workers must be a power of two")
+    if args.clear_decrease_percent <= 0:
+        raise ValueError("clear-decrease-percent must be positive")
 
     source = args.source.resolve()
     started_at = datetime.now(UTC).isoformat()
@@ -45,7 +48,7 @@ def main() -> None:
     expected_score: int | None = None
     measurements: list[dict[str, object]] = []
     selected_workers = 1
-    previous_wall: float | None = None
+    best_wall = float("inf")
     stop_reason = "max_workers_reached"
     workers = 1
 
@@ -83,11 +86,13 @@ def main() -> None:
             "public_cases_per_second": 50 / median_wall,
         }
         measurements.append(measurement)
-        if previous_wall is not None and median_wall >= previous_wall:
-            stop_reason = "median_performance_decreased"
+        clear_decrease_wall = best_wall * (1 + args.clear_decrease_percent / 100)
+        if median_wall >= clear_decrease_wall:
+            stop_reason = "clear_median_performance_decrease"
             break
-        selected_workers = workers
-        previous_wall = median_wall
+        if median_wall < best_wall:
+            selected_workers = workers
+            best_wall = median_wall
         workers *= 2
 
     report = {
@@ -103,7 +108,8 @@ def main() -> None:
         "language": args.language,
         "repeats_per_worker_count": args.repeats,
         "worker_sequence": "powers of two",
-        "stop_rule": "stop after the first worker count whose median wall time is not lower than the preceding count",
+        "clear_decrease_percent": args.clear_decrease_percent,
+        "stop_rule": "continue through near-ties and stop when median wall time is at least clear_decrease_percent slower than the best median seen",
         "selected_workers": selected_workers,
         "stop_reason": stop_reason,
         "cpu_model": cpu_model(),

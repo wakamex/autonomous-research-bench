@@ -7,9 +7,9 @@ CPU work.
 
 The sweep tests powers of two starting at one worker. Each worker count receives
 three complete evaluations of the same 50 public cases. The score must remain
-identical. Performance is the reciprocal of median wall time. The sweep stops
-after the first worker count whose median is not faster than its predecessor
-and selects the preceding count.
+identical. Performance is the reciprocal of median wall time. Near-ties remain
+in the sweep. It stops when a worker count is at least 5 percent slower than
+the best median seen and selects the fastest measured count.
 
 | Workers | Median wall | Public cases/s | Speedup |
 | ---: | ---: | ---: | ---: |
@@ -19,13 +19,14 @@ and selects the preceding count.
 | 8 | 20.971 s | 2.384 | 2.85x |
 | 16 | 19.293 s | 2.592 | 3.10x |
 | 32 | 19.314 s | 2.589 | 3.09x |
+| 64 | 20.954 s | 2.386 | 2.85x |
 
-Every trial produced the same public score of 49,189,250. Median performance
-first decreased at 32 workers, so the rule selects 16 workers. The 16-worker
-and 32-worker medians differ by only 0.11 percent, which is below the precision
-that three repetitions can establish. Sixteen remains the correct protocol
-choice under the declared first-decrease rule and uses fewer concurrent
-containers.
+Every trial produced the same public score of 49,189,250. The 16-worker and
+32-worker medians differ by only 0.11 percent, so the sweep continued through
+that near-tie. At 64 workers, median wall time was 8.61 percent slower than the
+best median at 16 workers. This is a clear decrease under the 5 percent rule,
+so the sweep stops at 64 and selects 16. Testing 128 is unnecessary under the
+declared rule.
 
 The raw trials and environment identity are in `worker-sweep.json`. Rerun the
 sweep when the problem, public case count, evaluator implementation or image,

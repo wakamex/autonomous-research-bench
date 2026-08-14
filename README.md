@@ -136,7 +136,7 @@ The [`first fixed AHC044 discovery baseline`](results/discovery/ahc044-aop-fixed
 
 The [`20-minute Luna continuation run`](results/discovery/ahc044-aop-luna-low-20m-v3/README.md) validates exact-session continuation, resumed-turn usage accounting, 15-candidate trajectory replay, and the evaluator-concurrency policy.
 
-The [`3950X evaluator concurrency procedure`](docs/evaluator-concurrency.md) tests powers of two until median performance decreases. Its first AHC044 sweep selects 16 public workers for the next discovery protocol.
+The [`3950X evaluator concurrency procedure`](docs/evaluator-concurrency.md) tests powers of two until median performance clearly decreases. Its first AHC044 sweep selects 16 public workers for the next discovery protocol.
 
 The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARS.
 

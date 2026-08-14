@@ -17,15 +17,16 @@ For each problem and evaluator configuration:
 4. Require every trial to return the identical score.
 5. Compare median end-to-end evaluator wall time, including session setup,
    compilation, cases, judging, and cleanup.
-6. Stop after the first worker count whose median wall time is not lower than
-   the preceding count.
-7. Select the preceding worker count and freeze it for that problem and
+6. Continue through near-ties. Stop when a worker count's median wall time is
+   at least 5 percent slower than the best median seen.
+7. Select the fastest measured worker count and freeze it for that problem and
    benchmark version.
 
 The procedure uses a median to limit sensitivity to one slow container launch.
-The first-decrease rule is intentionally simple. Near-ties are reported rather
-than treated as precise estimates. The selected count is not retuned per model,
-harness, or submitted solution after system comparisons begin.
+The 5 percent boundary prevents ordinary timing noise from ending the sweep.
+Near-ties are reported rather than treated as precise estimates. The selected
+count is not retuned per model, harness, or submitted solution after system
+comparisons begin.
 
 Public evaluator concurrency changes when feedback becomes available and must
 therefore be identical across compared systems. Private evaluation happens
@@ -36,9 +37,10 @@ operational efficiency as long as it is declared and scores remain identical.
 
 The [3950X worker sweep](../results/discovery/ahc044-evaluator-workers-3950x/README.md)
 tested candidate 13 from the Luna run. Median public wall time fell from 59.771
-seconds at one worker to 19.293 seconds at 16 workers, then increased slightly
-to 19.314 seconds at 32 workers. AHC044 therefore uses 16 public evaluator
-workers for the next discovery protocol.
+seconds at one worker to 19.293 seconds at 16 workers and was effectively tied
+at 32. At 64 workers it increased to 20.954 seconds, an 8.61 percent regression.
+AHC044 therefore uses 16 public evaluator workers for the next discovery
+protocol.
 
 Rerun the sweep when any causal input changes, including problem, case count,
 evaluator image or implementation, CPU topology, container runtime, or whether

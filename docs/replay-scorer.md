@@ -76,9 +76,10 @@ detail.
 A fixed-starter public audit first confirmed the effect directly. A subsequent
 [power-of-two sweep](evaluator-concurrency.md) on a representative candidate
 selected 16 public workers for the next AHC044 discovery protocol. Median wall
-time fell from 59.8 seconds at one worker to 19.3 seconds at 16, then increased
-slightly at 32. The setting must be reevaluated when the host, problem, case
-count, evaluator, or session lifecycle changes.
+time fell from 59.8 seconds at one worker to 19.3 seconds at 16. Thirty-two was
+effectively tied, while 64 was 8.61 percent slower. The setting must be
+reevaluated when the host, problem, case count, evaluator, or session lifecycle
+changes.
 
 The first fixed discovery smoke is retained under
 [`results/discovery`](../results/discovery). It also exposed two accounting
