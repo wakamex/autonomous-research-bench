@@ -167,6 +167,16 @@ package the remaining Sprint-9 problems and validate the benchmark methodology
 before fixing the initial suite, thresholds, resource policy, and leaderboard
 protocol.
 
+A later local-model baseline should use ARS as the complete agent task for the
+Qwen3.8 wall-clock experiment proposed in `/code/gpubuy/README.md`. On the same
+RTX 3090, weights, prompt, task, output limit, reasoning settings, and warm
+server state, compare 170K context with MTP against 262K context without MTP.
+At 262K without MTP, also compare `UD-Q4_K_XL` weights with Q4 KV cache against
+`UD-Q3_K_XL` weights with Q8 KV cache. Record end-to-end ARS progress and task
+completion alongside generation speed, prompt ingestion, tool time, tokens,
+and peak VRAM. Benchmark score and time-to-human thresholds should decide the
+result rather than tokens per second alone.
+
 Likely early work includes:
 
 1. Audit ALE-Bench and the available historical AtCoder data.
