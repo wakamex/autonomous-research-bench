@@ -167,15 +167,23 @@ package the remaining Sprint-9 problems and validate the benchmark methodology
 before fixing the initial suite, thresholds, resource policy, and leaderboard
 protocol.
 
-A later local-model baseline should use ARS as the complete agent task for the
-Qwen3.8 wall-clock experiment proposed in `/code/gpubuy/README.md`. On the same
-RTX 3090, weights, prompt, task, output limit, reasoning settings, and warm
-server state, compare 170K context with MTP against 262K context without MTP.
+A later local-model baseline should use ARS as a complete agent task for a
+Qwen3.8-27B wall-clock experiment on one RTX 3090. Using the same
+`UD-Q4_K_XL` weights and Q4 KV cache, compare 170K context with MTP against
+262K context without MTP. Reported generation rates to test are approximately
+40-44 tokens per second for the former and 30-33 for the latter. Keep the
+hardware, prompt, task, output limit, reasoning settings, and warm-server state
+fixed, and reserve context space for model output and tool results.
+
 At 262K without MTP, also compare `UD-Q4_K_XL` weights with Q4 KV cache against
-`UD-Q3_K_XL` weights with Q8 KV cache. Record end-to-end ARS progress and task
-completion alongside generation speed, prompt ingestion, tool time, tokens,
-and peak VRAM. Benchmark score and time-to-human thresholds should decide the
-result rather than tokens per second alone.
+`UD-Q3_K_XL` weights with Q8 KV cache. This tests whether a fixed VRAM budget is
+better spent on weight fidelity or a more accurate long-context cache, although
+it does not independently isolate the two quantization changes. Record
+end-to-end wall time, prompt ingestion, generation speed, generated tokens,
+tool time, peak VRAM, completion status, ARS score trajectory, and
+time-to-human thresholds across enough independent tasks to expose variance.
+ARS task quality and completion should decide the result rather than tokens per
+second alone.
 
 Likely early work includes:
 
