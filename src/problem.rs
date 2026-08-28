@@ -17,13 +17,14 @@ pub struct Problem {
     pub time_limit_seconds: f64,
     pub memory_limit_bytes: u64,
     pub output_limit_bytes: u64,
+    pub official_case_count: usize,
     pub compile_time_limit_seconds: f64,
     pub compile_memory_limit_bytes: u64,
     pub public_seeds: Vec<u64>,
     pub package_files: Vec<PathBuf>,
     pub compile: CompileProfile,
     pub tools: Tools,
-    pub reference: ReferenceFiles,
+    pub reference: Option<ReferenceFiles>,
     pub provenance: Provenance,
 }
 
@@ -39,6 +40,26 @@ pub struct Tools {
     pub source: PathBuf,
     pub generator: PathBuf,
     pub tester: PathBuf,
+    #[serde(default)]
+    pub generator_mode: GeneratorMode,
+    #[serde(default)]
+    pub judge_mode: JudgeMode,
+}
+
+#[derive(Debug, Clone, Copy, Default, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
+pub enum GeneratorMode {
+    #[default]
+    DirFlag,
+    WorkingDirectory,
+}
+
+#[derive(Debug, Clone, Copy, Default, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "kebab-case")]
+pub enum JudgeMode {
+    #[default]
+    Batch,
+    Interactive,
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -101,12 +122,26 @@ impl Package {
         self.tools_source().join(&self.problem.tools.tester)
     }
 
-    pub fn standings(&self) -> PathBuf {
-        self.root.join(&self.problem.reference.standings)
+    pub fn standings(&self) -> Result<PathBuf> {
+        Ok(self.root.join(
+            &self
+                .problem
+                .reference
+                .as_ref()
+                .context("problem package has no historical standings")?
+                .standings,
+        ))
     }
 
-    pub fn performance(&self) -> PathBuf {
-        self.root.join(&self.problem.reference.performance)
+    pub fn performance(&self) -> Result<PathBuf> {
+        Ok(self.root.join(
+            &self
+                .problem
+                .reference
+                .as_ref()
+                .context("problem package has no historical performance mapping")?
+                .performance,
+        ))
     }
 
     pub fn build_tools(&self) -> Result<()> {
@@ -120,7 +155,15 @@ impl Package {
             return Ok(());
         }
         let output = Command::new("cargo")
-            .args(["build", "--release", "--locked"])
+            .args([
+                "build",
+                "--release",
+                "--locked",
+                "--bin",
+                "gen",
+                "--bin",
+                "tester",
+            ])
             .current_dir(self.tools_source())
             .env("RUSTFLAGS", "-Awarnings")
             .output()
@@ -172,4 +215,36 @@ pub fn hex_sha256(bytes: &[u8]) -> String {
 
 pub fn file_sha256(path: &Path) -> Result<String> {
     Ok(hex_sha256(&fs::read(path)?))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn loads_every_sprint9_package() {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+        let ids = [
+            "ahc004", "ahc044", "ahc050", "ahc052", "ahc053", "ahc062", "ahc065", "ahc067",
+            "ahc068",
+        ];
+        for id in ids {
+            let package = Package::load(&root.join("problems").join(id)).unwrap();
+            assert_eq!(package.problem.id, id);
+            assert_eq!(package.problem.public_seeds.len(), 50);
+            assert!(matches!(package.problem.official_case_count, 100 | 150));
+        }
+    }
+
+    #[test]
+    fn declares_only_the_observed_sprint9_adapter_variants() {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+        let ahc004 = Package::load(&root.join("problems/ahc004")).unwrap();
+        let ahc053 = Package::load(&root.join("problems/ahc053")).unwrap();
+        assert_eq!(
+            ahc004.problem.tools.generator_mode,
+            GeneratorMode::WorkingDirectory
+        );
+        assert_eq!(ahc053.problem.tools.judge_mode, JudgeMode::Interactive);
+    }
 }

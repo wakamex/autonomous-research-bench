@@ -203,6 +203,17 @@ pub fn private_evaluate(
     workers: usize,
     sandbox: Sandbox,
 ) -> Result<Vec<Value>> {
+    let case_metadata: Value = serde_json::from_slice(&fs::read(cases.join("cases.json"))?)?;
+    let case_count = case_metadata["cases"]
+        .as_u64()
+        .context("private case bundle has no case count")? as usize;
+    if case_count != package.problem.official_case_count {
+        bail!(
+            "private case bundle contains {case_count} cases, but {} requires {} for human-score comparability",
+            package.problem.id,
+            package.problem.official_case_count
+        );
+    }
     let events = read_events(&run_dir.join("events.jsonl"))?;
     if !events.iter().any(|event| event.event_type == "run.stopped") {
         bail!("private evaluation is only allowed after the run stops");
@@ -237,10 +248,14 @@ pub fn private_evaluate(
             continue;
         }
         let evaluation = evaluate(package, cases, &candidate, workers, sandbox)?;
-        let rank = evaluation
-            .score
-            .map(|score| historical_rank(package, score))
-            .transpose()?;
+        let rank = if package.problem.reference.is_some() {
+            evaluation
+                .score
+                .map(|score| historical_rank(package, score))
+                .transpose()?
+        } else {
+            None
+        };
         let _lock = RunLock::acquire(run_dir)?;
         let mut state = read_state(run_dir)?;
         verify_package(&state, package)?;

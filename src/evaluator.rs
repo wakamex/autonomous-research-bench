@@ -1,3 +1,4 @@
+use std::ffi::OsString;
 use std::fs::{self, File};
 use std::os::unix::process::{CommandExt, ExitStatusExt};
 use std::path::{Path, PathBuf};
@@ -11,7 +12,7 @@ use anyhow::{Context, Result, bail};
 use serde::Serialize;
 use tempfile::TempDir;
 
-use crate::problem::{Package, file_sha256};
+use crate::problem::{GeneratorMode, JudgeMode, Package, file_sha256};
 
 #[derive(Debug, Clone, Copy, clap::ValueEnum)]
 pub enum Sandbox {
@@ -92,14 +93,23 @@ pub fn prepare_cases(package: &Package, seeds: &[u64], output: &Path) -> Result<
         + "\n";
     fs::write(&seeds_path, seed_text)?;
     let inputs = output.join("inputs");
-    let status = Command::new(package.generator())
-        .arg("--dir")
-        .arg(&inputs)
-        .arg(&seeds_path)
-        .status()
-        .context("run official generator")?;
+    let mut generator = Command::new(package.generator());
+    match package.problem.tools.generator_mode {
+        GeneratorMode::DirFlag => {
+            generator.arg("--dir").arg(&inputs).arg(&seeds_path);
+        }
+        GeneratorMode::WorkingDirectory => {
+            generator
+                .current_dir(output)
+                .arg(seeds_path.canonicalize()?);
+        }
+    }
+    let status = generator.status().context("run official generator")?;
     if !status.success() {
         bail!("official generator failed with {status}");
+    }
+    if package.problem.tools.generator_mode == GeneratorMode::WorkingDirectory {
+        fs::rename(output.join("in"), &inputs).context("normalize generated case directory")?;
     }
     let generated = case_paths(&inputs)?;
     if generated.len() != seeds.len() {
@@ -392,6 +402,19 @@ fn run_case(
     problem: &crate::problem::Problem,
     sandbox: Sandbox,
 ) -> Result<CaseResult> {
+    match problem.tools.judge_mode {
+        JudgeMode::Batch => run_batch_case(binary, tester, input, problem, sandbox),
+        JudgeMode::Interactive => run_interactive_case(binary, tester, input, problem, sandbox),
+    }
+}
+
+fn run_batch_case(
+    binary: &Path,
+    tester: &Path,
+    input: &Path,
+    problem: &crate::problem::Problem,
+    sandbox: Sandbox,
+) -> Result<CaseResult> {
     let scratch = TempDir::new()?;
     let output_path = scratch.path().join("output.txt");
     let stderr_path = scratch.path().join("stderr.txt");
@@ -462,11 +485,7 @@ fn run_case(
         result.message = Some(truncate(&judge_stderr, 4096));
         return Ok(result);
     }
-    let score = judge_stderr
-        .lines()
-        .rev()
-        .find_map(|line| line.strip_prefix("Score = "))
-        .and_then(|value| value.parse::<u64>().ok());
+    let score = parse_score(&judge_stderr);
     match score {
         Some(score) => result.score = Some(score),
         None => {
@@ -480,62 +499,156 @@ fn run_case(
     Ok(result)
 }
 
+fn run_interactive_case(
+    binary: &Path,
+    tester: &Path,
+    input: &Path,
+    problem: &crate::problem::Problem,
+    sandbox: Sandbox,
+) -> Result<CaseResult> {
+    let scratch = TempDir::new()?;
+    let stdout_path = scratch.path().join("tester-stdout.txt");
+    let stderr_path = scratch.path().join("tester-stderr.txt");
+    let profile_path = scratch.path().join("profile.txt");
+    File::create(&profile_path)?;
+    let (program, args) = candidate_invocation(binary, &profile_path, sandbox)?;
+    let mut command = Command::new(tester);
+    command
+        .arg(program)
+        .args(args)
+        .stdin(File::open(input)?)
+        .stdout(File::create(&stdout_path)?)
+        .stderr(File::create(&stderr_path)?);
+    let memory = problem.memory_limit_bytes;
+    let output_limit = problem.output_limit_bytes;
+    let cpu_limit = problem.time_limit_seconds.ceil() as u64 + 1;
+    unsafe {
+        command.pre_exec(move || {
+            libc::setpgid(0, 0);
+            set_limit(libc::RLIMIT_AS, memory, memory)?;
+            set_limit(libc::RLIMIT_FSIZE, output_limit, output_limit)?;
+            set_limit(libc::RLIMIT_CPU, cpu_limit, cpu_limit)?;
+            set_limit(libc::RLIMIT_NOFILE, 64, 64)?;
+            Ok(())
+        });
+    }
+    let child = command.spawn().context("start interactive tester")?;
+    let mut outcome = wait_child(
+        child,
+        Duration::from_secs_f64(problem.time_limit_seconds + 0.35),
+    )?;
+    apply_case_profile(&mut outcome, &profile_path);
+    let stderr = fs::read_to_string(&stderr_path).unwrap_or_default();
+    let mut result = CaseResult {
+        case: case_name(input),
+        judge_result: "ACCEPTED".into(),
+        score: None,
+        wall_seconds: outcome.wall.as_secs_f64(),
+        cpu_seconds: outcome.cpu.as_secs_f64(),
+        peak_memory_bytes: outcome.max_rss_bytes,
+        message: None,
+    };
+    if outcome.timed_out
+        || outcome.wall.as_secs_f64() > problem.time_limit_seconds
+        || outcome.cpu.as_secs_f64() > problem.time_limit_seconds
+    {
+        result.judge_result = "TIME_LIMIT_EXCEEDED".into();
+        return Ok(result);
+    }
+    if !outcome.status.success() {
+        result.judge_result = "WRONG_ANSWER".into();
+        result.message = (!stderr.is_empty()).then(|| truncate(&stderr, 4096));
+        return Ok(result);
+    }
+    match parse_score(&stderr) {
+        Some(score) => result.score = Some(score),
+        None => {
+            result.judge_result = "INTERNAL_ERROR".into();
+            result.message = Some(format!(
+                "tester did not emit a score: {}",
+                truncate(&stderr, 4096)
+            ));
+        }
+    }
+    Ok(result)
+}
+
+fn parse_score(output: &str) -> Option<u64> {
+    output
+        .lines()
+        .rev()
+        .find_map(|line| line.strip_prefix("Score = "))
+        .and_then(|value| value.parse::<i64>().ok())
+        .and_then(|value| u64::try_from(value).ok())
+}
+
 fn candidate_command(binary: &Path, profile: &Path, sandbox: Sandbox) -> Result<Command> {
+    let (program, args) = candidate_invocation(binary, profile, sandbox)?;
+    let mut command = Command::new(program);
+    command.args(args);
+    Ok(command)
+}
+
+fn candidate_invocation(
+    binary: &Path,
+    profile: &Path,
+    sandbox: Sandbox,
+) -> Result<(PathBuf, Vec<OsString>)> {
     let runner = std::env::current_exe()?.canonicalize()?;
     match sandbox {
-        Sandbox::None => {
-            let mut command = Command::new(&runner);
-            command
-                .arg("__case-exec")
-                .arg("--binary")
-                .arg(binary)
-                .arg("--profile")
-                .arg(profile);
-            Ok(command)
-        }
+        Sandbox::None => Ok((
+            runner,
+            vec![
+                "__case-exec".into(),
+                "--binary".into(),
+                binary.as_os_str().to_owned(),
+                "--profile".into(),
+                profile.as_os_str().to_owned(),
+            ],
+        )),
         Sandbox::Bwrap => {
             let binary = binary.canonicalize()?;
             let profile = profile.canonicalize()?;
-            let mut command = Command::new("bwrap");
-            command
-                .args([
-                    "--die-with-parent",
-                    "--unshare-net",
-                    "--unshare-pid",
-                    "--unshare-ipc",
-                    "--unshare-uts",
-                    "--new-session",
-                    "--clearenv",
-                    "--ro-bind",
-                    "/usr",
-                    "/usr",
-                    "--ro-bind",
-                    "/lib64",
-                    "/lib64",
-                    "--proc",
-                    "/proc",
-                    "--dev",
-                    "/dev",
-                    "--tmpfs",
-                    "/tmp",
-                    "--ro-bind",
-                ])
-                .arg(binary)
-                .arg("/ars-candidate")
-                .arg("--ro-bind")
-                .arg(runner)
-                .arg("/ars-runner")
-                .arg("--bind")
-                .arg(profile)
-                .arg("/ars-profile")
-                .arg("--")
-                .arg("/ars-runner")
-                .arg("__case-exec")
-                .arg("--binary")
-                .arg("/ars-candidate")
-                .arg("--profile")
-                .arg("/ars-profile");
-            Ok(command)
+            Ok((
+                PathBuf::from("bwrap"),
+                vec![
+                    "--die-with-parent".into(),
+                    "--unshare-net".into(),
+                    "--unshare-pid".into(),
+                    "--unshare-ipc".into(),
+                    "--unshare-uts".into(),
+                    "--new-session".into(),
+                    "--clearenv".into(),
+                    "--ro-bind".into(),
+                    "/usr".into(),
+                    "/usr".into(),
+                    "--ro-bind".into(),
+                    "/lib64".into(),
+                    "/lib64".into(),
+                    "--proc".into(),
+                    "/proc".into(),
+                    "--dev".into(),
+                    "/dev".into(),
+                    "--tmpfs".into(),
+                    "/tmp".into(),
+                    "--ro-bind".into(),
+                    binary.into_os_string(),
+                    "/ars-candidate".into(),
+                    "--ro-bind".into(),
+                    runner.into_os_string(),
+                    "/ars-runner".into(),
+                    "--bind".into(),
+                    profile.into_os_string(),
+                    "/ars-profile".into(),
+                    "--".into(),
+                    "/ars-runner".into(),
+                    "__case-exec".into(),
+                    "--binary".into(),
+                    "/ars-candidate".into(),
+                    "--profile".into(),
+                    "/ars-profile".into(),
+                ],
+            ))
         }
     }
 }
@@ -696,4 +809,16 @@ fn overall_failure(results: &[CaseResult]) -> &'static str {
         }
     }
     "INTERNAL_ERROR"
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_nonnegative_integer_scores() {
+        assert_eq!(parse_score("diagnostic\nScore = 42\n"), Some(42));
+        assert_eq!(parse_score("Score = -1\n"), None);
+        assert_eq!(parse_score("Score = 1.5\n"), None);
+    }
 }

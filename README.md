@@ -160,12 +160,13 @@ The [`native AHC044 compatibility run`](results/discovery/ahc044-native-runner-v
 
 The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARS.
 
+The [`verifier-guided research branching proposal`](docs/verifier-guided-branching.md) tests whether probability-weighted LLM verification can choose productive experiments before implementation. It keeps the objective evaluator authoritative and requires blinded selection and equal-deadline evidence before live runner integration.
+
+The [`Prime Agent system baseline proposal`](docs/prime-agent-system-baseline.md) treats Prime Agent as a submitted harness for the system tracks, not as a replacement for the authoritative Rust runner. It defines the isolation, accounting, clean-state, conformance, and paired-baseline gates required before including it in the reference-system panel.
+
 ## Status
 
-ARS has a validated native AHC044 vertical slice. The next milestone is to
-package the remaining Sprint-9 problems and validate the benchmark methodology
-before fixing the initial suite, thresholds, resource policy, and leaderboard
-protocol.
+ARS has native packages, fixed-cohort human references, and accepted starter evaluations for all nine Sprint-9 problems. The runner supports the legacy AHC004 generator, strict batch-output judging, and AHC053's interactive protocol. The next milestone is to validate every reconstructed human distribution and the held-out seed policy before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
 
 A later local-model baseline should use ARS as a complete agent task for a
 Qwen3.8-27B wall-clock experiment on one RTX 3090. Using the same

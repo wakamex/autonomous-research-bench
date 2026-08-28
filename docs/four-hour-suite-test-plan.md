@@ -180,8 +180,11 @@ At minimum, include systems expected to differ in:
 - base model capability
 - memory and context management
 - experiment selection
+- proposal branching and verifier-guided selection
 - code-search strategy
 - use of evaluator feedback
+
+The dedicated [verifier-guided research branching proposal](verifier-guided-branching.md) defines the blinded offline gate required before such a policy is included in the live system panel. A branching discovery run cannot become suite-promotion evidence.
 
 Record:
 

@@ -1,0 +1,335 @@
+{
+  "artifacts": [],
+  "base": "HEAD",
+  "created_at": "2026-08-28T14:52:50.107223+00:00",
+  "effective_policy": {
+    "capabilities": "native",
+    "controller": {
+      "cache": "/code/ARS/.aop/cache",
+      "input_snapshot": "/code/ARS/.aop/snapshots/5baeab94-4309-4416-b98b-a38e208c6b64",
+      "provider_state": "/code/ARS/.aop/provider-state/ars-ahc044-glm53-flash-high-20m-v1",
+      "scratch": "/code/ARS/.aop/scratch/ars-ahc044-glm53-flash-high-20m-v1"
+    },
+    "environment": {
+      "allowed_names": [],
+      "ambient_values_inherited": true,
+      "credential_exposure": "provider-process-readable",
+      "credential_names": [],
+      "inherited_names": [
+        "ANDROID_HOME",
+        "ANDROID_NDK_HOME",
+        "ARS_RUN_DIR",
+        "BUN_INSTALL",
+        "CODEX_CI",
+        "CODEX_HOME",
+        "CODEX_SESSION_ID",
+        "CODEX_THREAD_ID",
+        "COLORTERM",
+        "DBUS_SESSION_BUS_ADDRESS",
+        "DEBUGINFOD_IMA_CERT_PATH",
+        "DEBUGINFOD_URLS",
+        "DISABLE_AUTO_TITLE",
+        "DOTNET_ROOT",
+        "EDITOR",
+        "FNM_ARCH",
+        "FNM_COREPACK_ENABLED",
+        "FNM_DIR",
+        "FNM_LOGLEVEL",
+        "FNM_MULTISHELL_PATH",
+        "FNM_NODE_DIST_MIRROR",
+        "FNM_RESOLVE_ENGINES",
+        "FNM_VERSION_FILE_STRATEGY",
+        "FPATH",
+        "GH_PAGER",
+        "GIT_PAGER",
+        "GPG_TTY",
+        "GPODDER_DOWNLOAD_DIR",
+        "GROK_STORAGE_MODE",
+        "HISTCONTROL",
+        "HISTSIZE",
+        "HOME",
+        "HOMEBREW_CELLAR",
+        "HOMEBREW_PREFIX",
+        "HOMEBREW_REPOSITORY",
+        "HOSTNAME",
+        "INFOPATH",
+        "INVOCATION_ID",
+        "JAVA_HOME",
+        "JOURNAL_STREAM",
+        "KOTLIN_HOME",
+        "LANG",
+        "LC_ALL",
+        "LC_CTYPE",
+        "LD_LIBRARY_PATH",
+        "LESS",
+        "LESSOPEN",
+        "LOGNAME",
+        "LSCOLORS",
+        "LS_COLORS",
+        "MAIL",
+        "MANAGERPID",
+        "MANAGERPIDFDID",
+        "MEMORY_PRESSURE_WATCH",
+        "MEMORY_PRESSURE_WRITE",
+        "MODULAR_HOME",
+        "MOZ_GMP_PATH",
+        "NO_COLOR",
+        "NVM_BIN",
+        "NVM_CD_FLAGS",
+        "NVM_DIR",
+        "NVM_INC",
+        "OLDPWD",
+        "PAGER",
+        "PATH",
+        "PKG_CONFIG_PATH",
+        "PWD",
+        "PYTHONPATH",
+        "SAKANA_API_KEY",
+        "SDKMAN_CANDIDATES_API",
+        "SDKMAN_CANDIDATES_DIR",
+        "SDKMAN_DIR",
+        "SDKMAN_PLATFORM",
+        "SHELL",
+        "SHLVL",
+        "SSH_AUTH_SOCK",
+        "SYSTEMD_EXEC_PID",
+        "TERM",
+        "TERM_PROGRAM",
+        "TERM_PROGRAM_VERSION",
+        "TMUX_SOCKET",
+        "USER",
+        "VISUAL",
+        "WAKTERM_CONFIG_DIR",
+        "WAKTERM_CONFIG_FILE",
+        "WAKTERM_EXECUTABLE",
+        "WAKTERM_EXECUTABLE_DIR",
+        "WAKTERM_PANE",
+        "WAKTERM_UNIX_SOCKET",
+        "XDG_DATA_DIRS",
+        "XDG_RUNTIME_DIR",
+        "ZAI_API_KEY",
+        "ZSH",
+        "_"
+      ],
+      "mode": "native",
+      "recorded_values": "redacted"
+    },
+    "host": {
+      "access": "native",
+      "runtime_paths": [
+        "/"
+      ]
+    },
+    "identity": "normal",
+    "inputs": {
+      "guest_root": null,
+      "mode": "snapshot",
+      "names": [],
+      "source_paths_visible": true
+    },
+    "instruction_sources": [
+      {
+        "kind": "file",
+        "sha256": "884b4eacf9880ecf769710a8da01fdf8f6adb278b74c73222905551a91bcea34",
+        "source_path": "/code/aop/.codex-zai/config.toml"
+      },
+      {
+        "files": 60,
+        "kind": "directory",
+        "sha256": "2029b31c64aea67e335e4c677b09bf652ab2a20d582f884c86556b3ac73b8700",
+        "source_path": "/code/aop/.codex-zai/skills"
+      }
+    ],
+    "instructions": {
+      "aop_generated": "input-and-artifact-contract-when-needed",
+      "inherited_local": "project-and-user",
+      "provider_builtin": "present"
+    },
+    "model_capabilities": {
+      "effective": {
+        "extensions": "native",
+        "external_retrieval": "native",
+        "inference_network": "allowed",
+        "model_tools": "native",
+        "tool_network_egress": "native"
+      },
+      "enforcement": [],
+      "requested": {
+        "external_retrieval": "native"
+      }
+    },
+    "namespaces": [],
+    "network": {
+      "isolation": "none",
+      "mode": "native",
+      "possible_context_channels": [
+        "local-network-services",
+        "provider-account-state"
+      ]
+    },
+    "profile": "host",
+    "provider_runtime": {
+      "executable": "/usr/local/bin/codex",
+      "guest_root": "/runtime/provider",
+      "sha256": "08eddfbdb0b07ecbf9e0920fa66498a1533d3e8423ffefdbee018776031dba83"
+    },
+    "repository": {
+      "access": "native",
+      "guest_path": null
+    },
+    "schema_version": 2,
+    "state": "resumable",
+    "working_directory": "/workspace",
+    "workspace": {
+      "access": "write",
+      "content": "task-checkout",
+      "controller_path": "/code/ARS/.aop/worktrees/ars-ahc044-glm53-flash-high-20m-v1",
+      "guest_path": "/workspace",
+      "host_path": "/code/ARS/.aop/worktrees/ars-ahc044-glm53-flash-high-20m-v1",
+      "writable": true
+    },
+    "writable_path_scopes": {
+      "native host filesystem": "native"
+    },
+    "writable_paths": [
+      "native host filesystem"
+    ]
+  },
+  "effort": "high",
+  "inference_provider": "zai-coding-plan",
+  "inference_route": {
+    "authenticated": true,
+    "credential_env": "ZAI_API_KEY",
+    "endpoint": "https://api.z.ai/api/v1",
+    "inventory_models": [
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 204800,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Agent-optimized model",
+        "display_name": "glm-5-turbo",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 204800,
+        "priority": 2,
+        "shell_type": "shell_command",
+        "slug": "glm-5-turbo",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Z.ai's latest flagship model",
+        "display_name": "glm-5.3",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 1048576,
+        "priority": 0,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Fast multimodal coding model",
+        "display_name": "glm-5.3-flash",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "max_context_window": 1048576,
+        "priority": 1,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3-flash",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      }
+    ],
+    "inventory_retrieved_at": "2026-08-28T14:52:50.709465+00:00",
+    "inventory_sha256": "e7c96ab864d2290e327cb741316f2ec0345345aed81f4f18515267a477f0711b",
+    "native_provider": "zai",
+    "provider": "zai-coding-plan",
+    "wire_api": "responses"
+  },
+  "inputs": [],
+  "mode": "agent",
+  "model": "glm-5.3-flash",
+  "no_web": false,
+  "parent_run_id": null,
+  "profile": "host",
+  "prompt": "You are the fixed ARS AHC044 discovery baseline. Read benchmarks/ahc044/README.md and the official\nAHC044 statement it links. Improve benchmarks/ahc044/solution.cpp through empirical iteration.\n\nYour first action must be to submit the existing starter solution with the documented command.\nDo not inspect any other file before that submission finishes. You may then submit additional\ncandidates whenever the source changes meaningfully. Use only the local repository and evaluator.\nDo not access the internet. Do not inspect private tests, human reference artifacts, historical\nsubmission scores, or files under references/human and sources/atcoder/submissions-4h.\n\nContinue until you have used the available run time well or further work is unlikely to improve the\npublic score. Leave the best known source in benchmarks/ahc044/solution.cpp. Do not edit benchmark,\nrunner, schema, evaluator, or source-data files.\n",
+  "provider": "codex",
+  "run_id": "5baeab94-4309-4416-b98b-a38e208c6b64",
+  "session_id": null,
+  "task": "ars-ahc044-glm53-flash-high-20m-v1",
+  "timeout_seconds": 1200.0
+}

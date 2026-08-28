@@ -1,0 +1,191 @@
+{
+  "artifacts": [],
+  "billing": {
+    "credential_source": "ZAI_API_KEY",
+    "detected_by": "validated Z.AI Coding Plan route",
+    "route": "subscription"
+  },
+  "calculated_cost": {
+    "amount_usd": 0.0,
+    "currency": "USD",
+    "long_context_pricing": false,
+    "model": "glm-5.3-flash",
+    "priced_as": "glm-5.3-flash",
+    "pricing_retrieved_at": 1787910871.6648517,
+    "pricing_source": "https://models.dev/api.json",
+    "pricing_version": "models-dev-2026-08-28-776173772eec"
+  },
+  "command": [
+    "codex",
+    "exec",
+    "--json",
+    "--color",
+    "never",
+    "--dangerously-bypass-approvals-and-sandbox",
+    "--output-last-message",
+    "/code/ARS/.aop/scratch/ars-ahc044-glm53-flash-high-20m-v1/.codex-last-message-5baeab94-4309-4416-b98b-a38e208c6b64.txt",
+    "-C",
+    "/code/ARS/.aop/worktrees/ars-ahc044-glm53-flash-high-20m-v1",
+    "--model",
+    "glm-5.3-flash",
+    "--config",
+    "model_reasoning_effort=high",
+    "-"
+  ],
+  "duration_seconds": 1200.019037,
+  "effort": "high",
+  "error": "timed out after 1200 seconds",
+  "execution_completed": false,
+  "exit_code": -15,
+  "final_message": null,
+  "finished_at": "2026-08-28T15:12:51.591319+00:00",
+  "inference_provider": "zai-coding-plan",
+  "inference_route": {
+    "authenticated": true,
+    "credential_env": "ZAI_API_KEY",
+    "endpoint": "https://api.z.ai/api/v1",
+    "inventory_models": [
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 204800,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Agent-optimized model",
+        "display_name": "glm-5-turbo",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 204800,
+        "priority": 2,
+        "shell_type": "shell_command",
+        "slug": "glm-5-turbo",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Z.ai's latest flagship model",
+        "display_name": "glm-5.3",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 1048576,
+        "priority": 0,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Fast multimodal coding model",
+        "display_name": "glm-5.3-flash",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "max_context_window": 1048576,
+        "priority": 1,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3-flash",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      }
+    ],
+    "inventory_retrieved_at": "2026-08-28T14:52:50.709465+00:00",
+    "inventory_sha256": "e7c96ab864d2290e327cb741316f2ec0345345aed81f4f18515267a477f0711b",
+    "native_provider": "zai",
+    "provider": "zai-coding-plan",
+    "wire_api": "responses"
+  },
+  "inputs": [],
+  "mode": "agent",
+  "model": "glm-5.3-flash",
+  "provider": "codex",
+  "provider_duration_seconds": null,
+  "provider_error": null,
+  "provider_reported_cost": null,
+  "provider_status": null,
+  "response_available": false,
+  "run_id": "5baeab94-4309-4416-b98b-a38e208c6b64",
+  "session_id": "01a048db-fc39-7b43-a9d2-903792167e6c",
+  "started_at": "2026-08-28T14:52:51.566253+00:00",
+  "status": "failed",
+  "succeeded": false,
+  "task": "ars-ahc044-glm53-flash-high-20m-v1",
+  "time_to_first_event_seconds": 0.088676,
+  "time_to_first_response_seconds": null,
+  "timed_out": true,
+  "usage": {
+    "cached_input_tokens": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "reasoning_output_tokens": 0
+  },
+  "usage_schema": "aop-token-usage-v1"
+}

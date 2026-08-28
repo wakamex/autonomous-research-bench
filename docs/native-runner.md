@@ -11,7 +11,8 @@ The `ars` binary owns:
 - official tool builds and deterministic case preparation
 - problem, generator, tester, case-bundle, source, compiler, and candidate hashes
 - one isolated candidate compilation per evaluation
-- concurrent batch-case execution
+- batch-output and interactive candidate execution through strict official-tool adapters
+- concurrent case execution
 - wall, CPU, address-space, output, file-descriptor, and process limits
 - bubblewrap filesystem and network isolation
 - append-only run events and AOP usage import
@@ -28,7 +29,7 @@ Official deployment installs the release binary, problem package, and public
 case bundle outside the agent-writable workspace. Repository-local execution is
 for development only.
 
-## AHC044 compatibility
+## AHC044 compatibility and Sprint-9 coverage
 
 The native scorer reproduced the ALE-Bench public and private scores for all 15
 candidates archived from the Luna discovery run. Tests cover historical rank
@@ -41,20 +42,22 @@ a native median of 3.082 seconds over three trials, including isolated
 compilation. The comparable ALE-Bench median was 19.293 seconds. That is 6.26
 times faster and reduces wall time by 84.03 percent.
 
+Sprint-9 now has native packages for AHC004, AHC044, AHC050, AHC052, AHC053, AHC062, AHC065, AHC067, and AHC068. The package format declares the two observed generator interfaces and whether judging is batch-output or interactive. AHC053's tester launches the isolated candidate and preserves its required two-stage conversation. Strict tester adapters turn malformed output into `WRONG_ANSWER` instead of accepting the visualizers' zero-score fallback.
+
+The [Sprint-9 adapter smoke test](../results/discovery/sprint9-native-adapters-v1/README.md) generated and evaluated 50 cases for every problem. All nine starters were accepted under the one-CPU policy.
+
 ## Intentional scope
 
 The current implementation supports the ARS use case, not every ALE-Bench API:
 
 - Linux hosts
-- batch problems with additive integer scores
+- additive nonnegative integer scores
 - maximization objectives
 - C++23 candidates
-- the standard AtCoder Rust generator and tester interface
+- the observed AtCoder Rust generator interfaces and batch or interactive testers
 - fixed pre-generated public and private case bundles
 
-It omits reactive judges, relative scoring, other languages, visualization,
-arbitrary agent-driven case generation, ALE session quotas, and container image
-emulation. Add one only when a selected ARS problem or track requires it.
+It omits relative scoring, other languages, visualization, arbitrary agent-driven case generation, ALE session quotas, and container image emulation. Add one only when a selected ARS problem or track requires it.
 
 ## Remaining gaps
 
@@ -69,6 +72,5 @@ emulation. Add one only when a selected ARS problem or track requires it.
   the hardware and software execution profile.
 - Case bundle hashes detect corruption. Adversarial integrity still depends on
   installing the runner and bundles outside the agent's writable boundary.
-- AHC044 is the only native problem package so far. Batch problems using the
-  same official tool convention should need packaging rather than runner
-  changes, but that needs validation across the rest of Sprint-9.
+- The official tools are source-compatible but not interface-identical. A new problem still requires a package-level generator and judge-mode audit before inclusion.
+- Human-score comparison requires a private bundle with the official case count. ARS now rejects a mismatched private bundle, but the held-out seed policy and score-distribution comparability still need promotion evidence for every new Sprint problem.

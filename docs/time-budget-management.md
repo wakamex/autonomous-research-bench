@@ -100,6 +100,8 @@ ARS should make the run reliable without rescuing poor time management:
   time, and concurrency remain reported secondary resource measures rather than
   substitute deadlines.
 
+The proposed [verifier-guided research branching experiment](verifier-guided-branching.md) treats proposal generation and ranking as part of the harness policy. All of its model latency remains inside the research deadline, and its value is measured by the resulting objective score trajectory rather than verifier confidence alone.
+
 For the five-minute AHC044 smoke, the most important immediate changes are the
 time-zero starter, explicit remaining-time feedback, and separating the
 five-minute research cutoff from AOP teardown. The run already had the other

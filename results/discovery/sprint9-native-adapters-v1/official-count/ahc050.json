@@ -1,0 +1,11 @@
+{
+  "cases": 150,
+  "compile_seconds": 0.775579857,
+  "cpu_seconds": 0.19918699999999992,
+  "judge_result": "ACCEPTED",
+  "problem_package_sha256": "939f3efd6f0286fdc7328695ed30d79740a751f1a84ea3ee7185ef005e26da29",
+  "score": 37228564,
+  "source_sha256": "60c592d21ee350292be4fe6f0f1f9b2b6f7e25e1660b3f3bbba8ccdcc4214591",
+  "wall_seconds": 4.194742315,
+  "workers": 1
+}

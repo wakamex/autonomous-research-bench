@@ -22,10 +22,10 @@ struct PerformanceRow {
 }
 
 pub fn historical_rank(package: &Package, new_score: u64) -> Result<(u64, i64)> {
-    let standings = csv::Reader::from_path(package.standings())?
+    let standings = csv::Reader::from_path(package.standings()?)?
         .deserialize::<StandingRow>()
         .collect::<std::result::Result<Vec<_>, _>>()?;
-    let performance = csv::Reader::from_path(package.performance())?
+    let performance = csv::Reader::from_path(package.performance()?)?
         .deserialize::<PerformanceRow>()
         .collect::<std::result::Result<Vec<_>, _>>()?;
     if standings.len() < 2 || performance.len() < 2 {
@@ -233,7 +233,7 @@ fn validate_standings(
     if !(0.0..=1.0).contains(&minimum) {
         bail!("minimum match fraction must be between zero and one");
     }
-    let standings_path = package.standings();
+    let standings_path = package.standings()?;
     let standings = csv::Reader::from_path(&standings_path)?
         .deserialize::<StandingRow>()
         .collect::<std::result::Result<Vec<_>, _>>()?;

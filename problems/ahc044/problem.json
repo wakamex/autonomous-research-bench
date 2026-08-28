@@ -7,6 +7,7 @@
   "time_limit_seconds": 2.0,
   "memory_limit_bytes": 1073741824,
   "output_limit_bytes": 16777216,
+  "official_case_count": 150,
   "compile_time_limit_seconds": 60.0,
   "compile_memory_limit_bytes": 4294967296,
   "public_seeds": [
