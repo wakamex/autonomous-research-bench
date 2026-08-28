@@ -32,6 +32,7 @@ pub struct State {
     pub problem_id: String,
     pub problem_package_sha256: String,
     pub public_cases: PathBuf,
+    pub evaluator_cpu: usize,
     pub public_evaluator_cpu_seconds: f64,
     pub private_evaluator_cpu_seconds: f64,
     pub model_calls: u64,
@@ -67,6 +68,7 @@ pub struct InitOptions<'a> {
     pub system_manifest_sha256: &'a str,
     pub package: &'a Package,
     pub public_cases: &'a Path,
+    pub evaluator_cpu: usize,
 }
 
 pub fn init_run(options: InitOptions<'_>) -> Result<()> {
@@ -85,6 +87,7 @@ pub fn init_run(options: InitOptions<'_>) -> Result<()> {
         problem_id: options.package.problem.id.clone(),
         problem_package_sha256: options.package.manifest_hash.clone(),
         public_cases: options.public_cases.canonicalize()?,
+        evaluator_cpu: options.evaluator_cpu,
         public_evaluator_cpu_seconds: 0.0,
         private_evaluator_cpu_seconds: 0.0,
         model_calls: 0,
@@ -103,6 +106,7 @@ pub fn init_run(options: InitOptions<'_>) -> Result<()> {
         json!({
             "problem_id": options.package.problem.id, "suite_id": options.suite_id,
             "track": options.track, "system_manifest_sha256": options.system_manifest_sha256,
+            "evaluator_cpu": options.evaluator_cpu, "evaluator_workers": 1,
         }),
     )?;
     append_event(
@@ -444,6 +448,7 @@ fn evaluation_payload(
         "tester_sha256": evaluation.tester_sha256,
         "problem_package_sha256": evaluation.problem_package_sha256,
         "compiler": evaluation.compiler,
+        "cpu_contract": crate::cpu::current_cpu_contract()?,
     }))
 }
 

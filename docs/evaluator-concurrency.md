@@ -1,62 +1,40 @@
-# Evaluator concurrency
+# Evaluator CPU policy
 
-ARS treats evaluator throughput as part of its reference hardware definition.
-The primary reference category targets maximum stable performance on one Ryzen
-9 3950X with 16 physical cores and 32 hardware threads. Faster or different
-machines may publish hardware-declared results, but they are not assumed to be
-identical to the reference merely because their CPU frequency is throttled.
+ARS gives every active benchmark run one evaluator CPU. Each evaluator is pinned to one logical CPU on a distinct physical core, limited to one CPU of cgroup quota, and prevented from changing its own affinity. This makes feedback latency substantially more repeatable than allowing parallel evaluations to contend for all cores.
 
-## Selection procedure
+The host selects the number of simultaneous benchmark lanes. The default is 10 on the reference Ryzen 9 3950X, leaving six physical cores for model runners, services, and the operating system. A dedicated 16-core host may choose up to 16 lanes after verifying that unrelated work does not share the selected physical cores.
 
-For each problem and evaluator configuration:
+## Lane selection
 
-1. Choose one accepted candidate with representative nontrivial execution cost.
-2. Evaluate the same fixed public cases at 1, 2, 4, 8, and subsequent powers of
-   two.
-3. Run three complete repetitions at each worker count.
-4. Require every trial to return the identical score.
-5. Compare median end-to-end evaluator wall time, including compilation, case
-   execution, judging, and cleanup.
-6. Continue through near-ties. Stop when a worker count's median wall time is
-   at least 5 percent slower than the best median seen.
-7. Check the fastest counts with a fixed CPU-budget fixture and a
-   wall-budgeted search fixture. Reject counts that change a standalone
-   candidate's verdict or materially reduce the work available to each case.
-8. Select the fastest eligible worker count and freeze it for that problem and
-   benchmark version.
+Generate a plan before starting a wave:
 
-The procedure uses a median to limit sensitivity to one slow process launch.
-The 5 percent boundary prevents ordinary timing noise from ending the sweep.
-Near-ties are reported rather than treated as precise estimates. The selected
-count is not retuned per model, harness, or submitted solution after system
-comparisons begin.
+```sh
+ars cpu-plan --count 10 --output cpu-plan.json
+```
 
-Public evaluator concurrency changes when feedback becomes available and must
-therefore be identical across compared systems. Private evaluation happens
-after the research system stops, so its concurrency may be higher for
-operational efficiency as long as it is declared and scores remain identical.
+The planner samples utilization, groups SMT siblings by physical core, ranks physical cores by combined utilization, and chooses the less-used logical CPU from each selected core. It never assigns two lanes to the same physical core. Keep the resulting assignment fixed for the wave rather than choosing a new CPU for each submission.
 
-## Current AHC044 result
+Pass one lane CPU when initializing each run:
 
-The [3950X worker sweep](../results/discovery/ahc044-evaluator-workers-3950x/README.md)
-tested candidate 13 through the former ALE-Bench evaluator. Median public wall time fell from 59.771
-seconds at one worker to 19.293 seconds at 16 workers and was effectively tied
-at 32. At 64 workers it increased to 20.954 seconds, an 8.61 percent regression.
-AHC044 therefore uses 16 public evaluator workers for the next discovery
-protocol.
+```sh
+ars init --run-dir RUN --run-id RUN_ID --duration 14400 \
+  --model MODEL --system-manifest-sha256 SHA256 \
+  --problem problems/ahc044 --public-cases /var/lib/ars/ahc044/public \
+  --evaluator-cpu 3
+```
 
-The native runner reproduces candidate 13's score and reduces its 16-worker
-median from 19.293 seconds to about 3.1 seconds. The completed-runner
-[discovery sweep](../results/discovery/ahc044-native-workers-3950x-v1/README.md)
-found a raw end-to-end optimum of 2.824 seconds at 32 workers. Fifty workers
-was effectively tied at 2.829 seconds.
+`ars submit` and `ars private-evaluate` then enter a transient systemd user service with `CPUAffinity=`, `CPUQuota=100%`, and `SystemCallFilter=~sched_setaffinity`. The evaluator verifies the effective affinity, quota, and cgroup before running and records that contract in the event log. Compilation and case execution use the same CPU contract.
 
-The calibration audit does not support raising the public default. A candidate
-that consumes 1.5 seconds of process CPU took up to 1.93 seconds wall at 32
-workers and timed out at 50, despite being accepted in 1.51 seconds standalone.
-A wall-budgeted search also received less CPU and a lower score as concurrency
-increased. ARS therefore retains 16 public workers, matching the 3950X physical
-core count. Thirty-two is reported separately as the raw throughput optimum.
+This protects the evaluator from migration and prevents candidate code from widening its affinity. It does not reserve the core from unrelated host processes. Selecting quiet physical cores and leaving host capacity unused reduces that remaining interference.
 
-Rerun the sweep when any causal input changes, including problem, case count,
-evaluator implementation, compiler, sandbox, CPU topology, or case caching.
+## Dedicated-host isolation
+
+Tuna is not part of the benchmark path. It mutates process and IRQ affinity across the host, needs privileged setup and cleanup, and cannot reliably restore every pre-existing custom affinity after an interrupted run.
+
+A dedicated cloud or benchmark machine may later use cgroup v2 isolated CPU partitions to reserve evaluator cores and separate housekeeping work. That is a host deployment option, not a requirement of the current portable runner. Promotion of such a configuration requires measuring evaluator latency and score equivalence against the current policy and recording the loaded cgroup configuration.
+
+## Concurrency estimate
+
+The [AHC044 concurrency estimate](../results/discovery/ahc044-concurrent-evaluator-estimate-v1/README.md) compares one-CPU lanes with 16-worker evaluators sharing a 16-core host. Shared parallel evaluation produced about 34 percent more research cycles in the model, but overlapping evaluations had enough latency variation to affect which run receives feedback first. ARS therefore favors deterministic one-CPU lanes over maximum aggregate throughput for compared runs.
+
+The earlier worker sweeps remain historical measurements of raw evaluator throughput. They no longer define the official public-evaluation policy.

@@ -24,6 +24,8 @@ Native evaluation events also retain the source, compiled candidate, tester,
 and problem-package hashes plus the effective compiler identity. Case bundles
 separately hash the generator, tester, seeds, and generated inputs.
 
+Each native evaluation records its verified CPU contract: the selected CPU, effective affinity, cgroup path, and one-CPU quota. `run.started` records the run's assigned evaluator CPU and fixed worker count of one.
+
 The schema defines these events:
 
 - `run.started`

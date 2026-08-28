@@ -1,0 +1,290 @@
+{
+  "comparison": {
+    "completed_evaluations_speedup": {
+      "maximum": 1.3612250478534318,
+      "mean": 1.3406637848569585,
+      "median": 1.339915919081372,
+      "minimum": 1.3144329896907216,
+      "p05": 1.3271572557832367,
+      "p95": 1.3547097247126527,
+      "standard_deviation": 0.008747297158724684
+    },
+    "mean_completed_evaluations_speedup": 1.3406414703548921,
+    "mean_evaluations_per_run_one_cpu": 459.276875,
+    "mean_evaluations_per_run_shared_16_worker": 615.725625,
+    "mean_feedback_latency_speedup": 2.9994109258023562
+  },
+  "inputs": {
+    "events": "results/discovery/ahc044-aop-luna-low-20m-v3/events.jsonl",
+    "events_sha256": "75e34aec9cd052ad6dea7328340ecbd4212d077ef6b694d1029f71ef19a0eb23",
+    "horizon_seconds": 14400.0,
+    "physical_cores": 16,
+    "repetitions": 100,
+    "runs": 16,
+    "seed": 20260828,
+    "think_gap_seconds": {
+      "maximum": 54.367729,
+      "mean": 19.41905821428573,
+      "median": 13.222063500000047,
+      "minimum": 5.343030999999996,
+      "p05": 7.030698799999988,
+      "p95": 46.57999969999999,
+      "standard_deviation": 14.760473182997972
+    },
+    "think_gaps_seconds": [
+      42.386607,
+      10.220710999999994,
+      8.656945000000007,
+      54.367729,
+      5.343030999999996,
+      27.235896000000025,
+      23.415544000000068,
+      15.560643000000027,
+      16.286378000000013,
+      7.996293999999921,
+      31.837155000000052,
+      10.883484000000067,
+      9.73695500000008,
+      7.939442999999983
+    ],
+    "worker_sweep": "results/discovery/ahc044-native-workers-3950x-v1/worker-sweep.json",
+    "worker_sweep_sha256": "a54be013e0776c3e60f4d97ea1fece51bdcb67720a1df197c7d299e4aafbf8b5"
+  },
+  "model": {
+    "description": "Closed-loop discrete-event Monte Carlo with max-min fair sharing of physical CPU cores",
+    "one_cpu_policy": "Each evaluator phase has maximum parallelism one, so 16 runs can each occupy one core",
+    "shared_policy": "Compilers use at most one core and case phases use their isolated effective parallelism while all phases share 16 cores",
+    "unmodeled": [
+      "scheduler migration and SMT effects",
+      "memory-bandwidth, cache, storage, and process-launch contention",
+      "changes in model latency when many agent runs share a provider",
+      "score sensitivity to reduced compute"
+    ]
+  },
+  "policies": {
+    "one_cpu_lanes": {
+      "completed_evaluations": {
+        "maximum": 7447.0,
+        "mean": 7348.43,
+        "median": 7350.0,
+        "minimum": 7243.0,
+        "p05": 7286.95,
+        "p95": 7407.200000000001,
+        "standard_deviation": 38.18330456462289
+      },
+      "completed_per_run": {
+        "maximum": 494.0,
+        "mean": 459.276875,
+        "median": 459.0,
+        "minimum": 432.0,
+        "p05": 443.0,
+        "p95": 475.0,
+        "standard_deviation": 9.825441582865956
+      },
+      "cpu_utilization": {
+        "maximum": 0.38500230821423476,
+        "mean": 0.3800711183131058,
+        "median": 0.3801460579581876,
+        "minimum": 0.3750823066496355,
+        "p05": 0.3766407331841534,
+        "p95": 0.383210516526563,
+        "standard_deviation": 0.002026824608998774
+      },
+      "maximum_feedback_latency_seconds": {
+        "maximum": 12.786878896007693,
+        "mean": 12.78687889600551,
+        "median": 12.786878896005874,
+        "minimum": 12.786878896004055,
+        "p05": 12.786878896004055,
+        "p95": 12.786878896007693,
+        "standard_deviation": 9.673677772396346e-13
+      },
+      "mean_case_slowdown": {
+        "maximum": 0.999999999999979,
+        "mean": 0.9999999999999752,
+        "median": 0.9999999999999765,
+        "minimum": 0.999999999999974,
+        "p05": 0.9999999999999752,
+        "p95": 0.9999999999999785,
+        "standard_deviation": 1.7241074268199922e-15
+      },
+      "mean_completed_per_run": 459.276875,
+      "mean_feedback_latency_seconds": {
+        "maximum": 11.930805319374562,
+        "mean": 11.911783899150196,
+        "median": 11.913050210851328,
+        "minimum": 11.894289975535377,
+        "p05": 11.89834235352767,
+        "p95": 11.924232919459197,
+        "standard_deviation": 0.00790534199146575
+      },
+      "median_feedback_latency_seconds": {
+        "maximum": 11.444442780000003,
+        "mean": 11.444442779999918,
+        "median": 11.444442779999918,
+        "minimum": 11.444442779999918,
+        "p05": 11.444442779999918,
+        "p95": 11.444442779999918,
+        "standard_deviation": 1.214007941954279e-14
+      },
+      "overlap_fraction": {
+        "maximum": 1.0,
+        "mean": 0.9999959144537379,
+        "median": 1.0,
+        "minimum": 0.9998624862486248,
+        "p05": 1.0,
+        "p95": 1.0,
+        "standard_deviation": 0.000023349050088655377
+      },
+      "p95_case_slowdown": {
+        "maximum": 1.000000000000215,
+        "mean": 1.0000000000002067,
+        "median": 1.000000000000215,
+        "minimum": 1.0000000000001648,
+        "p05": 1.0000000000001863,
+        "p95": 1.000000000000215,
+        "standard_deviation": 1.3420387677830782e-14
+      },
+      "p95_feedback_latency_seconds": {
+        "maximum": 12.786878896000417,
+        "mean": 12.786878896000417,
+        "median": 12.786878896000417,
+        "minimum": 12.786878896000417,
+        "p05": 12.786878896000417,
+        "p95": 12.786878896000417,
+        "standard_deviation": 0.0
+      },
+      "peak_concurrent_case_phases": {
+        "maximum": 15.0,
+        "mean": 12.37,
+        "median": 12.0,
+        "minimum": 11.0,
+        "p05": 12.0,
+        "p95": 13.0,
+        "standard_deviation": 0.6614187383758852
+      },
+      "peak_concurrent_evaluations": {
+        "maximum": 16.0,
+        "mean": 13.65,
+        "median": 14.0,
+        "minimum": 12.0,
+        "p05": 13.0,
+        "p95": 15.0,
+        "standard_deviation": 0.6723244767373872
+      }
+    },
+    "shared_16_worker_evaluators": {
+      "completed_evaluations": {
+        "maximum": 9991.0,
+        "mean": 9851.61,
+        "median": 9854.5,
+        "minimum": 9690.0,
+        "p05": 9753.849999999999,
+        "p95": 9943.65,
+        "standard_deviation": 59.04353726640451
+      },
+      "completed_per_run": {
+        "maximum": 666.0,
+        "mean": 615.725625,
+        "median": 616.0,
+        "minimum": 569.0,
+        "p05": 590.0,
+        "p95": 641.0,
+        "standard_deviation": 15.301075785201848
+      },
+      "cpu_utilization": {
+        "maximum": 0.5001183093211794,
+        "mean": 0.4932362366982699,
+        "median": 0.49336031248010365,
+        "minimum": 0.48521282023928963,
+        "p05": 0.4883087493399927,
+        "p95": 0.49783038000154495,
+        "standard_deviation": 0.0029696816297390353
+      },
+      "maximum_feedback_latency_seconds": {
+        "maximum": 9.986422854394732,
+        "mean": 8.396408523400106,
+        "median": 8.304130620230808,
+        "minimum": 7.43282447622687,
+        "p05": 7.711318958302672,
+        "p95": 9.42373490358682,
+        "standard_deviation": 0.5215678979208086
+      },
+      "mean_case_slowdown": {
+        "maximum": 1.493121390910901,
+        "mean": 1.4621262631014462,
+        "median": 1.4607004416138136,
+        "minimum": 1.432445938902661,
+        "p05": 1.4391420126954322,
+        "p95": 1.4862950929039849,
+        "standard_deviation": 0.01431210918240002
+      },
+      "mean_completed_per_run": 615.725625,
+      "mean_feedback_latency_seconds": {
+        "maximum": 3.9999139895229314,
+        "mean": 3.9713744444548684,
+        "median": 3.970577173204284,
+        "minimum": 3.9385660702309586,
+        "p05": 3.9507364111032794,
+        "p95": 3.992773359814679,
+        "standard_deviation": 0.013762913599388927
+      },
+      "median_feedback_latency_seconds": {
+        "maximum": 3.7166514516375173,
+        "mean": 3.6872291503674592,
+        "median": 3.6868909122242712,
+        "minimum": 3.652363082550437,
+        "p05": 3.668219162568312,
+        "p95": 3.7078704848616777,
+        "standard_deviation": 0.012727316481306195
+      },
+      "overlap_fraction": {
+        "maximum": 0.7329361873990307,
+        "mean": 0.7238020304961923,
+        "median": 0.7244617765133399,
+        "minimum": 0.7104910944095542,
+        "p05": 0.713897256916472,
+        "p95": 0.7318521498637257,
+        "standard_deviation": 0.005326707545002922
+      },
+      "p95_case_slowdown": {
+        "maximum": 3.0226657366682392,
+        "mean": 2.835064405652753,
+        "median": 2.837394293085362,
+        "minimum": 2.6979618215270817,
+        "p05": 2.7242767078228973,
+        "p95": 2.959208084206775,
+        "standard_deviation": 0.07133386802947332
+      },
+      "p95_feedback_latency_seconds": {
+        "maximum": 5.426213138509956,
+        "mean": 5.34097891927062,
+        "median": 5.338242286190098,
+        "minimum": 5.253880326615217,
+        "p05": 5.27047134682729,
+        "p95": 5.4139671912158205,
+        "standard_deviation": 0.04429926189503134
+      },
+      "peak_concurrent_case_phases": {
+        "maximum": 13.0,
+        "mean": 9.83,
+        "median": 10.0,
+        "minimum": 8.0,
+        "p05": 8.0,
+        "p95": 11.049999999999997,
+        "standard_deviation": 0.995494902553549
+      },
+      "peak_concurrent_evaluations": {
+        "maximum": 14.0,
+        "mean": 11.46,
+        "median": 11.0,
+        "minimum": 9.0,
+        "p05": 10.0,
+        "p95": 13.0,
+        "standard_deviation": 0.9257265778671901
+      }
+    }
+  },
+  "schema_version": "ars.concurrent-evaluator-estimate.v2",
+  "status": "discovery-model"
+}

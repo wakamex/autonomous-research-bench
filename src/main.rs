@@ -1,3 +1,5 @@
+mod concurrency;
+mod cpu;
 mod evaluator;
 mod events;
 mod problem;
@@ -48,8 +50,10 @@ enum Commands {
         cases: PathBuf,
         #[arg(long)]
         source: PathBuf,
-        #[arg(long, default_value_t = 16)]
+        #[arg(long, default_value_t = 1)]
         workers: usize,
+        #[arg(long)]
+        cpu: Option<usize>,
         #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
         sandbox: Sandbox,
         #[arg(long)]
@@ -73,6 +77,38 @@ enum Commands {
         #[arg(long)]
         output: PathBuf,
     },
+    CpuPlan {
+        #[arg(long, default_value_t = 10)]
+        count: usize,
+        #[arg(long, default_value_t = 2.0)]
+        sample_seconds: f64,
+        #[arg(long)]
+        output: Option<PathBuf>,
+    },
+    EstimateConcurrency {
+        #[arg(
+            long,
+            default_value = "results/discovery/ahc044-native-workers-3950x-v1/worker-sweep.json"
+        )]
+        worker_sweep: PathBuf,
+        #[arg(
+            long,
+            default_value = "results/discovery/ahc044-aop-luna-low-20m-v3/events.jsonl"
+        )]
+        events: PathBuf,
+        #[arg(long, default_value_t = 16)]
+        runs: usize,
+        #[arg(long, default_value_t = 16)]
+        physical_cores: usize,
+        #[arg(long, default_value_t = 14400.0)]
+        horizon_seconds: f64,
+        #[arg(long, default_value_t = 100)]
+        repetitions: usize,
+        #[arg(long, default_value_t = 20260828)]
+        seed: u64,
+        #[arg(long)]
+        output: PathBuf,
+    },
     Init {
         #[arg(long)]
         run_dir: PathBuf,
@@ -92,6 +128,8 @@ enum Commands {
         problem: PathBuf,
         #[arg(long)]
         public_cases: PathBuf,
+        #[arg(long)]
+        evaluator_cpu: usize,
     },
     Submit {
         #[arg(long)]
@@ -100,8 +138,6 @@ enum Commands {
         source: PathBuf,
         #[arg(long, default_value = "problems/ahc044")]
         problem: PathBuf,
-        #[arg(long, default_value_t = 16)]
-        workers: usize,
         #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
         sandbox: Sandbox,
     },
@@ -122,8 +158,6 @@ enum Commands {
         problem: PathBuf,
         #[arg(long)]
         cases: PathBuf,
-        #[arg(long, default_value_t = 16)]
-        workers: usize,
         #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
         sandbox: Sandbox,
     },
@@ -184,9 +218,13 @@ fn main() -> Result<()> {
             cases,
             source,
             workers,
+            cpu,
             sandbox,
             summary,
         } => {
+            if let Some(cpu) = cpu {
+                cpu::enforce(cpu)?;
+            }
             let result =
                 evaluator::evaluate(&Package::load(&problem)?, &cases, &source, workers, sandbox)?;
             if summary {
@@ -223,6 +261,33 @@ fn main() -> Result<()> {
             sandbox,
             output: &output,
         })?,
+        Commands::CpuPlan {
+            count,
+            sample_seconds,
+            output,
+        } => write_or_print(&cpu::plan(count, sample_seconds)?, output)?,
+        Commands::EstimateConcurrency {
+            worker_sweep,
+            events,
+            runs,
+            physical_cores,
+            horizon_seconds,
+            repetitions,
+            seed,
+            output,
+        } => {
+            let value = concurrency::estimate(concurrency::Options {
+                worker_sweep: &worker_sweep,
+                events: &events,
+                runs,
+                physical_cores,
+                horizon_seconds,
+                repetitions,
+                seed,
+            })?;
+            write_or_print(&value, Some(output))?;
+            println!("{}", serde_json::to_string_pretty(&value["comparison"])?);
+        }
         Commands::Init {
             run_dir,
             run_id,
@@ -233,6 +298,7 @@ fn main() -> Result<()> {
             system_manifest_sha256,
             problem,
             public_cases,
+            evaluator_cpu,
         } => {
             if !["controlled-model", "single-model", "unlimited"].contains(&track.as_str()) {
                 bail!("invalid track {track}");
@@ -248,6 +314,7 @@ fn main() -> Result<()> {
                 system_manifest_sha256: &system_manifest_sha256,
                 package: &package,
                 public_cases: &public_cases,
+                evaluator_cpu,
             })?;
             println!("{}", run_dir.display());
         }
@@ -255,16 +322,16 @@ fn main() -> Result<()> {
             run_dir,
             source,
             problem,
-            workers,
             sandbox,
         } => {
+            cpu::enforce(events::read_state(&run_dir)?.evaluator_cpu)?;
             println!(
                 "{}",
                 serde_json::to_string(&events::submit(
                     &run_dir,
                     &Package::load(&problem)?,
                     &source,
-                    workers,
+                    1,
                     sandbox
                 )?)?
             );
@@ -280,16 +347,12 @@ fn main() -> Result<()> {
             run_dir,
             problem,
             cases,
-            workers,
             sandbox,
         } => {
-            for value in events::private_evaluate(
-                &run_dir,
-                &Package::load(&problem)?,
-                &cases,
-                workers,
-                sandbox,
-            )? {
+            cpu::enforce(events::read_state(&run_dir)?.evaluator_cpu)?;
+            for value in
+                events::private_evaluate(&run_dir, &Package::load(&problem)?, &cases, 1, sandbox)?
+            {
                 println!("{}", serde_json::to_string(&value)?);
             }
         }
