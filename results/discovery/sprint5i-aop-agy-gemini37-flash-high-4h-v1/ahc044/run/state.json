@@ -1,0 +1,17 @@
+{
+  "run_id": "agy-gemini37-high-ahc044-4h-v1",
+  "started_at": "2026-08-29T19:03:16.246746983+00:00",
+  "started_monotonic": 625603.300378527,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc044",
+  "problem_package_sha256": "28552e8804f5c8accc5b1cfb23a4b6b9a0b31815c353b5cc302666c90f52c705",
+  "public_cases": "/tmp/ars-10x4-bundles.KqQnRc/ahc044-public",
+  "evaluator_cpu": 24,
+  "public_evaluator_cpu_seconds": 0.0,
+  "private_evaluator_cpu_seconds": 0.0,
+  "model_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cached_tokens": 0,
+  "cost_usd": 0.0
+}

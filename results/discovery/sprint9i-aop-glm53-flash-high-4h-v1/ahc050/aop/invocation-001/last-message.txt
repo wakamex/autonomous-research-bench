@@ -1,0 +1,14 @@
+Implemented and left the best empirical candidate in `benchmarks/ahc050/solution.cpp`.
+
+Local public-seed evaluation (seeds 0–49, official tester):
+
+- Starter total: `9,820,500`
+- Final total: `21,994,379`
+- Final average per case: `439,887`
+- Worst public case: `356,285`
+- Best public case: `566,211`
+- Maximum observed local runtime: about `1.16s` per case
+
+The final solution generates multiple orderings using lookahead-guided candidate selection, exactly scores each ordering, and emits the best one.
+
+Submission attempts used the documented `ars submit` command, but the configured `$ARS_RUN_DIR` remains on a read-only filesystem (`Error: Read-only file system`), so public evaluation could not be recorded from this sandbox.

@@ -1,0 +1,15 @@
+{
+  "schema_version": "ars.corrected-usage.v1",
+  "provider": "codex",
+  "model": "glm-5.3-flash",
+  "reasoning_effort": "high",
+  "aggregation": "sum of incremental AOP invocation usage",
+  "lanes": {
+    "ahc004": {"input_tokens": 8738104, "cached_input_tokens": 8648640, "output_tokens": 54435, "calculated_cost_usd": 0.15004815},
+    "ahc062": {"input_tokens": 14738090, "cached_input_tokens": 14584320, "output_tokens": 72573, "calculated_cost_usd": 0.2484408},
+    "ahc067": {"input_tokens": 9454576, "cached_input_tokens": 9346240, "output_tokens": 53266, "calculated_cost_usd": 0.1616353},
+    "ahc050": {"input_tokens": 25193760, "cached_input_tokens": 25047808, "output_tokens": 70156, "calculated_cost_usd": 0.40420252},
+    "ahc052": {"input_tokens": 10461834, "cached_input_tokens": 10292352, "output_tokens": 85978, "calculated_cost_usd": 0.18859093}
+  },
+  "total": {"input_tokens": 68586364, "cached_input_tokens": 67919360, "output_tokens": 336408, "reasoning_output_tokens": 156302, "calculated_cost_usd": 1.1529177}
+}

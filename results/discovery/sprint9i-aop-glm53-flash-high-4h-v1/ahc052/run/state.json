@@ -1,0 +1,17 @@
+{
+  "run_id": "sprint9i-glm53-high-ahc052-v1",
+  "started_at": "2026-08-29T18:53:43.099653945+00:00",
+  "started_monotonic": 625030.153286169,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc052",
+  "problem_package_sha256": "cdad6a50bba6f38a9971ff4223dd1a1fee6a9d7ae931fe6f60557e4d774199d8",
+  "public_cases": "/tmp/ars-10x4-bundles.KqQnRc/ahc052-public",
+  "evaluator_cpu": 13,
+  "public_evaluator_cpu_seconds": 0.0,
+  "private_evaluator_cpu_seconds": 0.0,
+  "model_calls": 1,
+  "input_tokens": 10461834,
+  "output_tokens": 85978,
+  "cached_tokens": 10292352,
+  "cost_usd": 0.0
+}

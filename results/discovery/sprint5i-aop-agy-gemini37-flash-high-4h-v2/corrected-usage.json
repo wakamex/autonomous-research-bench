@@ -1,0 +1,15 @@
+{
+  "schema_version": "ars.corrected-usage.v1",
+  "provider": "agy",
+  "model": "gemini-3.7-flash-high",
+  "reasoning_effort": "high",
+  "aggregation": "last cumulative AOP usage snapshot per lane",
+  "lanes": {
+    "ahc053": {"input_tokens": 100816551, "cached_input_tokens": 97657377, "output_tokens": 260658, "reasoning_output_tokens": 63584, "calculated_cost_usd": 10.67115127},
+    "ahc065": {"input_tokens": 15977030, "cached_input_tokens": 15168833, "output_tokens": 239986, "reasoning_output_tokens": 55851, "calculated_cost_usd": 2.64375772},
+    "ahc044": {"input_tokens": 11543696, "cached_input_tokens": 10878231, "output_tokens": 125087, "reasoning_output_tokens": 28449, "calculated_cost_usd": 1.78404232},
+    "ahc068": {"input_tokens": 7585985, "cached_input_tokens": 7165575, "output_tokens": 129448, "reasoning_output_tokens": 32478, "calculated_cost_usd": 1.33815562},
+    "ahc030": {"input_tokens": 26217238, "cached_input_tokens": 24980781, "output_tokens": 406891, "reasoning_output_tokens": 74135, "calculated_cost_usd": 4.32674257}
+  },
+  "total": {"input_tokens": 162140500, "cached_input_tokens": 155850797, "output_tokens": 1162070, "reasoning_output_tokens": 254497, "calculated_cost_usd": 20.7638495}
+}

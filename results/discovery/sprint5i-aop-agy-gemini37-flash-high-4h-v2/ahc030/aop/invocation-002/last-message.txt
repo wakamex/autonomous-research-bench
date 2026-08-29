@@ -1,0 +1,56 @@
+Waiting for candidate 24 evaluation to complete.
+Waiting for candidate 25 evaluation to complete.
+Waiting for candidate 27 evaluation to complete.
+Waiting for candidate 28 evaluation to complete.
+Waiting for candidate 29 evaluation to complete.
+Waiting for candidate 30 evaluation to complete.
+Waiting for candidate 31 evaluation to complete.
+### Motivation and Question
+
+Can we systematically minimize query cost in the AHC030 polyomino oil mining challenge by pairing high-capacity exact constraint satisfaction with large-particle Markov Chain Monte Carlo posterior estimation and active unexplained oil tracking?
+
+### Short-Form Result
+
+The total 50-case public score was reduced from 9,831,000,000 on the starter solution down to 1,870,000,000 on candidate 28 and confirmed on candidate 31. This represents an 80.98% reduction in total query cost, lowering average queries per test case from 196.6 down to 37.40 while maintaining fast execution at 0.20 seconds CPU time per case. The best known code is saved in [solution.cpp](file:///code/ARS/benchmarks/ahc030/solution.cpp).
+
+### Evaluation Summary
+
+| Candidate ID | Score (50-case sum) | Average Cost per Case | Wall Time (s) | CPU Time (s) | Key Technical Change |
+|---|---|---|---|---|---|
+| candidate-0001 | 9,831,000,000 | 196.62 | 1.10 | 0.095 | Starter baseline: exhaustive single cell drilling |
+| candidate-0002 | 6,504,000,000 | 130.08 | 6.45 | 4.09 | Sparse checkerboard probing with offline MCMC reconstruction |
+| candidate-0003 | 3,032,000,000 | 60.64 | 6.55 | 4.03 | Adaptive online active learning with incremental MCMC updates |
+| candidate-0008 | 2,548,000,000 | 50.96 | 6.82 | 4.41 | Exact complete DFS for small states and positive cell answer guarantee |
+| candidate-0009 | 2,092,000,000 | 41.84 | 6.72 | 4.22 | Dynamic placement coverage prior and global oil conservation termination |
+| candidate-0011 | 2,072,000,000 | 41.44 | 6.76 | 4.31 | Polyomino symmetry breaking and 4-neighbor boundary bonus |
+| candidate-0012 | 1,951,000,000 | 39.02 | 8.90 | 6.31 | Bidirectional Arc Consistency constraint propagation engine |
+| candidate-0013 | 1,943,000,000 | 38.86 | 8.74 | 6.06 | Staggered spatial repulsion for initial empty board exploration |
+| candidate-0021 | 1,886,000,000 | 37.72 | 12.63 | 9.43 | High-capacity 2M DFS, 70-particle MCMC, and active unexplained oil tracking |
+| candidate-0028 | 1,870,000,000 | 37.40 | 13.21 | 10.07 | Scaled 90-particle MCMC with 400 steps and 2M DFS configuration limit |
+| candidate-0031 | 1,870,000,000 | 37.40 | 13.26 | 10.04 | Re-verified best solution on disk |
+
+### Core Algorithmic Architecture
+
+The optimized solver in [solution.cpp](file:///code/ARS/benchmarks/ahc030/solution.cpp) integrates four interacting subsystems:
+
+1. Full Arc Consistency Engine
+After every single drill, constraint propagation updates all polyomino placement domains:
+- Zero-oil filtering: all placements overlapping any zero-drilled cell are pruned.
+- Upper bound core pruning: when the total core-guaranteed oil across polyominoes equals the drilled oil count at cell `u`, all non-core placements covering `u` are pruned.
+- Lower bound capacity pruning: when the maximum possible overlapping candidate shapes equals the drilled oil count at cell `u`, candidate shapes are forced to cover `u`.
+
+2. Exact Symmetry-Broken DFS
+- Polyomino shapes with identical geometry are grouped into symmetry classes, enforcing monotonic placement indexing to prune factorial redundant branches.
+- When the Cartesian product of valid placements is under 2,000,000 configurations, branch-and-bound DFS evaluates exact solutions.
+- If all valid solutions share identical oil presence, the answer is submitted immediately.
+- If ambiguity remains, the probe selects the cell maximizing the binary entropy `p * (1 - p)`.
+
+3. Scaled 90-Particle Targeted MCMC Posterior Estimation
+- When the state space exceeds 2,000,000 configurations, an ensemble of 90 state particles explores the posterior distribution.
+- Metropolis-Hastings transitions use targeted proposals directed at unsatisfied cells, adding candidate shapes to deficit cells and moving shapes away from excess cells.
+- When consensus among valid particles exceeds 98% certainty across all cells, the solver submits the answer immediately.
+
+4. Active Unexplained Oil Tracking and Staggered Exploration
+- Unexplained oil tracking: 4-neighbor expansion bonuses are granted only to drilled positive cells that are not yet explained by uniquely determined polyominoes. This eliminates wasted exploration around finished shapes.
+- Staggered spatial repulsion: during initial exploration when no positive cells are known, probes adjacent to known zero cells are penalized, enforcing an efficient lattice over the grid.
+- Global conservation termination: as soon as the total oil discovered matches the known total polyomino area, all remaining unrevealed cells are proven to be zero, enabling immediate answer submission.

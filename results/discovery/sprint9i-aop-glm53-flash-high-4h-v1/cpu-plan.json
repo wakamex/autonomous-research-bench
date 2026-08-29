@@ -1,0 +1,130 @@
+{
+  "default_max_concurrent_runs": 10,
+  "effective_lanes": 10,
+  "lanes": [
+    {
+      "combined_utilization": 0.0,
+      "cpu": 10,
+      "lane": 0,
+      "physical_core": 10,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        10,
+        26
+      ]
+    },
+    {
+      "combined_utilization": 0.0024875621890547263,
+      "cpu": 27,
+      "lane": 1,
+      "physical_core": 11,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        11,
+        27
+      ]
+    },
+    {
+      "combined_utilization": 0.0025,
+      "cpu": 19,
+      "lane": 2,
+      "physical_core": 3,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        3,
+        19
+      ]
+    },
+    {
+      "combined_utilization": 0.0025,
+      "cpu": 28,
+      "lane": 3,
+      "physical_core": 12,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        12,
+        28
+      ]
+    },
+    {
+      "combined_utilization": 0.004987562189054726,
+      "cpu": 18,
+      "lane": 4,
+      "physical_core": 2,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.004975124378109453,
+      "thread_siblings": [
+        2,
+        18
+      ]
+    },
+    {
+      "combined_utilization": 0.005,
+      "cpu": 13,
+      "lane": 5,
+      "physical_core": 13,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.005,
+      "thread_siblings": [
+        13,
+        29
+      ]
+    },
+    {
+      "combined_utilization": 0.005,
+      "cpu": 14,
+      "lane": 6,
+      "physical_core": 14,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        14,
+        30
+      ]
+    },
+    {
+      "combined_utilization": 0.005000125003125078,
+      "cpu": 24,
+      "lane": 7,
+      "physical_core": 8,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.004975124378109453,
+      "thread_siblings": [
+        8,
+        24
+      ]
+    },
+    {
+      "combined_utilization": 0.007462686567164179,
+      "cpu": 15,
+      "lane": 8,
+      "physical_core": 15,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.0,
+      "thread_siblings": [
+        15,
+        31
+      ]
+    },
+    {
+      "combined_utilization": 0.007475124378109453,
+      "cpu": 25,
+      "lane": 9,
+      "physical_core": 9,
+      "physical_package": 0,
+      "selected_cpu_utilization": 0.005,
+      "thread_siblings": [
+        9,
+        25
+      ]
+    }
+  ],
+  "requested_lanes": 10,
+  "sample_seconds": 2.0,
+  "schema_version": "ars.cpu-plan.v1",
+  "selection": "lowest combined utilization across distinct physical cores"
+}

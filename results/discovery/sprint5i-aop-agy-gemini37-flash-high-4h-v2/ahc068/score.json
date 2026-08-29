@@ -1,0 +1,103 @@
+{
+  "checkpoints": [
+    {
+      "agent_score": 882479365,
+      "candidate_id": "candidate-0005",
+      "elapsed_seconds": 600,
+      "human_count": 855,
+      "human_percentile": {
+        "lower": 99.88304093567251,
+        "midrank": 99.88304093567251,
+        "upper": 99.88304093567251
+      }
+    },
+    {
+      "agent_score": 906198683,
+      "candidate_id": "candidate-0008",
+      "elapsed_seconds": 1800,
+      "human_count": 855,
+      "human_percentile": {
+        "lower": 99.41520467836257,
+        "midrank": 99.41520467836257,
+        "upper": 99.41520467836257
+      }
+    },
+    {
+      "agent_score": 906198683,
+      "candidate_id": "candidate-0008",
+      "elapsed_seconds": 3600,
+      "human_count": 855,
+      "human_percentile": {
+        "lower": 95.2046783625731,
+        "midrank": 95.2046783625731,
+        "upper": 95.2046783625731
+      }
+    },
+    {
+      "agent_score": 906198683,
+      "candidate_id": "candidate-0008",
+      "elapsed_seconds": 7200,
+      "human_count": 855,
+      "human_percentile": {
+        "lower": 85.96491228070175,
+        "midrank": 85.96491228070175,
+        "upper": 85.96491228070175
+      }
+    },
+    {
+      "agent_score": 906198683,
+      "candidate_id": "candidate-0008",
+      "elapsed_seconds": 14400,
+      "human_count": 855,
+      "human_percentile": {
+        "lower": 69.23976608187135,
+        "midrank": 69.23976608187135,
+        "upper": 69.23976608187135
+      }
+    }
+  ],
+  "human_cohort": {
+    "cohort_humans": 855,
+    "cutoff_seconds": 14400,
+    "excluded_humans": 0,
+    "precomputed_trajectory_count": 855,
+    "selection": "first submission at or before the cohort cutoff",
+    "source_humans": 855,
+    "source_max_elapsed_seconds": 14399,
+    "source_submissions": 5201,
+    "submissions_by_cutoff": 5201
+  },
+  "privately_scored_candidates": 9,
+  "problem_id": "ahc068",
+  "run_id": "agy-gemini37-high-ahc068-4h-v2",
+  "schema_version": "ars.run-score.v1",
+  "score_direction": "maximize",
+  "submitted_candidates": 9,
+  "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
+  "time_to_human_4h": [
+    {
+      "candidate_id": "candidate-0004",
+      "censor_seconds": null,
+      "elapsed_seconds": 232.50380842201412,
+      "score": 810151424,
+      "status": "reached",
+      "target": "p50"
+    },
+    {
+      "candidate_id": null,
+      "censor_seconds": 14400,
+      "elapsed_seconds": null,
+      "score": 973236960,
+      "status": "right-censored",
+      "target": "p90"
+    },
+    {
+      "candidate_id": null,
+      "censor_seconds": 14400,
+      "elapsed_seconds": null,
+      "score": 1021974170,
+      "status": "right-censored",
+      "target": "p99"
+    }
+  ]
+}

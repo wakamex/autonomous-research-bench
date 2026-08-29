@@ -1,0 +1,54 @@
+I have launched the benchmark evaluation on the chained candidates and will inspect the results upon completion.
+I have launched the benchmark evaluation for the fast beam search solver with precomputed distances and will inspect the timing and score results upon completion.
+I have launched the benchmark evaluation for the optimized beam solver with fast multi-step simulation and hash deduplication, and will inspect the results upon completion.
+I have launched the benchmark evaluation for the ultra beam solver with 3-target chaining and highway-aligned expansions, and will inspect the results upon completion.
+I have launched the full 50-seed evaluation for the tuned solver with adaptive beam search and will review the results once it finishes.
+I have submitted candidate-0003 with the tuned adaptive beam search solver and will review the evaluator's score once execution finishes.
+I have launched the benchmark evaluation for different weight profiles and multi-target bonuses, and will inspect the output once complete.
+I have launched the benchmark evaluation for the same-conveyor chaining solver and will check the performance metrics once it finishes.
+# Progression summary
+
+Can we design a conveyor belt network and move scheduler to extract all 400 boxes from a 20x20 grid in strictly increasing order with the fewest possible conveyor rotations?
+
+I improved the public benchmark score from the 2,500 starter baseline to 275,955,798 points on the native 50-case evaluation suite. Across 50 public seeds, the average operation count per instance dropped from unbounded to 4,360 rotations while successfully extracting all 400 boxes in every test case.
+
+The solution was evaluated using the official ARS submit command and local judge on seeds 0 through 49.
+
+| Candidate | Description | 50-case total score | Average score per seed | Average operations T | Solved cases (B=400) |
+|---|---|---|---|---|---|
+| candidate-0001 | Starter empty output | 2,500 | 50.0 | 0.0 | 0 / 50 |
+| candidate-0002 | 20-loop orthogonal conveyor grid with greedy single-box routing | 252,414,614 | 5,048,292.3 | 6,045.6 | 50 / 50 |
+| candidate-0003 | Adaptive beam search with 2-target chaining, lookahead distance fields, and hash deduplication | 275,955,798 | 5,519,116.0 | 4,360.4 | 50 / 50 |
+
+# Methodology
+
+The algorithm consists of two stages: static conveyor network topology design and dynamic operation sequence optimization.
+
+For the static layout, the 20x20 grid is partitioned into 20 closed conveyor loops of length 40:
+- 10 horizontal loops (H_0 to H_9), where loop H_k spans row 2k and row 2k+1 across all 20 columns.
+- 10 vertical loops (V_0 to V_9), where loop V_j spans column 2j and column 2j+1 across all 20 rows.
+
+This layout satisfies the problem constraints because every cell on the grid belongs to exactly one horizontal loop and one vertical loop, achieving the maximum allowable cell degree of 2. The warehouse exit at cell (0, 10) is part of horizontal highway H_0 (rows 0 and 1) and vertical highway V_5 (columns 10 and 11). Every cell on the board shares 4 intersection points with V_5 via its horizontal loop and 4 intersection points with H_0 via its vertical loop.
+
+For dynamic scheduling, the solver maintains an adaptive beam search over board states:
+- A precomputed distance table `cell_dist[r][c]` stores the exact shortest number of operations needed for any single cell to reach (0, 10).
+- Candidate actions include single-target routing to the exit via V_5 or H_0, as well as 2-target chained actions where target `t` and target `t+1` are aligned onto highway V_5 or H_0 before executing a combined highway sweep.
+- Non-exit conveyor rotations are simulated in O(L) using block array permutations, while highway rotations check intermediate exit clears.
+- States are evaluated by combining accumulated operations with a discounted lookahead over the next 10 target boxes: `eval = operations + sum_{w=0..9} (0.75^w * cell_dist[pos[target + w]])`.
+- Duplicate configurations are pruned using state hashing.
+- Beam width adjusts dynamically from 28 down to 8 as elapsed time approaches the 2.0-second limit.
+
+# Caveats
+
+The current candidate generation evaluates single-target and two-target chaining on highways V_5 and H_0. Deep three-target chain candidates increase the branching factor and require strict pruning to avoid diluting beam capacity within the per-test time budget.
+
+# Scoring
+
+For instances where all 400 boxes are removed (B = 400), each test case receives:
+`Score = 1,000,000 + round(1,000,000 * log2(100,000 / T))`
+
+When B < 400, the score is `round(1,000,000 * B / 400)`.
+
+# Implementation details
+
+The complete solver is implemented in [solution.cpp](file:///code/ARS/benchmarks/ahc065/solution.cpp). It operates without dynamic memory allocations during search expansions and uses standard C++23 features.

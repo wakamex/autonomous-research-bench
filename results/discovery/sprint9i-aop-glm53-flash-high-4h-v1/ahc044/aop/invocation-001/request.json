@@ -1,0 +1,279 @@
+{
+  "artifacts": [],
+  "base": "15181fc",
+  "created_at": "2026-08-29T18:53:44.699643+00:00",
+  "effective_policy": {
+    "capabilities": "native",
+    "controller": {
+      "cache": "/code/ARS/.aop/cache",
+      "input_snapshot": "/code/ARS/.aop/snapshots/3e1b31d8-4f40-44c6-b4dd-99c9154db847",
+      "provider_state": "/code/ARS/.aop/provider-state/ars-10x4-glm53-high-ahc044-v1/no-web",
+      "scratch": "/code/ARS/.aop/scratch/ars-10x4-glm53-high-ahc044-v1/no-web"
+    },
+    "environment": {
+      "allowed_names": [],
+      "ambient_values_inherited": true,
+      "credential_exposure": "provider-process-readable",
+      "credential_names": [],
+      "inherited_names": [
+        "AOP_CODEX_BIN",
+        "ARS_EVALUATOR_CPU",
+        "ARS_PROBLEM_ID",
+        "ARS_RUN_DIR",
+        "CODEX_HOME",
+        "DBUS_SESSION_BUS_ADDRESS",
+        "HOME",
+        "INVOCATION_ID",
+        "JOURNAL_STREAM",
+        "LANG",
+        "LOGNAME",
+        "MANAGERPID",
+        "MANAGERPIDFDID",
+        "MEMORY_PRESSURE_WATCH",
+        "MEMORY_PRESSURE_WRITE",
+        "OLDPWD",
+        "PATH",
+        "PWD",
+        "SHELL",
+        "SHLVL",
+        "SYSTEMD_EXEC_PID",
+        "USER",
+        "XDG_DATA_DIRS",
+        "XDG_RUNTIME_DIR",
+        "ZAI_API_KEY",
+        "_"
+      ],
+      "mode": "native",
+      "recorded_values": "redacted"
+    },
+    "host": {
+      "access": "native",
+      "runtime_paths": [
+        "/"
+      ]
+    },
+    "identity": "normal",
+    "inputs": {
+      "guest_root": null,
+      "mode": "snapshot",
+      "names": [],
+      "source_paths_visible": true
+    },
+    "instruction_sources": [
+      {
+        "kind": "file",
+        "sha256": "f4480ad0e7cece0dbea6884b6ba7d94109e8eb3e3cf20cfbe2cc2880adbeeae6",
+        "source_path": "/code/ARS/.aop/worktrees/ars-10x4-glm53-high-ahc044-v1/AGENTS.md"
+      },
+      {
+        "kind": "file",
+        "sha256": "884b4eacf9880ecf769710a8da01fdf8f6adb278b74c73222905551a91bcea34",
+        "source_path": "/code/aop/.codex-zai/config.toml"
+      },
+      {
+        "files": 60,
+        "kind": "directory",
+        "sha256": "2029b31c64aea67e335e4c677b09bf652ab2a20d582f884c86556b3ac73b8700",
+        "source_path": "/code/aop/.codex-zai/skills"
+      }
+    ],
+    "instructions": {
+      "aop_generated": "input-and-artifact-contract-when-needed",
+      "inherited_local": "project-and-user",
+      "provider_builtin": "present"
+    },
+    "model_capabilities": {
+      "effective": {
+        "allowed_toolsets": [
+          "local shell and file tools"
+        ],
+        "extensions": "denied",
+        "external_retrieval": "denied",
+        "inference_network": "allowed",
+        "model_tools": "allowlist",
+        "tool_network_egress": "denied"
+      },
+      "enforcement": [
+        "Codex app-server web search disabled",
+        "Codex workspace sandbox network disabled",
+        "AOP authentication-only Codex state"
+      ],
+      "requested": {
+        "external_retrieval": "denied"
+      }
+    },
+    "namespaces": [],
+    "network": {
+      "isolation": "none",
+      "mode": "native",
+      "possible_context_channels": [
+        "local-network-services",
+        "provider-account-state"
+      ]
+    },
+    "profile": "host",
+    "provider_runtime": {
+      "executable": "/tmp/ars-codex-official.hEAlbN/home/packages/standalone/releases/0.150.1-x86_64-unknown-linux-musl/bin/codex",
+      "guest_root": "/runtime/provider",
+      "sha256": "abf1bb1643a79f73aa78ee627e111e02d4f8c98f25813a0cf6ce277709664386"
+    },
+    "repository": {
+      "access": "native",
+      "guest_path": null
+    },
+    "schema_version": 2,
+    "state": "resumable",
+    "working_directory": "/workspace",
+    "workspace": {
+      "access": "write",
+      "content": "task-checkout",
+      "controller_path": "/code/ARS/.aop/worktrees/ars-10x4-glm53-high-ahc044-v1",
+      "guest_path": "/workspace",
+      "host_path": "/code/ARS/.aop/worktrees/ars-10x4-glm53-high-ahc044-v1",
+      "writable": true
+    },
+    "writable_path_scopes": {
+      "native host filesystem": "native"
+    },
+    "writable_paths": [
+      "native host filesystem"
+    ]
+  },
+  "effort": "high",
+  "inference_provider": "zai-coding-plan",
+  "inference_route": {
+    "authenticated": true,
+    "credential_env": "ZAI_API_KEY",
+    "endpoint": "https://api.z.ai/api/v1",
+    "inventory_models": [
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 204800,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Agent-optimized model",
+        "display_name": "glm-5-turbo",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 204800,
+        "priority": 2,
+        "shell_type": "shell_command",
+        "slug": "glm-5-turbo",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Z.ai's latest flagship model",
+        "display_name": "glm-5.3",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text"
+        ],
+        "max_context_window": 1048576,
+        "priority": 0,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      },
+      {
+        "apply_patch_tool_type": "freeform",
+        "base_instructions": "",
+        "context_window": 1048576,
+        "default_reasoning_level": "max",
+        "default_reasoning_summary": "none",
+        "description": "Fast multimodal coding model",
+        "display_name": "glm-5.3-flash",
+        "effective_context_window_percent": 95,
+        "experimental_supported_tools": [],
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "max_context_window": 1048576,
+        "priority": 1,
+        "shell_type": "shell_command",
+        "slug": "glm-5.3-flash",
+        "support_verbosity": false,
+        "supported_in_api": true,
+        "supported_reasoning_levels": [
+          {
+            "description": "Light reasoning",
+            "effort": "low"
+          },
+          {
+            "description": "Enhanced reasoning",
+            "effort": "high"
+          },
+          {
+            "description": "Deep reasoning",
+            "effort": "max"
+          }
+        ],
+        "supports_parallel_tool_calls": true,
+        "supports_reasoning_summaries": true,
+        "truncation_policy": {
+          "limit": 10000,
+          "mode": "bytes"
+        },
+        "visibility": "list"
+      }
+    ],
+    "inventory_retrieved_at": "2026-08-29T18:53:45.194900+00:00",
+    "inventory_sha256": "e7c96ab864d2290e327cb741316f2ec0345345aed81f4f18515267a477f0711b",
+    "native_provider": "zai",
+    "provider": "zai-coding-plan",
+    "wire_api": "responses"
+  },
+  "inputs": [],
+  "mode": "agent",
+  "model": "glm-5.3-flash",
+  "no_web": true,
+  "parent_run_id": null,
+  "profile": "host",
+  "prompt": "You are the fixed ARS ahc044 discovery baseline. Read benchmarks/ahc044/README.md and the official ahc044 statement it links. Improve benchmarks/ahc044/solution.cpp through empirical iteration.\n\nYour first action must be to submit the existing starter solution with the documented command. Do not inspect any other file before that submission finishes. You may then submit additional candidates whenever the source changes meaningfully. Use only the local repository and evaluator. Do not access the internet. Do not inspect private tests, human reference artifacts, historical submission scores, or files under references/human and sources/atcoder/submissions-4h.\n\nContinue until you have used the available run time well or further work is unlikely to improve the public score. Leave the best known source in benchmarks/ahc044/solution.cpp. Do not edit benchmark, runner, schema, evaluator, or source-data files.",
+  "provider": "codex",
+  "run_id": "3e1b31d8-4f40-44c6-b4dd-99c9154db847",
+  "session_id": null,
+  "task": "ars-10x4-glm53-high-ahc044-v1",
+  "timeout_seconds": 14400.0
+}

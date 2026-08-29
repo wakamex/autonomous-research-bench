@@ -1,0 +1,142 @@
+{
+  "artifacts": [],
+  "base": "15181fc",
+  "created_at": "2026-08-29T19:31:38.040210+00:00",
+  "effective_policy": {
+    "capabilities": "native",
+    "controller": {
+      "cache": "/code/ARS/.aop/cache",
+      "input_snapshot": "/code/ARS/.aop/snapshots/4ffd8336-dbb9-4029-91cb-a74b0cdf6ba1",
+      "provider_state": "/code/ARS/.aop/provider-state/ars-agy-gemini37-high-ahc030-4h-v2",
+      "scratch": "/code/ARS/.aop/scratch/ars-agy-gemini37-high-ahc030-4h-v2"
+    },
+    "environment": {
+      "allowed_names": [],
+      "ambient_values_inherited": true,
+      "credential_exposure": "provider-process-readable",
+      "credential_names": [],
+      "inherited_names": [
+        "ARS_EVALUATOR_CPU",
+        "ARS_PROBLEM_ID",
+        "ARS_RUN_DIR",
+        "DBUS_SESSION_BUS_ADDRESS",
+        "HOME",
+        "INVOCATION_ID",
+        "JOURNAL_STREAM",
+        "LANG",
+        "LOGNAME",
+        "MANAGERPID",
+        "MANAGERPIDFDID",
+        "MEMORY_PRESSURE_WATCH",
+        "MEMORY_PRESSURE_WRITE",
+        "OLDPWD",
+        "PATH",
+        "PWD",
+        "SHELL",
+        "SHLVL",
+        "SYSTEMD_EXEC_PID",
+        "USER",
+        "XDG_DATA_DIRS",
+        "XDG_RUNTIME_DIR",
+        "_"
+      ],
+      "mode": "native",
+      "recorded_values": "redacted"
+    },
+    "host": {
+      "access": "native",
+      "runtime_paths": [
+        "/"
+      ]
+    },
+    "identity": "normal",
+    "inputs": {
+      "guest_root": null,
+      "mode": "snapshot",
+      "names": [],
+      "source_paths_visible": true
+    },
+    "instruction_sources": [
+      {
+        "kind": "file",
+        "sha256": "f4480ad0e7cece0dbea6884b6ba7d94109e8eb3e3cf20cfbe2cc2880adbeeae6",
+        "source_path": "/code/ARS/.aop/worktrees/ars-agy-gemini37-high-ahc030-4h-v2/AGENTS.md"
+      },
+      {
+        "files": 10,
+        "kind": "directory",
+        "sha256": "592626c85f2b1928fd965815361469c551ff6eb217104e569b9857926747eb4d",
+        "source_path": "~/.gemini/config"
+      }
+    ],
+    "instructions": {
+      "aop_generated": "input-and-artifact-contract-when-needed",
+      "inherited_local": "project-and-user",
+      "provider_builtin": "present"
+    },
+    "model_capabilities": {
+      "effective": {
+        "extensions": "native",
+        "external_retrieval": "native",
+        "inference_network": "allowed",
+        "model_tools": "native",
+        "tool_network_egress": "native"
+      },
+      "enforcement": [],
+      "requested": {
+        "external_retrieval": "native"
+      }
+    },
+    "namespaces": [],
+    "network": {
+      "isolation": "none",
+      "mode": "native",
+      "possible_context_channels": [
+        "local-network-services",
+        "provider-account-state"
+      ]
+    },
+    "profile": "host",
+    "provider_runtime": {
+      "executable": "~/.local/bin/agy",
+      "guest_root": "/runtime/provider",
+      "sha256": "2822292f90deea4556938a8728fe4ed02a1d66d1525cf75fa07a171e36a38c25"
+    },
+    "repository": {
+      "access": "native",
+      "guest_path": null
+    },
+    "schema_version": 2,
+    "state": "resumable",
+    "working_directory": "/workspace",
+    "workspace": {
+      "access": "write",
+      "content": "task-checkout",
+      "controller_path": "/code/ARS/.aop/worktrees/ars-agy-gemini37-high-ahc030-4h-v2",
+      "guest_path": "/workspace",
+      "host_path": "/code/ARS/.aop/worktrees/ars-agy-gemini37-high-ahc030-4h-v2",
+      "writable": true
+    },
+    "writable_path_scopes": {
+      "native host filesystem": "native"
+    },
+    "writable_paths": [
+      "native host filesystem"
+    ]
+  },
+  "effort": null,
+  "inference_provider": null,
+  "inference_route": null,
+  "inputs": [],
+  "mode": "agent",
+  "model": "gemini-3.7-flash-high",
+  "no_web": false,
+  "parent_run_id": "ca505133-08d6-416c-b08f-fed26ca86304",
+  "profile": "host",
+  "prompt": "Continue working on the task. Time remaining: 13,056 seconds.",
+  "provider": "agy",
+  "run_id": "4ffd8336-dbb9-4029-91cb-a74b0cdf6ba1",
+  "session_id": "db786105-306b-4cc9-97e0-53d8deaeae22",
+  "task": "ars-agy-gemini37-high-ahc030-4h-v2",
+  "timeout_seconds": 13056.0
+}

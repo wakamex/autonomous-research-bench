@@ -1,0 +1,17 @@
+{
+  "run_id": "agy-gemini37-high-ahc068-4h-v2",
+  "started_at": "2026-08-29T19:09:14.307870604+00:00",
+  "started_monotonic": 625961.361502228,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc068",
+  "problem_package_sha256": "e44c8da17ed2f2444b3ef8abd0334c193463f4dd78ffe9b1e8af4f6b7141a01b",
+  "public_cases": "/tmp/ars-10x4-bundles.KqQnRc/ahc068-public",
+  "evaluator_cpu": 15,
+  "public_evaluator_cpu_seconds": 148.759802,
+  "private_evaluator_cpu_seconds": 478.786962,
+  "model_calls": 2,
+  "input_tokens": 14793881,
+  "output_tokens": 251470,
+  "cached_tokens": 13968009,
+  "cost_usd": 0.0
+}

@@ -307,16 +307,7 @@ pub fn stop_run(run_dir: &Path, aop_results: &[PathBuf]) -> Result<()> {
             })
             .sum()
     };
-    let cost = values
-        .iter()
-        .map(|value| {
-            value
-                .get("api_equivalent_cost")
-                .and_then(|cost| cost.get("amount_usd"))
-                .and_then(Value::as_f64)
-                .unwrap_or(0.0)
-        })
-        .sum();
+    let cost = values.iter().map(aop_cost).sum();
     let (status, reason) = if final_result
         .get("timed_out")
         .and_then(Value::as_bool)
@@ -510,13 +501,36 @@ fn with_commas(value: u64) -> String {
     output
 }
 
+fn aop_cost(value: &Value) -> f64 {
+    value
+        .get("calculated_cost")
+        .or_else(|| value.get("api_equivalent_cost"))
+        .and_then(|cost| cost.get("amount_usd"))
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0)
+}
+
 #[cfg(test)]
 mod tests {
-    use super::with_commas;
+    use super::{aop_cost, with_commas};
+    use serde_json::json;
 
     #[test]
     fn formats_deadline_seconds() {
         assert_eq!(with_commas(999), "999");
         assert_eq!(with_commas(14_400), "14,400");
+    }
+
+    #[test]
+    fn reads_current_and_legacy_aop_cost_fields() {
+        assert_eq!(
+            aop_cost(&json!({"calculated_cost": {"amount_usd": 1.25}})),
+            1.25
+        );
+        assert_eq!(
+            aop_cost(&json!({"api_equivalent_cost": {"amount_usd": 2.5}})),
+            2.5
+        );
+        assert_eq!(aop_cost(&json!({})), 0.0);
     }
 }

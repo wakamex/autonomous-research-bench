@@ -1,0 +1,83 @@
+{
+  "checkpoints": [
+    {
+      "agent_score": null,
+      "candidate_id": null,
+      "elapsed_seconds": 600,
+      "human_count": 705,
+      "human_percentile": null
+    },
+    {
+      "agent_score": null,
+      "candidate_id": null,
+      "elapsed_seconds": 1800,
+      "human_count": 705,
+      "human_percentile": null
+    },
+    {
+      "agent_score": null,
+      "candidate_id": null,
+      "elapsed_seconds": 3600,
+      "human_count": 705,
+      "human_percentile": null
+    },
+    {
+      "agent_score": null,
+      "candidate_id": null,
+      "elapsed_seconds": 7200,
+      "human_count": 705,
+      "human_percentile": null
+    },
+    {
+      "agent_score": null,
+      "candidate_id": null,
+      "elapsed_seconds": 14400,
+      "human_count": 705,
+      "human_percentile": null
+    }
+  ],
+  "human_cohort": {
+    "cohort_humans": 705,
+    "cutoff_seconds": 14400,
+    "excluded_humans": 0,
+    "precomputed_trajectory_count": 705,
+    "selection": "first submission at or before the cohort cutoff",
+    "source_humans": 705,
+    "source_max_elapsed_seconds": 14399,
+    "source_submissions": 4600,
+    "submissions_by_cutoff": 4600
+  },
+  "privately_scored_candidates": 0,
+  "problem_id": "ahc065",
+  "run_id": "sprint9i-glm53-high-ahc065-v1",
+  "schema_version": "ars.run-score.v1",
+  "score_direction": "maximize",
+  "submitted_candidates": 0,
+  "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
+  "time_to_human_4h": [
+    {
+      "candidate_id": null,
+      "censor_seconds": 14400,
+      "elapsed_seconds": null,
+      "score": 834108666,
+      "status": "right-censored",
+      "target": "p50"
+    },
+    {
+      "candidate_id": null,
+      "censor_seconds": 14400,
+      "elapsed_seconds": null,
+      "score": 927807697,
+      "status": "right-censored",
+      "target": "p90"
+    },
+    {
+      "candidate_id": null,
+      "censor_seconds": 14400,
+      "elapsed_seconds": null,
+      "score": 1024904066,
+      "status": "right-censored",
+      "target": "p99"
+    }
+  ]
+}
