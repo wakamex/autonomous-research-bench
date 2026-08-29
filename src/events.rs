@@ -106,6 +106,7 @@ pub fn init_run(options: InitOptions<'_>) -> Result<()> {
         json!({
             "problem_id": options.package.problem.id, "suite_id": options.suite_id,
             "track": options.track, "system_manifest_sha256": options.system_manifest_sha256,
+            "score_direction": options.package.problem.score_direction.as_str(),
             "evaluator_cpu": options.evaluator_cpu, "evaluator_workers": 1,
         }),
     )?;
@@ -172,6 +173,7 @@ pub fn submit(
         timing.0,
         timing.1,
         None,
+        package.problem.score_direction.as_str(),
     )?;
     append_event(
         run_dir,
@@ -189,6 +191,7 @@ pub fn submit(
         "remaining_seconds": timing.1,
         "judge_result": evaluation.judge_result,
         "score": evaluation.score,
+        "score_direction": package.problem.score_direction.as_str(),
         "wall_seconds": evaluation.wall_seconds,
         "cpu_seconds": evaluation.cpu_seconds,
         "compile_seconds": evaluation.compile_seconds,
@@ -266,6 +269,7 @@ pub fn private_evaluate(
             0.0,
             0.0,
             rank,
+            package.problem.score_direction.as_str(),
         )?;
         append_event(
             run_dir,
@@ -445,11 +449,13 @@ fn evaluation_payload(
     elapsed_seconds: f64,
     remaining_seconds: f64,
     rank: Option<(u64, i64)>,
+    score_direction: &str,
 ) -> Result<Value> {
     Ok(json!({
         "evaluation_id": format!("{}-{candidate_id}", if visibility == "public" { "public" } else { "private" }),
         "candidate_id": candidate_id, "visibility": visibility,
         "judge_result": evaluation.judge_result, "score": evaluation.score,
+        "score_direction": score_direction,
         "wall_seconds": evaluation.wall_seconds, "cpu_seconds": evaluation.cpu_seconds,
         "compile_seconds": evaluation.compile_seconds,
         "cases": evaluation.cases,

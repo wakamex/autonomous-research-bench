@@ -8,7 +8,7 @@ use serde::Deserialize;
 use serde_json::{Value, json};
 
 use crate::events::{Event, read_events};
-use crate::problem::{Package, file_sha256};
+use crate::problem::{Package, ScoreDirection, file_sha256};
 
 #[derive(Debug, Deserialize)]
 struct StandingRow {
@@ -22,6 +22,7 @@ struct PerformanceRow {
 }
 
 pub fn historical_rank(package: &Package, new_score: u64) -> Result<(u64, i64)> {
+    let direction = package.problem.score_direction;
     let standings = csv::Reader::from_path(package.standings()?)?
         .deserialize::<StandingRow>()
         .collect::<std::result::Result<Vec<_>, _>>()?;
@@ -42,13 +43,13 @@ pub fn historical_rank(package: &Package, new_score: u64) -> Result<(u64, i64)> 
     }
     let last = standings.last().unwrap();
     groups.push((last.score, last.rank, last.rank));
-    let (rank, performance_rank) = if new_score == 0 {
+    let (rank, performance_rank) = if direction == ScoreDirection::Maximize && new_score == 0 {
         (last.rank, last.rank as f64)
     } else {
         groups
             .iter()
             .find_map(|&(score, start, end)| {
-                if new_score > score {
+                if direction.improves(new_score, score) {
                     Some((start, start as f64))
                 } else if new_score == score {
                     Some((start, (start + end) as f64 / 2.0))
@@ -110,6 +111,7 @@ pub struct HumanReferenceOptions<'a> {
     pub cohort_seconds: u64,
     pub checkpoints: &'a [u64],
     pub percentiles: &'a [u64],
+    pub score_direction: ScoreDirection,
     pub package: Option<&'a Package>,
     pub minimum_match_fraction: f64,
 }
@@ -122,6 +124,7 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
         cohort_seconds,
         checkpoints,
         percentiles,
+        score_direction,
         package,
         minimum_match_fraction,
     } = options;
@@ -160,7 +163,11 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
             bail!("non-integral score {}", row.point);
         }
         let score = point as u64;
-        if score > user.improvements.last().map(|value| value.1).unwrap_or(0) {
+        if user
+            .improvements
+            .last()
+            .is_none_or(|value| score_direction.improves(score, value.1))
+        {
             user.improvements.push((row.elapsed_seconds, score, row.id));
         }
     }
@@ -174,12 +181,12 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
             .cmp(&b.display_id.to_lowercase())
     });
     let checkpoint_values = checkpoints.iter().map(|&time| {
-        let scores = humans.iter().map(|human| score_at(&human.improvements, time)).collect::<Vec<_>>();
+        let scores = humans.iter().map(|human| score_at(&human.improvements, time, score_direction)).collect::<Vec<_>>();
         let submitted = humans.iter().filter(|human| human.first_submission <= time).count();
-        let scored = humans.iter().filter(|human| score_at(&human.improvements, time) > 0).count();
+        let scored = humans.iter().filter(|human| score_at(&human.improvements, time, score_direction).is_some_and(|score| score > 0)).count();
         let submissions_at = rows.iter().filter(|row| row.elapsed_seconds <= time).count();
         let values = percentiles.iter().map(|&percentile|
-            (format!("p{percentile}"), json!(nearest_rank(&scores, percentile)))).collect::<serde_json::Map<_, _>>();
+            (format!("p{percentile}"), json!(nearest_rank(&scores, percentile, score_direction)))).collect::<serde_json::Map<_, _>>();
         json!({"elapsed_seconds": time, "humans": humans.len(), "humans_submitted": submitted,
             "humans_with_score": scored, "submissions": submissions_at, "score_percentiles": values})
     }).collect::<Vec<_>>();
@@ -198,9 +205,10 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
         "method": {
             "population": "fixed cohort of users with at least one submission by the configured cohort cutoff",
             "cohort_seconds": cohort_seconds,
-            "per_human_value": "highest AC score submitted by the elapsed-time cutoff; zero before a first scored submission",
-            "score_direction": "maximize",
-            "percentile": "ascending nearest-rank: sorted_scores[ceil(p * n) - 1]"
+            "per_human_value": format!("best AC score in the {} direction submitted by the elapsed-time cutoff", score_direction.as_str()),
+            "unscored_value": if score_direction == ScoreDirection::Maximize {json!(0)} else {Value::Null},
+            "score_direction": score_direction.as_str(),
+            "percentile": "nearest rank over scores ordered from worst to best: ordered_scores[ceil(p * n) - 1]"
         },
         "cohort": {"cutoff_seconds": cohort_seconds,
             "selection": "first submission at or before the cohort cutoff",
@@ -212,7 +220,7 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
     });
     if let Some(package) = package {
         let (validation, standings_hash) =
-            validate_standings(&humans, package, minimum_match_fraction)?;
+            validate_standings(&humans, package, minimum_match_fraction, score_direction)?;
         value["source"]["official_standings_url"] = json!(package.problem.provenance.source_url);
         value["source"]["ale_bench_zip_sha256"] = json!(package.problem.provenance.source_sha256);
         value["source"]["standings_csv_sha256"] = json!(standings_hash);
@@ -229,6 +237,7 @@ fn validate_standings(
     humans: &[Human],
     package: &Package,
     minimum: f64,
+    score_direction: ScoreDirection,
 ) -> Result<(Value, String)> {
     if !(0.0..=1.0).contains(&minimum) {
         bail!("minimum match fraction must be between zero and one");
@@ -287,9 +296,9 @@ fn validate_standings(
         "public_only_scores": difference(&public_counts, &official_counts),
         "official_only_scores": difference(&official_counts, &public_counts),
         "official_percentiles": {
-            "p50": nearest_rank(&official_scores, 50),
-            "p90": nearest_rank(&official_scores, 90),
-            "p99": nearest_rank(&official_scores, 99)
+            "p50": nearest_rank(&official_scores.iter().copied().map(Some).collect::<Vec<_>>(), 50, score_direction),
+            "p90": nearest_rank(&official_scores.iter().copied().map(Some).collect::<Vec<_>>(), 90, score_direction),
+            "p99": nearest_rank(&official_scores.iter().copied().map(Some).collect::<Vec<_>>(), 99, score_direction)
         },
         "note": "ALE-Bench standings encode final ranked positions without user IDs, while the ARS reference includes every public submitter. Exact population equality is neither expected nor assumed."
     });
@@ -307,6 +316,9 @@ pub fn replay_score(events_path: &Path, reference_path: &Path, horizon: u64) -> 
     let events = read_events(events_path)?;
     validate_events(&events)?;
     let reference: Value = serde_json::from_slice(&fs::read(reference_path)?)?;
+    let score_direction: ScoreDirection =
+        serde_json::from_value(reference["method"]["score_direction"].clone())
+            .context("human reference score direction")?;
     let mut submitted = BTreeMap::<String, f64>::new();
     let mut private = HashMap::<String, Option<u64>>::new();
     for event in &events {
@@ -337,9 +349,9 @@ pub fn replay_score(events_path: &Path, reference_path: &Path, horizon: u64) -> 
     let checkpoint_results = checkpoints.iter().map(|checkpoint| {
         let time = checkpoint["elapsed_seconds"].as_u64().unwrap();
         let best = candidates.iter().filter(|(_, submitted, score)| *submitted <= time as f64 && score.is_some())
-            .max_by(|a, b| a.2.cmp(&b.2).then_with(|| b.1.total_cmp(&a.1)));
-        let scores = human_scores(trajectories, time);
-        let percentile = best.map(|(_, _, score)| percentile_with_ties(&scores, score.unwrap()));
+            .max_by(|a, b| score_direction.compare(a.2.unwrap(), b.2.unwrap()).then_with(|| b.1.total_cmp(&a.1)));
+        let scores = human_scores(trajectories, time, score_direction);
+        let percentile = best.map(|(_, _, score)| percentile_with_ties(&scores, score.unwrap(), score_direction));
         json!({"elapsed_seconds": time, "agent_score": best.and_then(|value| value.2),
             "candidate_id": best.map(|value| value.0), "human_count": scores.len(), "human_percentile": percentile})
     }).collect::<Vec<_>>();
@@ -348,8 +360,11 @@ pub fn replay_score(events_path: &Path, reference_path: &Path, horizon: u64) -> 
         .find(|value| value["elapsed_seconds"] == horizon)
         .context("horizon checkpoint")?;
     let thresholds = final_checkpoint["score_percentiles"].as_object().unwrap().iter().map(|(name, value)| {
-        let target = value.as_u64().unwrap();
-        let reached = candidates.iter().filter(|(_, time, score)| *time <= horizon as f64 && score.is_some_and(|score| score >= target))
+        let Some(target) = value.as_u64() else {
+            return json!({"target": name, "score": null, "status": "unavailable",
+                "elapsed_seconds": null, "candidate_id": null, "censor_seconds": null});
+        };
+        let reached = candidates.iter().filter(|(_, time, score)| *time <= horizon as f64 && score.is_some_and(|score| score_direction.reaches(score, target)))
             .min_by(|a, b| a.1.total_cmp(&b.1));
         json!({"target": name, "score": target, "status": if reached.is_some() {"reached"} else {"right-censored"},
             "elapsed_seconds": reached.map(|value| value.1), "candidate_id": reached.map(|value| value.0),
@@ -358,7 +373,7 @@ pub fn replay_score(events_path: &Path, reference_path: &Path, horizon: u64) -> 
     Ok(
         json!({"schema_version": "ars.run-score.v1", "run_id": events[0].run_id,
         "problem_id": reference["problem_id"], "human_cohort": reference["cohort"],
-        "score_direction": "maximize", "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
+        "score_direction": score_direction.as_str(), "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
         "checkpoints": checkpoint_results, "time_to_human_4h": thresholds,
         "submitted_candidates": submitted.len(), "privately_scored_candidates": candidates.len()}),
     )
@@ -415,22 +430,35 @@ fn validate_events(events: &[Event]) -> Result<()> {
     Ok(())
 }
 
-fn score_at(improvements: &[(u64, u64, u64)], time: u64) -> u64 {
+fn score_at(improvements: &[(u64, u64, u64)], time: u64, direction: ScoreDirection) -> Option<u64> {
     improvements
         .iter()
         .filter(|value| value.0 <= time)
         .map(|value| value.1)
-        .max()
-        .unwrap_or(0)
+        .max_by(|left, right| direction.compare(*left, *right))
+        .or((direction == ScoreDirection::Maximize).then_some(0))
 }
 
-fn nearest_rank(values: &[u64], percentile: u64) -> u64 {
+fn compare_scores(
+    left: Option<u64>,
+    right: Option<u64>,
+    direction: ScoreDirection,
+) -> std::cmp::Ordering {
+    match (left, right) {
+        (None, None) => std::cmp::Ordering::Equal,
+        (None, Some(_)) => std::cmp::Ordering::Less,
+        (Some(_), None) => std::cmp::Ordering::Greater,
+        (Some(left), Some(right)) => direction.compare(left, right),
+    }
+}
+
+fn nearest_rank(values: &[Option<u64>], percentile: u64, direction: ScoreDirection) -> Option<u64> {
     let mut values = values.to_vec();
-    values.sort_unstable();
+    values.sort_unstable_by(|left, right| compare_scores(*left, *right, direction));
     values[(percentile * values.len() as u64).div_ceil(100).max(1) as usize - 1]
 }
 
-fn human_scores(trajectories: &[Value], time: u64) -> Vec<u64> {
+fn human_scores(trajectories: &[Value], time: u64, direction: ScoreDirection) -> Vec<Option<u64>> {
     trajectories
         .iter()
         .map(|human| {
@@ -440,15 +468,18 @@ fn human_scores(trajectories: &[Value], time: u64) -> Vec<u64> {
                 .iter()
                 .filter(|value| value[0].as_u64().unwrap() <= time)
                 .map(|value| value[1].as_u64().unwrap())
-                .max()
-                .unwrap_or(0)
+                .max_by(|left, right| direction.compare(*left, *right))
+                .or((direction == ScoreDirection::Maximize).then_some(0))
         })
         .collect()
 }
 
-fn percentile_with_ties(scores: &[u64], agent: u64) -> Value {
-    let below = scores.iter().filter(|&&score| score < agent).count();
-    let equal = scores.iter().filter(|&&score| score == agent).count();
+fn percentile_with_ties(scores: &[Option<u64>], agent: u64, direction: ScoreDirection) -> Value {
+    let below = scores
+        .iter()
+        .filter(|&&score| compare_scores(score, Some(agent), direction).is_lt())
+        .count();
+    let equal = scores.iter().filter(|&&score| score == Some(agent)).count();
     let total = scores.len() as f64;
     let lower = 100.0 * below as f64 / total;
     let upper = 100.0 * (below + equal) as f64 / total;
@@ -458,6 +489,18 @@ fn percentile_with_ties(scores: &[u64], agent: u64) -> Value {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn event(sequence: usize, elapsed_seconds: f64, event_type: &str, payload: Value) -> Event {
+        Event {
+            schema_version: "ars.run-event.v1".into(),
+            run_id: "minimize-run".into(),
+            sequence,
+            event_type: event_type.into(),
+            elapsed_seconds,
+            recorded_at: "2026-01-01T00:00:00Z".into(),
+            payload,
+        }
+    }
 
     #[test]
     fn ahc044_rank_mapping_matches_archived_ale_results() {
@@ -475,14 +518,101 @@ mod tests {
     #[test]
     fn percentile_reports_all_tie_bounds() {
         assert_eq!(
-            percentile_with_ties(&[0, 10, 10, 20], 10),
+            percentile_with_ties(
+                &[Some(0), Some(10), Some(10), Some(20)],
+                10,
+                ScoreDirection::Maximize,
+            ),
             json!({"lower": 25.0, "midrank": 50.0, "upper": 75.0})
+        );
+        assert_eq!(
+            percentile_with_ties(
+                &[None, Some(20), Some(10), Some(10)],
+                10,
+                ScoreDirection::Minimize,
+            ),
+            json!({"lower": 50.0, "midrank": 75.0, "upper": 100.0})
         );
     }
 
     #[test]
     fn nearest_rank_uses_the_fixed_cohort_definition() {
-        assert_eq!(nearest_rank(&[0, 0, 10, 20], 50), 0);
-        assert_eq!(nearest_rank(&[0, 0, 10, 20], 90), 20);
+        let scores = [Some(0), Some(0), Some(10), Some(20)];
+        assert_eq!(nearest_rank(&scores, 50, ScoreDirection::Maximize), Some(0));
+        assert_eq!(
+            nearest_rank(&scores, 90, ScoreDirection::Maximize),
+            Some(20)
+        );
+
+        let costs = [None, None, Some(20), Some(10)];
+        assert_eq!(nearest_rank(&costs, 50, ScoreDirection::Minimize), None);
+        assert_eq!(nearest_rank(&costs, 90, ScoreDirection::Minimize), Some(10));
+    }
+
+    #[test]
+    fn replay_selects_lower_costs_and_reverses_thresholds() {
+        let directory = tempfile::tempdir().unwrap();
+        let events_path = directory.path().join("events.jsonl");
+        let reference_path = directory.path().join("reference.json");
+        let events = [
+            event(0, 0.0, "run.started", json!({})),
+            event(
+                1,
+                10.0,
+                "candidate.submitted",
+                json!({"candidate_id": "candidate-0001"}),
+            ),
+            event(
+                2,
+                20.0,
+                "candidate.submitted",
+                json!({"candidate_id": "candidate-0002"}),
+            ),
+            event(3, 30.0, "run.stopped", json!({"reason": "deadline"})),
+            event(
+                4,
+                31.0,
+                "evaluation.completed",
+                json!({"candidate_id": "candidate-0001", "visibility": "private-post-run", "score": 100}),
+            ),
+            event(
+                5,
+                32.0,
+                "evaluation.completed",
+                json!({"candidate_id": "candidate-0002", "visibility": "private-post-run", "score": 50}),
+            ),
+        ];
+        let serialized = events
+            .iter()
+            .map(|value| serde_json::to_string(value).unwrap())
+            .collect::<Vec<_>>()
+            .join("\n");
+        fs::write(&events_path, format!("{serialized}\n")).unwrap();
+        fs::write(
+            &reference_path,
+            serde_json::to_vec(&json!({
+                "problem_id": "minimize-test",
+                "method": {"score_direction": "minimize"},
+                "cohort": {"cohort_humans": 2},
+                "trajectories": [
+                    {"improvements": [[5, 80, 1]]},
+                    {"improvements": [[5, 40, 2]]}
+                ],
+                "checkpoints": [
+                    {"elapsed_seconds": 15, "score_percentiles": {"p50": 80, "p90": 40}},
+                    {"elapsed_seconds": 30, "score_percentiles": {"p50": 80, "p90": 40}}
+                ]
+            }))
+            .unwrap(),
+        )
+        .unwrap();
+
+        let score = replay_score(&events_path, &reference_path, 30).unwrap();
+        assert_eq!(score["checkpoints"][0]["agent_score"], 100);
+        assert_eq!(score["checkpoints"][1]["agent_score"], 50);
+        assert_eq!(score["checkpoints"][1]["human_percentile"]["midrank"], 50.0);
+        assert_eq!(score["time_to_human_4h"][0]["status"], "reached");
+        assert_eq!(score["time_to_human_4h"][0]["elapsed_seconds"], 20.0);
+        assert_eq!(score["time_to_human_4h"][1]["status"], "right-censored");
     }
 }

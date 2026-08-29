@@ -17,6 +17,8 @@ every individual trajectory is nondecreasing and the denominator never changes,
 each percentile score threshold is also nondecreasing. The definition is frozen
 in each generated reference artifact.
 
+The same compiler and replay scorer support minimize objectives with `--score-direction minimize`. Scores are always ordered from worst to best before applying nearest rank, so P90 retains the same meaning. Best-so-far costs and their thresholds are nonincreasing, and an agent reaches a target when its cost is at or below it. Before a human's first scored submission, maximize references use the established score of zero while minimize references use `null`, which remains worse than every numeric cost.
+
 Each artifact precomputes the selected cohort as its `trajectories` list. Its
 `cohort` summary separately records total users and submissions present in the
 source, users admitted or excluded by the desired cutoff, submissions by that

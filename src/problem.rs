@@ -1,10 +1,43 @@
+use std::cmp::Ordering;
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use anyhow::{Context, Result, bail};
+use clap::ValueEnum;
 use serde::Deserialize;
 use sha2::{Digest, Sha256};
+
+#[derive(Debug, Clone, Copy, Deserialize, ValueEnum, PartialEq, Eq)]
+#[serde(rename_all = "lowercase")]
+pub enum ScoreDirection {
+    Maximize,
+    Minimize,
+}
+
+impl ScoreDirection {
+    pub fn compare(self, left: u64, right: u64) -> Ordering {
+        match self {
+            Self::Maximize => left.cmp(&right),
+            Self::Minimize => right.cmp(&left),
+        }
+    }
+
+    pub fn improves(self, candidate: u64, current: u64) -> bool {
+        self.compare(candidate, current).is_gt()
+    }
+
+    pub fn reaches(self, score: u64, target: u64) -> bool {
+        !self.compare(score, target).is_lt()
+    }
+
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Maximize => "maximize",
+            Self::Minimize => "minimize",
+        }
+    }
+}
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Problem {
@@ -13,7 +46,7 @@ pub struct Problem {
     #[serde(rename = "title")]
     pub _title: String,
     pub kind: String,
-    pub score_direction: String,
+    pub score_direction: ScoreDirection,
     pub time_limit_seconds: f64,
     pub memory_limit_bytes: u64,
     pub output_limit_bytes: u64,
@@ -95,9 +128,6 @@ impl Package {
         }
         if problem.kind != "batch" {
             bail!("only batch problems are currently supported");
-        }
-        if problem.score_direction != "maximize" {
-            bail!("only maximize problems are currently supported");
         }
         if problem.public_seeds.is_empty() {
             bail!("public seed set is empty");
@@ -226,7 +256,7 @@ mod tests {
         let root = Path::new(env!("CARGO_MANIFEST_DIR"));
         let ids = [
             "ahc004", "ahc044", "ahc050", "ahc052", "ahc053", "ahc062", "ahc065", "ahc067",
-            "ahc068",
+            "ahc068", "ahc030",
         ];
         for id in ids {
             let package = Package::load(&root.join("problems").join(id)).unwrap();

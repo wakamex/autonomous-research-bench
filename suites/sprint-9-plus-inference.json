@@ -1,0 +1,18 @@
+{
+  "schema_version": "ars.suite.v1",
+  "id": "sprint-9-plus-inference",
+  "status": "discovery",
+  "selection": "Sprint-9 plus AHC030 as the latest short inference contest in the 2026-08-12 catalog",
+  "problems": [
+    {"id": "ahc004", "category": "Packing", "public_case_count": 50, "official_case_count": 100},
+    {"id": "ahc062", "category": "Routing", "public_case_count": 50, "official_case_count": 100},
+    {"id": "ahc067", "category": "Network", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc050", "category": "Game", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc053", "category": "Partitioning", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc052", "category": "Covering", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc065", "category": "Planning", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc044", "category": "Scheduling", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc068", "category": "Puzzle", "public_case_count": 50, "official_case_count": 150},
+    {"id": "ahc030", "category": "Inference", "public_case_count": 50, "official_case_count": 100}
+  ]
+}

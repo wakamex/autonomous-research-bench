@@ -47,4 +47,6 @@ ars score RUN/events.jsonl \
 
 The scorer validates event identity, sequence, monotonic timestamps, candidate references, and the single stop event. It reports fixed-time agent scores, fixed-cohort human percentile tie bounds, and time to the four-hour P50, P90, and P99 thresholds with right-censoring.
 
+The reference artifact supplies the score direction. One shared ordering path selects best-so-far candidates, ranks scores from worst to best, computes tie bounds, and tests threshold attainment for both maximize and minimize objectives.
+
 Candidate submission time, not private evaluation time, determines threshold attainment. Private evaluation happens only after the run stops.

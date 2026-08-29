@@ -191,6 +191,8 @@ enum Commands {
         checkpoints: Vec<u64>,
         #[arg(long, value_delimiter = ',', default_value = "50,90,99")]
         percentiles: Vec<u64>,
+        #[arg(long, value_enum, default_value_t = problem::ScoreDirection::Maximize)]
+        score_direction: problem::ScoreDirection,
     },
 }
 
@@ -374,6 +376,7 @@ fn main() -> Result<()> {
             cohort_seconds,
             checkpoints,
             percentiles,
+            score_direction,
         } => {
             let package = problem.as_deref().map(Package::load).transpose()?;
             reference::build_human_reference(reference::HumanReferenceOptions {
@@ -383,6 +386,7 @@ fn main() -> Result<()> {
                 cohort_seconds,
                 checkpoints: &checkpoints,
                 percentiles: &percentiles,
+                score_direction,
                 package: package.as_ref(),
                 minimum_match_fraction,
             })?;
