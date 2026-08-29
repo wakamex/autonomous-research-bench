@@ -1,0 +1,17 @@
+{
+  "run_id": "ahc044-aop-glm53-flash-high-20m-v5",
+  "started_at": "2026-08-29T03:48:42.412505926+00:00",
+  "started_monotonic": 570729.46613751,
+  "duration_seconds": 1200.0,
+  "problem_id": "ahc044",
+  "problem_package_sha256": "28552e8804f5c8accc5b1cfb23a4b6b9a0b31815c353b5cc302666c90f52c705",
+  "public_cases": "/code/ARS/.ars-cache/ahc044-public-88d414e",
+  "evaluator_cpu": 14,
+  "public_evaluator_cpu_seconds": 0.05487800000000001,
+  "private_evaluator_cpu_seconds": 0.16146300000000005,
+  "model_calls": 1,
+  "input_tokens": 195698,
+  "output_tokens": 37561,
+  "cached_tokens": 143232,
+  "cost_usd": 0.0
+}

@@ -154,6 +154,8 @@ The [`first fixed AHC044 discovery baseline`](results/discovery/ahc044-aop-fixed
 
 The [`20-minute Luna continuation run`](results/discovery/ahc044-aop-luna-low-20m-v3/README.md) validates exact-session continuation, resumed-turn usage accounting, 15-candidate trajectory replay, and the evaluator-concurrency policy.
 
+The [`AOP 0.1.13 no-web discovery run`](results/discovery/ahc044-aop-glm53-flash-high-20m-v5/README.md) validates native app-server interruption accounting and pinned evaluation under network denial. GLM 5.3 Flash submitted the starter but spent the remaining time on unsubmitted local experiments, leaving all human-4h targets right-censored.
+
 The [`evaluator CPU policy`](docs/evaluator-concurrency.md) gives each run one pinned evaluator CPU on a distinct physical core. The reference 3950X host defaults to 10 simultaneous lanes so unrelated services retain capacity.
 
 The [`native AHC044 compatibility run`](results/discovery/ahc044-native-runner-v1/README.md) matches all 15 archived private scores and is 6.26 times faster than the comparable ALE-Bench evaluation.

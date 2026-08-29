@@ -1,0 +1,21 @@
+{
+  "schema_version": "ars.system-manifest.v1",
+  "name": "aop-codex-glm53-flash-high-20m-v5",
+  "status": "discovery",
+  "harness": "AOP 0.1.13",
+  "agent": "codex",
+  "inference_provider": "zai-coding-plan",
+  "model": "glm-5.3-flash",
+  "effort": "high",
+  "duration_seconds": 1200,
+  "track": "single-model",
+  "problem_id": "ahc044",
+  "candidate_file": "benchmarks/ahc044/solution.cpp",
+  "public_evaluator": "controller-installed native ARS, 50 cases, inheriting the Codex workspace sandbox",
+  "private_evaluator": "controller-installed native ARS, held-out cases",
+  "evaluator_workers": 1,
+  "evaluator_cpu_policy": "one pinned logical CPU selected from the least-used distinct physical cores",
+  "evaluator_cpu": 14,
+  "agent_network_policy": "AOP --no-web with Codex web search disabled and workspace tool network denied",
+  "human_steering": false
+}
