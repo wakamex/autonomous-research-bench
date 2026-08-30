@@ -1,3 +1,4 @@
+mod broker;
 mod concurrency;
 mod cpu;
 mod evaluator;
@@ -133,11 +134,37 @@ enum Commands {
     },
     Submit {
         #[arg(long)]
-        run_dir: PathBuf,
+        run_dir: Option<PathBuf>,
         #[arg(long)]
         source: PathBuf,
         #[arg(long, default_value = "problems/ahc044")]
         problem: PathBuf,
+        #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
+        sandbox: Sandbox,
+    },
+    SubmissionBroker {
+        #[arg(long)]
+        socket: PathBuf,
+        #[arg(long)]
+        run_dir: PathBuf,
+        #[arg(long, default_value = "problems/ahc044")]
+        problem: PathBuf,
+        #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
+        sandbox: Sandbox,
+        #[arg(long)]
+        max_submissions: Option<usize>,
+    },
+    PreflightSubmit {
+        #[arg(long)]
+        workspace: PathBuf,
+        #[arg(long)]
+        source: PathBuf,
+        #[arg(long, default_value = "problems/ahc044")]
+        problem: PathBuf,
+        #[arg(long)]
+        public_cases: PathBuf,
+        #[arg(long)]
+        evaluator_cpu: usize,
         #[arg(long, value_enum, default_value_t = Sandbox::Bwrap)]
         sandbox: Sandbox,
     },
@@ -326,16 +353,55 @@ fn main() -> Result<()> {
             problem,
             sandbox,
         } => {
+            let default_socket = Path::new("/workspace/.ars-submit.sock");
+            let socket = std::env::var_os("ARS_SUBMIT_SOCKET")
+                .map(PathBuf::from)
+                .or_else(|| default_socket.exists().then(|| default_socket.to_owned()));
+            let result = if let Some(socket) = socket {
+                broker::submit(&socket, &source)?
+            } else {
+                let run_dir = run_dir
+                    .context("--run-dir is required when no submission broker is available")?;
+                cpu::enforce(events::read_state(&run_dir)?.evaluator_cpu)?;
+                events::submit(&run_dir, &Package::load(&problem)?, &source, 1, sandbox)?
+            };
+            println!("{}", serde_json::to_string(&result)?);
+        }
+        Commands::SubmissionBroker {
+            socket,
+            run_dir,
+            problem,
+            sandbox,
+            max_submissions,
+        } => {
             cpu::enforce(events::read_state(&run_dir)?.evaluator_cpu)?;
+            broker::serve(
+                &socket,
+                &run_dir,
+                &Package::load(&problem)?,
+                sandbox,
+                max_submissions,
+            )?;
+        }
+        Commands::PreflightSubmit {
+            workspace,
+            source,
+            problem,
+            public_cases,
+            evaluator_cpu,
+            sandbox,
+        } => {
+            let package = Package::load(&problem)?;
             println!(
                 "{}",
-                serde_json::to_string(&events::submit(
-                    &run_dir,
-                    &Package::load(&problem)?,
-                    &source,
-                    1,
-                    sandbox
-                )?)?
+                serde_json::to_string(&broker::preflight(broker::PreflightOptions {
+                    workspace: &workspace,
+                    source: &source,
+                    package: &package,
+                    public_cases: &public_cases,
+                    evaluator_cpu,
+                    sandbox,
+                })?)?
             );
         }
         Commands::ContinuationPrompt { run_dir } => {

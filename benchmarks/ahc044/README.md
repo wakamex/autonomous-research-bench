@@ -5,9 +5,7 @@ Read the official English statement at [`../../sources/atcoder/statements/ahc044
 Submit a candidate for timestamped public evaluation with:
 
 ```sh
-ars submit \
-  --run-dir "$ARS_RUN_DIR" \
-  --source benchmarks/ahc044/solution.cpp
+ars submit --source benchmarks/ahc044/solution.cpp
 ```
 
 The submission command archives the exact source before evaluation. Its JSON output contains the 50-case public score plus `elapsed_seconds` and `remaining_seconds` from the benchmark clock. Private scores are calculated only after the run and are never shown to the research system.

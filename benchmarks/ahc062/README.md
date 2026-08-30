@@ -5,10 +5,7 @@ Read the official English statement at [`../../sources/atcoder/statements/ahc062
 Submit a candidate for timestamped public evaluation with:
 
 ```sh
-ars submit \\
-  --run-dir "$ARS_RUN_DIR" \\
-  --problem problems/ahc062 \\
-  --source benchmarks/ahc062/solution.cpp
+ars submit --source benchmarks/ahc062/solution.cpp
 ```
 
 The run's assigned evaluator CPU and one-worker policy apply automatically. Private scores are calculated only after the run and are never shown to the research system.

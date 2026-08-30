@@ -44,9 +44,7 @@ Time to human 4h P90
 Time to human 4h P99
 ```
 
-A threshold not reached within four hours is right-censored, not assigned a
-fabricated completion time. Same-time human percentiles at the required
-checkpoints remain a separate view of progress.
+A threshold not reached within four hours is reported as `Not reached (>4h)`. The underlying record retains right-censoring rather than assigning a fabricated completion time. Same-time human percentiles at the required checkpoints remain a separate view of progress.
 
 ## Why four hours
 
@@ -174,6 +172,8 @@ Use reduced seeds only if rank and score stability remain adequate. Seed reducti
 ## Phase 4: system discovery runs
 
 Run a small, diverse panel of frozen systems on the union of both candidate suites. Use the same system configuration, model-call concurrency rule, hardware allocation, evaluator policy, and four-hour cap for every problem.
+
+Run benchmark problems serially for each provider credential. Separate problems must not compete for provider request rate or usage allowance. Controlled-model and single-model tracks permit one concurrent model inference within the active problem; the unlimited track may use its declared internal concurrency within that problem. A provider-quota failure caused by another overlapping benchmark lane is an infrastructure failure and must not be scored as model performance.
 
 At minimum, include systems expected to differ in:
 

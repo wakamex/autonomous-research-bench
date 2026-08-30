@@ -77,6 +77,65 @@ fn evaluates_and_classifies_native_candidates() {
     );
 }
 
+#[test]
+fn broker_records_a_submission_from_a_read_only_outer_filesystem() {
+    let root = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let binary = env!("CARGO_BIN_EXE_ars");
+    let temp = tempfile::tempdir().unwrap();
+    let seeds = temp.path().join("seeds.txt");
+    fs::write(&seeds, "0\n").unwrap();
+    let cases = temp.path().join("cases");
+    let prepared = Command::new(binary)
+        .current_dir(root)
+        .args(["prepare", "--problem", "problems/ahc044", "--output"])
+        .arg(&cases)
+        .arg("--seeds")
+        .arg(&seeds)
+        .status()
+        .unwrap();
+    assert!(prepared.success());
+
+    let workspace = temp.path().join("workspace");
+    fs::create_dir(&workspace).unwrap();
+    write_source(
+        &workspace,
+        "solution.cpp",
+        r#"
+        #include <iostream>
+        int main() { int n, l, x; std::cin >> n >> l; for(int i=0;i<n;i++) std::cin >> x;
+        for(int i=0;i<n;i++) std::cout << i << ' ' << i << '\n'; }
+    "#,
+    );
+    let cpu = unsafe { libc::sched_getcpu() };
+    assert!(cpu >= 0);
+    let output = Command::new(binary)
+        .current_dir(root)
+        .args(["preflight-submit", "--workspace"])
+        .arg(&workspace)
+        .args(["--source", "solution.cpp", "--problem"])
+        .arg(root.join("problems/ahc044"))
+        .arg("--public-cases")
+        .arg(&cases)
+        .args(["--evaluator-cpu", &cpu.to_string(), "--sandbox", "none"])
+        .output()
+        .unwrap();
+    assert!(
+        output.status.success(),
+        "{}",
+        String::from_utf8_lossy(&output.stderr)
+    );
+    let result: Value = serde_json::from_slice(&output.stdout).unwrap();
+    assert_eq!(result["candidate_id"], "candidate-0001");
+    assert_eq!(result["judge_result"], "ACCEPTED");
+    assert!(fs::read_dir(&workspace).unwrap().all(|entry| {
+        !entry
+            .unwrap()
+            .file_name()
+            .to_string_lossy()
+            .starts_with(".ars-preflight-")
+    }));
+}
+
 fn evaluate(binary: &str, root: &Path, cases: &Path, source: &Path, sandbox: &str) -> String {
     let output = Command::new(binary)
         .current_dir(root)

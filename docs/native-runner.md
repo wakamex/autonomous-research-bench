@@ -29,6 +29,36 @@ Official deployment installs the release binary, problem package, and public
 case bundle outside the agent-writable workspace. Repository-local execution is
 for development only.
 
+## Agent submission broker
+
+Agent runs must receive no write access to the authoritative run directory. The host starts `ars submission-broker` with the run directory, problem package, public cases already recorded in run state, and evaluator sandbox. The broker listens on a mode-0600 Unix socket placed inside the task worktree. In the standard AOP edit profile, `ars submit --source benchmarks/PROBLEM/solution.cpp` finds that socket at `/workspace/.ars-submit.sock`. The client sends the source contents to the broker; the broker owns deadline checks, candidate numbering, timestamps, source archival, evaluation, and event writes. `ARS_SUBMIT_SOCKET` remains available as an override for other workspace layouts.
+
+This boundary prevents the failure seen in the ten-lane GLM run, where `$ARS_RUN_DIR` was read-only inside AOP and agents diverted evaluations into writable `/tmp` copies. It also avoids the unsafe alternative of making the event log agent-writable.
+
+Before starting a scored clock, run the starter through the same read-only outer-filesystem boundary:
+
+```sh
+ars preflight-submit \
+  --workspace "$AOP_WORKTREE" \
+  --problem problems/ahc044 \
+  --public-cases "$PUBLIC_CASES" \
+  --source benchmarks/ahc044/solution.cpp \
+  --evaluator-cpu 14
+```
+
+The preflight creates a temporary unscored run, starts the real broker, invokes the real `ars submit` client inside a bubblewrap view where only the workspace is writable, and requires exactly one accepted authoritative evaluation. A failed preflight prevents the scored run from starting.
+
+For the scored run, keep the run directory outside the AOP worktree and place only the socket inside it:
+
+```sh
+ars submission-broker \
+  --socket "$AOP_WORKTREE/.ars-submit.sock" \
+  --run-dir "$RUN_DIR" \
+  --problem problems/ahc044 &
+```
+
+The broker is an ARS controller process, not part of the submitted harness. Stop it after AOP exits and before private evaluation.
+
 ## AHC044 compatibility and Sprint-9 coverage
 
 The native scorer reproduced the ALE-Bench public and private scores for all 15
