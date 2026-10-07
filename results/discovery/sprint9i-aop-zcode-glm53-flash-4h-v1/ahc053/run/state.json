@@ -1,0 +1,17 @@
+{
+  "run_id": "sprint9i-zcode-glm53-ahc053-v1",
+  "started_at": "2026-09-06T05:07:11.912756294+00:00",
+  "started_monotonic": 446230.971619542,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc053",
+  "problem_package_sha256": "3333e4b9e38927e15a9088a673bf8f0a0410fedb85c5cdbfd14e36fb71da2d88",
+  "public_cases": "/code/ARS/.aop/eval-bundles/sprint9i-aop-zcode-glm53-flash-4h-v1/ahc053-public",
+  "evaluator_cpu": 28,
+  "public_evaluator_cpu_seconds": 0.115949,
+  "private_evaluator_cpu_seconds": 0.0,
+  "model_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cached_tokens": 0,
+  "cost_usd": 0.0
+}
