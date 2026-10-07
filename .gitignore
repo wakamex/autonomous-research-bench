@@ -17,3 +17,4 @@ target/
 /sources/time-budget-benchmarks/mini.md
 /results/**/aop/**/events.jsonl
 /results/**/aop/**/events.jsonl.gz
+/AGENTS.local.md
