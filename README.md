@@ -47,11 +47,14 @@ cargo build --release --locked
 target/release/ars --help
 ```
 
-Problem packages contain a manifest, the official generator and tester source,
-public seeds, and historical rank data. The runner builds official tools once,
-caches generated inputs by package identity, compiles each candidate once, and
-evaluates cases concurrently as native processes. Bubblewrap provides
-filesystem and network isolation without a container daemon.
+Problem packages contain a manifest, public seeds, and any ARS tester adapter. The official generator and tester sources and historical rank data are not redistributed here; fetch them from the archives recorded in each manifest, which the script verifies by SHA-256:
+
+```sh
+uv run scripts/fetch_problem_packages.py
+cargo test --release --locked
+```
+
+The runner builds official tools once, caches generated inputs by package identity, compiles each candidate once, and evaluates cases concurrently as native processes. Bubblewrap provides filesystem and network isolation without a container daemon.
 
 The initial package is [`problems/ahc044`](problems/ahc044). See the
 [`native runner design`](docs/native-runner.md) and
