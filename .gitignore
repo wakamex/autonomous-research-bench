@@ -15,3 +15,5 @@ target/
 /sources/time-budget-benchmarks/paperbench.md
 /sources/time-budget-benchmarks/mle.md
 /sources/time-budget-benchmarks/mini.md
+/results/**/aop/**/events.jsonl
+/results/**/aop/**/events.jsonl.gz
