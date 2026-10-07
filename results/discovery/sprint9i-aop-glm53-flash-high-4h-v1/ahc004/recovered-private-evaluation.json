@@ -1,0 +1,817 @@
+{
+  "judge_result": "ACCEPTED",
+  "score": 5053124394,
+  "wall_seconds": 282.515679835,
+  "cpu_seconds": 276.38770400000004,
+  "compile_seconds": 1.892462254,
+  "cases": 100,
+  "workers": 1,
+  "sandbox": "bwrap",
+  "source_sha256": "058a5a53842749a0aa5415b863646880eb81fab2186588faca336b47125affd5",
+  "candidate_binary_sha256": "b69b9f00a11b5c15341b057a0a73a56fa820069d3394aeec0ca6cd04bbed735d",
+  "tester_sha256": "63717d3c75db831c2ac11525452f79df555f024eeeaf73e7026b46a2a740dabd",
+  "compiler": "g++ (GCC) 16.2.1 20260819 (Red Hat 16.2.1-2)",
+  "problem_package_sha256": "0bc549a6e60f62b2aaa72160447d31e91fd6f4b0bfc521697ea8304041d3e2d6",
+  "case_results": [
+    {
+      "case": "0000.txt",
+      "judge_result": "ACCEPTED",
+      "score": 75302663,
+      "wall_seconds": 2.711242439,
+      "cpu_seconds": 2.682163,
+      "peak_memory_bytes": 81666048
+    },
+    {
+      "case": "0001.txt",
+      "judge_result": "ACCEPTED",
+      "score": 40361446,
+      "wall_seconds": 2.86769741,
+      "cpu_seconds": 2.834099,
+      "peak_memory_bytes": 172204032
+    },
+    {
+      "case": "0002.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33572711,
+      "wall_seconds": 2.790161044,
+      "cpu_seconds": 2.763001,
+      "peak_memory_bytes": 136888320
+    },
+    {
+      "case": "0003.txt",
+      "judge_result": "ACCEPTED",
+      "score": 60566449,
+      "wall_seconds": 2.728203469,
+      "cpu_seconds": 2.702092,
+      "peak_memory_bytes": 95952896
+    },
+    {
+      "case": "0004.txt",
+      "judge_result": "ACCEPTED",
+      "score": 53725490,
+      "wall_seconds": 2.792734872,
+      "cpu_seconds": 2.761005,
+      "peak_memory_bytes": 132550656
+    },
+    {
+      "case": "0005.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42002782,
+      "wall_seconds": 2.862208217,
+      "cpu_seconds": 2.833754,
+      "peak_memory_bytes": 174886912
+    },
+    {
+      "case": "0006.txt",
+      "judge_result": "ACCEPTED",
+      "score": 51159196,
+      "wall_seconds": 2.78189007,
+      "cpu_seconds": 2.751521,
+      "peak_memory_bytes": 133853184
+    },
+    {
+      "case": "0007.txt",
+      "judge_result": "ACCEPTED",
+      "score": 57641921,
+      "wall_seconds": 2.7275164739999997,
+      "cpu_seconds": 2.698877,
+      "peak_memory_bytes": 95100928
+    },
+    {
+      "case": "0008.txt",
+      "judge_result": "ACCEPTED",
+      "score": 67354597,
+      "wall_seconds": 2.7450686060000002,
+      "cpu_seconds": 2.7137320000000003,
+      "peak_memory_bytes": 104251392
+    },
+    {
+      "case": "0009.txt",
+      "judge_result": "ACCEPTED",
+      "score": 35625000,
+      "wall_seconds": 2.8110975639999998,
+      "cpu_seconds": 2.7807690000000003,
+      "peak_memory_bytes": 147140608
+    },
+    {
+      "case": "0010.txt",
+      "judge_result": "ACCEPTED",
+      "score": 40396341,
+      "wall_seconds": 2.815617975,
+      "cpu_seconds": 2.773373,
+      "peak_memory_bytes": 144994304
+    },
+    {
+      "case": "0011.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38581315,
+      "wall_seconds": 2.80156924,
+      "cpu_seconds": 2.772265,
+      "peak_memory_bytes": 141561856
+    },
+    {
+      "case": "0012.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38178295,
+      "wall_seconds": 2.769596074,
+      "cpu_seconds": 2.735322,
+      "peak_memory_bytes": 119136256
+    },
+    {
+      "case": "0013.txt",
+      "judge_result": "ACCEPTED",
+      "score": 48892405,
+      "wall_seconds": 2.843778684,
+      "cpu_seconds": 2.813351,
+      "peak_memory_bytes": 164356096
+    },
+    {
+      "case": "0014.txt",
+      "judge_result": "ACCEPTED",
+      "score": 84722222,
+      "wall_seconds": 2.742937439,
+      "cpu_seconds": 2.713416,
+      "peak_memory_bytes": 108478464
+    },
+    {
+      "case": "0015.txt",
+      "judge_result": "ACCEPTED",
+      "score": 54716981,
+      "wall_seconds": 2.752320168,
+      "cpu_seconds": 2.722147,
+      "peak_memory_bytes": 110555136
+    },
+    {
+      "case": "0016.txt",
+      "judge_result": "ACCEPTED",
+      "score": 51351351,
+      "wall_seconds": 2.768583722,
+      "cpu_seconds": 2.738672,
+      "peak_memory_bytes": 122748928
+    },
+    {
+      "case": "0017.txt",
+      "judge_result": "ACCEPTED",
+      "score": 52423698,
+      "wall_seconds": 2.756704746,
+      "cpu_seconds": 2.729888,
+      "peak_memory_bytes": 115310592
+    },
+    {
+      "case": "0018.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38530735,
+      "wall_seconds": 2.865327556,
+      "cpu_seconds": 2.835399,
+      "peak_memory_bytes": 172916736
+    },
+    {
+      "case": "0019.txt",
+      "judge_result": "ACCEPTED",
+      "score": 64751553,
+      "wall_seconds": 2.769115514,
+      "cpu_seconds": 2.741667,
+      "peak_memory_bytes": 124760064
+    },
+    {
+      "case": "0020.txt",
+      "judge_result": "ACCEPTED",
+      "score": 49411765,
+      "wall_seconds": 2.811610424,
+      "cpu_seconds": 2.778763,
+      "peak_memory_bytes": 141438976
+    },
+    {
+      "case": "0021.txt",
+      "judge_result": "ACCEPTED",
+      "score": 46643718,
+      "wall_seconds": 2.774168487,
+      "cpu_seconds": 2.746276,
+      "peak_memory_bytes": 126205952
+    },
+    {
+      "case": "0022.txt",
+      "judge_result": "ACCEPTED",
+      "score": 36397749,
+      "wall_seconds": 2.7979034179999998,
+      "cpu_seconds": 2.766442,
+      "peak_memory_bytes": 138547200
+    },
+    {
+      "case": "0023.txt",
+      "judge_result": "ACCEPTED",
+      "score": 41614907,
+      "wall_seconds": 2.8104768890000003,
+      "cpu_seconds": 2.781021,
+      "peak_memory_bytes": 147623936
+    },
+    {
+      "case": "0024.txt",
+      "judge_result": "ACCEPTED",
+      "score": 62176871,
+      "wall_seconds": 2.805935688,
+      "cpu_seconds": 2.776985,
+      "peak_memory_bytes": 142647296
+    },
+    {
+      "case": "0025.txt",
+      "judge_result": "ACCEPTED",
+      "score": 59325843,
+      "wall_seconds": 2.725707303,
+      "cpu_seconds": 2.697415,
+      "peak_memory_bytes": 93016064
+    },
+    {
+      "case": "0026.txt",
+      "judge_result": "ACCEPTED",
+      "score": 47203947,
+      "wall_seconds": 2.829983275,
+      "cpu_seconds": 2.801005,
+      "peak_memory_bytes": 157556736
+    },
+    {
+      "case": "0027.txt",
+      "judge_result": "ACCEPTED",
+      "score": 50000000,
+      "wall_seconds": 2.774337151,
+      "cpu_seconds": 2.74453,
+      "peak_memory_bytes": 122609664
+    },
+    {
+      "case": "0028.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42879499,
+      "wall_seconds": 2.796979737,
+      "cpu_seconds": 2.756398,
+      "peak_memory_bytes": 138711040
+    },
+    {
+      "case": "0029.txt",
+      "judge_result": "ACCEPTED",
+      "score": 22222222,
+      "wall_seconds": 2.908482401,
+      "cpu_seconds": 2.874179,
+      "peak_memory_bytes": 197402624
+    },
+    {
+      "case": "0030.txt",
+      "judge_result": "ACCEPTED",
+      "score": 46507353,
+      "wall_seconds": 2.7626626979999998,
+      "cpu_seconds": 2.7332549999999998,
+      "peak_memory_bytes": 118788096
+    },
+    {
+      "case": "0031.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42415317,
+      "wall_seconds": 2.831709713,
+      "cpu_seconds": 2.795485,
+      "peak_memory_bytes": 155688960
+    },
+    {
+      "case": "0032.txt",
+      "judge_result": "ACCEPTED",
+      "score": 48011782,
+      "wall_seconds": 2.807083712,
+      "cpu_seconds": 2.7727500000000003,
+      "peak_memory_bytes": 140546048
+    },
+    {
+      "case": "0033.txt",
+      "judge_result": "ACCEPTED",
+      "score": 51964286,
+      "wall_seconds": 2.80925855,
+      "cpu_seconds": 2.776421,
+      "peak_memory_bytes": 145149952
+    },
+    {
+      "case": "0034.txt",
+      "judge_result": "ACCEPTED",
+      "score": 36434109,
+      "wall_seconds": 2.780306163,
+      "cpu_seconds": 2.749721,
+      "peak_memory_bytes": 127119360
+    },
+    {
+      "case": "0035.txt",
+      "judge_result": "ACCEPTED",
+      "score": 45242370,
+      "wall_seconds": 2.808582065,
+      "cpu_seconds": 2.779637,
+      "peak_memory_bytes": 144769024
+    },
+    {
+      "case": "0036.txt",
+      "judge_result": "ACCEPTED",
+      "score": 46555324,
+      "wall_seconds": 2.769182624,
+      "cpu_seconds": 2.740099,
+      "peak_memory_bytes": 118390784
+    },
+    {
+      "case": "0037.txt",
+      "judge_result": "ACCEPTED",
+      "score": 40432099,
+      "wall_seconds": 2.814497948,
+      "cpu_seconds": 2.783452,
+      "peak_memory_bytes": 149688320
+    },
+    {
+      "case": "0038.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38933333,
+      "wall_seconds": 2.846861482,
+      "cpu_seconds": 2.814492,
+      "peak_memory_bytes": 163733504
+    },
+    {
+      "case": "0039.txt",
+      "judge_result": "ACCEPTED",
+      "score": 65822785,
+      "wall_seconds": 2.800066595,
+      "cpu_seconds": 2.770301,
+      "peak_memory_bytes": 137326592
+    },
+    {
+      "case": "0040.txt",
+      "judge_result": "ACCEPTED",
+      "score": 87927107,
+      "wall_seconds": 2.706516132,
+      "cpu_seconds": 2.677647,
+      "peak_memory_bytes": 83767296
+    },
+    {
+      "case": "0041.txt",
+      "judge_result": "ACCEPTED",
+      "score": 39784946,
+      "wall_seconds": 2.8944816270000002,
+      "cpu_seconds": 2.8621119999999998,
+      "peak_memory_bytes": 192430080
+    },
+    {
+      "case": "0042.txt",
+      "judge_result": "ACCEPTED",
+      "score": 49542683,
+      "wall_seconds": 2.800663718,
+      "cpu_seconds": 2.770592,
+      "peak_memory_bytes": 139984896
+    },
+    {
+      "case": "0043.txt",
+      "judge_result": "ACCEPTED",
+      "score": 39759036,
+      "wall_seconds": 2.762409343,
+      "cpu_seconds": 2.730983,
+      "peak_memory_bytes": 116097024
+    },
+    {
+      "case": "0044.txt",
+      "judge_result": "ACCEPTED",
+      "score": 48936170,
+      "wall_seconds": 2.834828872,
+      "cpu_seconds": 2.803314,
+      "peak_memory_bytes": 154873856
+    },
+    {
+      "case": "0045.txt",
+      "judge_result": "ACCEPTED",
+      "score": 73430962,
+      "wall_seconds": 2.7224681889999998,
+      "cpu_seconds": 2.692647,
+      "peak_memory_bytes": 93822976
+    },
+    {
+      "case": "0046.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38936535,
+      "wall_seconds": 2.806225053,
+      "cpu_seconds": 2.776694,
+      "peak_memory_bytes": 142888960
+    },
+    {
+      "case": "0047.txt",
+      "judge_result": "ACCEPTED",
+      "score": 85267035,
+      "wall_seconds": 2.732625156,
+      "cpu_seconds": 2.704102,
+      "peak_memory_bytes": 102645760
+    },
+    {
+      "case": "0048.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33977456,
+      "wall_seconds": 2.818126739,
+      "cpu_seconds": 2.786912,
+      "peak_memory_bytes": 152166400
+    },
+    {
+      "case": "0049.txt",
+      "judge_result": "ACCEPTED",
+      "score": 81583199,
+      "wall_seconds": 2.755103589,
+      "cpu_seconds": 2.726027,
+      "peak_memory_bytes": 116305920
+    },
+    {
+      "case": "0050.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42988506,
+      "wall_seconds": 2.742999088,
+      "cpu_seconds": 2.714697,
+      "peak_memory_bytes": 101478400
+    },
+    {
+      "case": "0051.txt",
+      "judge_result": "ACCEPTED",
+      "score": 39617084,
+      "wall_seconds": 2.87404557,
+      "cpu_seconds": 2.844528,
+      "peak_memory_bytes": 175566848
+    },
+    {
+      "case": "0052.txt",
+      "judge_result": "ACCEPTED",
+      "score": 53232759,
+      "wall_seconds": 2.75828561,
+      "cpu_seconds": 2.729797,
+      "peak_memory_bytes": 114388992
+    },
+    {
+      "case": "0053.txt",
+      "judge_result": "ACCEPTED",
+      "score": 86086957,
+      "wall_seconds": 2.740505363,
+      "cpu_seconds": 2.706398,
+      "peak_memory_bytes": 108204032
+    },
+    {
+      "case": "0054.txt",
+      "judge_result": "ACCEPTED",
+      "score": 44519393,
+      "wall_seconds": 2.780513208,
+      "cpu_seconds": 2.747953,
+      "peak_memory_bytes": 129945600
+    },
+    {
+      "case": "0055.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33582090,
+      "wall_seconds": 2.833640636,
+      "cpu_seconds": 2.801683,
+      "peak_memory_bytes": 154972160
+    },
+    {
+      "case": "0056.txt",
+      "judge_result": "ACCEPTED",
+      "score": 37569061,
+      "wall_seconds": 2.788940836,
+      "cpu_seconds": 2.7576359999999998,
+      "peak_memory_bytes": 132960256
+    },
+    {
+      "case": "0057.txt",
+      "judge_result": "ACCEPTED",
+      "score": 68871595,
+      "wall_seconds": 2.732034393,
+      "cpu_seconds": 2.701177,
+      "peak_memory_bytes": 100782080
+    },
+    {
+      "case": "0058.txt",
+      "judge_result": "ACCEPTED",
+      "score": 32388060,
+      "wall_seconds": 2.864496956,
+      "cpu_seconds": 2.832188,
+      "peak_memory_bytes": 173240320
+    },
+    {
+      "case": "0059.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33947368,
+      "wall_seconds": 2.864479435,
+      "cpu_seconds": 2.832429,
+      "peak_memory_bytes": 174678016
+    },
+    {
+      "case": "0060.txt",
+      "judge_result": "ACCEPTED",
+      "score": 43343653,
+      "wall_seconds": 2.7955425529999998,
+      "cpu_seconds": 2.764503,
+      "peak_memory_bytes": 141242368
+    },
+    {
+      "case": "0061.txt",
+      "judge_result": "ACCEPTED",
+      "score": 36699029,
+      "wall_seconds": 2.7934345560000002,
+      "cpu_seconds": 2.763483,
+      "peak_memory_bytes": 133947392
+    },
+    {
+      "case": "0062.txt",
+      "judge_result": "ACCEPTED",
+      "score": 31626120,
+      "wall_seconds": 2.905192007,
+      "cpu_seconds": 2.871944,
+      "peak_memory_bytes": 201072640
+    },
+    {
+      "case": "0063.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42993631,
+      "wall_seconds": 2.800641547,
+      "cpu_seconds": 2.767646,
+      "peak_memory_bytes": 144850944
+    },
+    {
+      "case": "0064.txt",
+      "judge_result": "ACCEPTED",
+      "score": 53744493,
+      "wall_seconds": 2.75602552,
+      "cpu_seconds": 2.726613,
+      "peak_memory_bytes": 112586752
+    },
+    {
+      "case": "0065.txt",
+      "judge_result": "ACCEPTED",
+      "score": 57173913,
+      "wall_seconds": 2.727309868,
+      "cpu_seconds": 2.696313,
+      "peak_memory_bytes": 95584256
+    },
+    {
+      "case": "0066.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38028169,
+      "wall_seconds": 2.908884599,
+      "cpu_seconds": 2.876753,
+      "peak_memory_bytes": 201646080
+    },
+    {
+      "case": "0067.txt",
+      "judge_result": "ACCEPTED",
+      "score": 45710627,
+      "wall_seconds": 2.8389039929999997,
+      "cpu_seconds": 2.802264,
+      "peak_memory_bytes": 161472512
+    },
+    {
+      "case": "0068.txt",
+      "judge_result": "ACCEPTED",
+      "score": 77427822,
+      "wall_seconds": 2.813105217,
+      "cpu_seconds": 2.779797,
+      "peak_memory_bytes": 142368768
+    },
+    {
+      "case": "0069.txt",
+      "judge_result": "ACCEPTED",
+      "score": 82961783,
+      "wall_seconds": 2.753323909,
+      "cpu_seconds": 2.7188369999999997,
+      "peak_memory_bytes": 118091776
+    },
+    {
+      "case": "0070.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33732535,
+      "wall_seconds": 2.787290729,
+      "cpu_seconds": 2.75576,
+      "peak_memory_bytes": 130646016
+    },
+    {
+      "case": "0071.txt",
+      "judge_result": "ACCEPTED",
+      "score": 56850716,
+      "wall_seconds": 2.738032637,
+      "cpu_seconds": 2.706586,
+      "peak_memory_bytes": 101990400
+    },
+    {
+      "case": "0072.txt",
+      "judge_result": "ACCEPTED",
+      "score": 53101737,
+      "wall_seconds": 2.723608504,
+      "cpu_seconds": 2.688444,
+      "peak_memory_bytes": 89374720
+    },
+    {
+      "case": "0073.txt",
+      "judge_result": "ACCEPTED",
+      "score": 58071279,
+      "wall_seconds": 2.734468358,
+      "cpu_seconds": 2.701634,
+      "peak_memory_bytes": 99241984
+    },
+    {
+      "case": "0074.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38088643,
+      "wall_seconds": 2.83022245,
+      "cpu_seconds": 2.791992,
+      "peak_memory_bytes": 155877376
+    },
+    {
+      "case": "0075.txt",
+      "judge_result": "ACCEPTED",
+      "score": 50753012,
+      "wall_seconds": 2.810322255,
+      "cpu_seconds": 2.768468,
+      "peak_memory_bytes": 139882496
+    },
+    {
+      "case": "0076.txt",
+      "judge_result": "ACCEPTED",
+      "score": 62612036,
+      "wall_seconds": 2.826414915,
+      "cpu_seconds": 2.79042,
+      "peak_memory_bytes": 150892544
+    },
+    {
+      "case": "0077.txt",
+      "judge_result": "ACCEPTED",
+      "score": 72626932,
+      "wall_seconds": 2.721543159,
+      "cpu_seconds": 2.692059,
+      "peak_memory_bytes": 89124864
+    },
+    {
+      "case": "0078.txt",
+      "judge_result": "ACCEPTED",
+      "score": 87991718,
+      "wall_seconds": 2.718016029,
+      "cpu_seconds": 2.686159,
+      "peak_memory_bytes": 91418624
+    },
+    {
+      "case": "0079.txt",
+      "judge_result": "ACCEPTED",
+      "score": 32367150,
+      "wall_seconds": 2.834915074,
+      "cpu_seconds": 2.8012740000000003,
+      "peak_memory_bytes": 161615872
+    },
+    {
+      "case": "0080.txt",
+      "judge_result": "ACCEPTED",
+      "score": 33618234,
+      "wall_seconds": 2.847380433,
+      "cpu_seconds": 2.810358,
+      "peak_memory_bytes": 161136640
+    },
+    {
+      "case": "0081.txt",
+      "judge_result": "ACCEPTED",
+      "score": 48154657,
+      "wall_seconds": 2.816313348,
+      "cpu_seconds": 2.781009,
+      "peak_memory_bytes": 147570688
+    },
+    {
+      "case": "0082.txt",
+      "judge_result": "ACCEPTED",
+      "score": 38319672,
+      "wall_seconds": 2.777323476,
+      "cpu_seconds": 2.743188,
+      "peak_memory_bytes": 120426496
+    },
+    {
+      "case": "0083.txt",
+      "judge_result": "ACCEPTED",
+      "score": 88819876,
+      "wall_seconds": 2.7194274910000003,
+      "cpu_seconds": 2.687075,
+      "peak_memory_bytes": 91418624
+    },
+    {
+      "case": "0084.txt",
+      "judge_result": "ACCEPTED",
+      "score": 35457064,
+      "wall_seconds": 2.886665212,
+      "cpu_seconds": 2.851417,
+      "peak_memory_bytes": 187379712
+    },
+    {
+      "case": "0085.txt",
+      "judge_result": "ACCEPTED",
+      "score": 39179632,
+      "wall_seconds": 2.867637737,
+      "cpu_seconds": 2.833717,
+      "peak_memory_bytes": 173035520
+    },
+    {
+      "case": "0086.txt",
+      "judge_result": "ACCEPTED",
+      "score": 49526814,
+      "wall_seconds": 2.837459112,
+      "cpu_seconds": 2.804007,
+      "peak_memory_bytes": 164507648
+    },
+    {
+      "case": "0087.txt",
+      "judge_result": "ACCEPTED",
+      "score": 29681529,
+      "wall_seconds": 2.89149128,
+      "cpu_seconds": 2.852912,
+      "peak_memory_bytes": 191873024
+    },
+    {
+      "case": "0088.txt",
+      "judge_result": "ACCEPTED",
+      "score": 53600000,
+      "wall_seconds": 2.841460511,
+      "cpu_seconds": 2.804889,
+      "peak_memory_bytes": 162664448
+    },
+    {
+      "case": "0089.txt",
+      "judge_result": "ACCEPTED",
+      "score": 55011136,
+      "wall_seconds": 2.727830469,
+      "cpu_seconds": 2.692755,
+      "peak_memory_bytes": 94199808
+    },
+    {
+      "case": "0090.txt",
+      "judge_result": "ACCEPTED",
+      "score": 34181818,
+      "wall_seconds": 2.810239982,
+      "cpu_seconds": 2.773567,
+      "peak_memory_bytes": 142684160
+    },
+    {
+      "case": "0091.txt",
+      "judge_result": "ACCEPTED",
+      "score": 41666667,
+      "wall_seconds": 2.754021625,
+      "cpu_seconds": 2.716724,
+      "peak_memory_bytes": 108740608
+    },
+    {
+      "case": "0092.txt",
+      "judge_result": "ACCEPTED",
+      "score": 80225080,
+      "wall_seconds": 2.758936365,
+      "cpu_seconds": 2.723255,
+      "peak_memory_bytes": 117202944
+    },
+    {
+      "case": "0093.txt",
+      "judge_result": "ACCEPTED",
+      "score": 49343066,
+      "wall_seconds": 2.8999631,
+      "cpu_seconds": 2.862693,
+      "peak_memory_bytes": 177405952
+    },
+    {
+      "case": "0094.txt",
+      "judge_result": "ACCEPTED",
+      "score": 88528139,
+      "wall_seconds": 2.716015065,
+      "cpu_seconds": 2.684191,
+      "peak_memory_bytes": 87748608
+    },
+    {
+      "case": "0095.txt",
+      "judge_result": "ACCEPTED",
+      "score": 47507331,
+      "wall_seconds": 2.872228659,
+      "cpu_seconds": 2.835519,
+      "peak_memory_bytes": 176025600
+    },
+    {
+      "case": "0096.txt",
+      "judge_result": "ACCEPTED",
+      "score": 55894309,
+      "wall_seconds": 2.738440896,
+      "cpu_seconds": 2.6936590000000002,
+      "peak_memory_bytes": 102182912
+    },
+    {
+      "case": "0097.txt",
+      "judge_result": "ACCEPTED",
+      "score": 42026826,
+      "wall_seconds": 2.822105468,
+      "cpu_seconds": 2.786077,
+      "peak_memory_bytes": 146018304
+    },
+    {
+      "case": "0098.txt",
+      "judge_result": "ACCEPTED",
+      "score": 34112150,
+      "wall_seconds": 2.825902523,
+      "cpu_seconds": 2.789769,
+      "peak_memory_bytes": 156905472
+    },
+    {
+      "case": "0099.txt",
+      "judge_result": "ACCEPTED",
+      "score": 50364964,
+      "wall_seconds": 2.81148086,
+      "cpu_seconds": 2.775318,
+      "peak_memory_bytes": 141156352
+    }
+  ]
+}
