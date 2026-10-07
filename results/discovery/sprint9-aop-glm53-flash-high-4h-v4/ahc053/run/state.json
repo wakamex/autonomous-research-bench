@@ -1,0 +1,17 @@
+{
+  "run_id": "glm53-high-ahc053-4h-v4",
+  "started_at": "2026-08-30T03:37:50.345520691+00:00",
+  "started_monotonic": 656477.399152385,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc053",
+  "problem_package_sha256": "3333e4b9e38927e15a9088a673bf8f0a0410fedb85c5cdbfd14e36fb71da2d88",
+  "public_cases": "/code/ARS/.ars-cache/ahc053-public-v2",
+  "evaluator_cpu": 10,
+  "public_evaluator_cpu_seconds": 0.0,
+  "private_evaluator_cpu_seconds": 0.0,
+  "model_calls": 1,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cached_tokens": 0,
+  "cost_usd": 0.0
+}
