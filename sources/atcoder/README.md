@@ -1,6 +1,6 @@
 # AtCoder source snapshot
 
-This directory preserves the official source material used to build the ARS catalog of rated AtCoder heuristic contests.
+This directory documents the official source material used to build the ARS catalog of rated AtCoder heuristic contests. The catalog, statements and submission snapshots are generated locally by the sourcing scripts and are not tracked, because AtCoder does not license its pages and data for redistribution.
 
 ## Scope
 
@@ -38,4 +38,4 @@ The default cutoff is fixed at August 12, 2026 so later contests do not silently
 - AtCoder contest archive: https://atcoder.jp/contests/archive?lang=en&category=0&keyword=&ratedType=4
 - ALE-Bench paper: https://arxiv.org/abs/2506.09050
 
-The copied statements remain subject to AtCoder's terms and the rights of their respective authors. They are preserved here as local research sources, not relicensed by ARS.
+Generated statements remain subject to AtCoder's terms and the rights of their respective authors.

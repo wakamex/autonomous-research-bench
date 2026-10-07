@@ -7,3 +7,7 @@ target/
 /.env
 /problems/*/tools/
 /problems/*/reference/
+/sources/atcoder/statements/
+/sources/atcoder/catalog.json
+/sources/atcoder/submissions-4h/*.csv.gz
+/references/human/submissions/*/*.cpp

@@ -7,8 +7,7 @@ when the contest ended earlier.
 
 The snapshot was retrieved from the AtCoder Problems time-based Submission API
 on August 12, 2026. The API is an unofficial index of public AtCoder metadata.
-The retrieval script, exact source URL, retrieval timestamp, row counts, and
-file hashes are preserved in this repository:
+The CSV files are not tracked; `uv run scripts/source_atcoder_submissions.py` regenerates them. The retrieval script, exact source URL, retrieval timestamp, row counts, and file hashes are preserved in this repository:
 
 - [`../../../scripts/source_atcoder_submissions.py`](../../../scripts/source_atcoder_submissions.py)
 - [`manifest.json`](manifest.json)

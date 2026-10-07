@@ -142,7 +142,7 @@ def main() -> None:
         "- [Source snapshot notes](../sources/atcoder/README.md)",
         "- [ALE-Bench paper](../papers/ale-bench-2506.09050.pdf)",
         "",
-        "The source inventory records official URLs and SHA-256 hashes. The complete official English statement HTML for each row is stored under `sources/atcoder/statements`.",
+        "The source inventory records official URLs and SHA-256 hashes. `uv run scripts/source_atcoder_catalog.py` writes it and the official English statement HTML for each row under `sources/atcoder/statements`; neither is tracked because AtCoder does not license its pages for redistribution.",
         "",
         "## Catalog",
         "",
