@@ -13,3 +13,4 @@
 - Local file: `ale-bench-2506.09050.pdf`
 - Pages: 46
 - SHA-256: `afb8481e20f07228260b5d1da38da663b3991363dae07cbe9a8ae1e7896e94c9`
+- License: [Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/); the full text is in [`../LICENSES/CC-BY-4.0.txt`](../LICENSES/CC-BY-4.0.txt). The PDF is redistributed unmodified.

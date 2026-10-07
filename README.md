@@ -204,3 +204,9 @@ Likely early work includes:
 ## Short description
 
 Autonomous Research Speedrun is a living benchmark for measuring how quickly AI research systems can improve solutions to optimization problems. Its first proposed suite, ARS-AHC, compares complete harness-and-model systems against historical human progress on AtCoder Heuristic Contests.
+
+## License
+
+ARS's own code, documentation, adapters and results are under the [MIT License](LICENSE). The [ALE-Bench paper](papers/ale-bench-2506.09050.pdf) by Imajuku et al. is redistributed unmodified under [CC BY 4.0](LICENSES/CC-BY-4.0.txt).
+
+Official AtCoder problem tools, statements, standings and submission data are not included. `scripts/fetch_problem_packages.py` downloads the problem tools from the archives recorded in each `problem.json`; ALE-Bench archives are licensed [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/), and AtCoder's own archives remain subject to [AtCoder's terms](https://atcoder.jp/tos?lang=en). The sourcing scripts in `scripts/` regenerate the statements and submission snapshots locally.
