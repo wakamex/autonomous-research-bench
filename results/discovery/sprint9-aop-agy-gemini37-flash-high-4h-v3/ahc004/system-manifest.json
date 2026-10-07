@@ -1,0 +1,21 @@
+{
+  "schema_version": "ars.system-manifest.v1",
+  "name": "aop-agy-gemini37-flash-high-4h-ahc004-v3",
+  "status": "discovery",
+  "harness": "AOP 0.1.13",
+  "agent": "agy",
+  "inference_provider": "google-oauth",
+  "model": "gemini-3.7-flash-high",
+  "effort": "high",
+  "duration_seconds": 14400,
+  "track": "single-model",
+  "problem_id": "ahc004",
+  "candidate_file": "benchmarks/ahc004/solution.cpp",
+  "public_evaluator": "native ARS submission broker, 50 cases",
+  "private_evaluator": "native ARS, held-out cases after the run",
+  "evaluator_workers": 1,
+  "evaluator_cpu_policy": "one pinned logical CPU selected from the least-used distinct physical cores",
+  "evaluator_cpu": 11,
+  "agent_network_policy": "AOP edit profile with prompt-level internet prohibition",
+  "human_steering": false
+}

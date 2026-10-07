@@ -1,0 +1,17 @@
+{
+  "run_id": "gemini37-high-ahc004-4h-v3",
+  "started_at": "2026-08-30T03:31:22.873747812+00:00",
+  "started_monotonic": 656089.927379446,
+  "duration_seconds": 14400.0,
+  "problem_id": "ahc004",
+  "problem_package_sha256": "0bc549a6e60f62b2aaa72160447d31e91fd6f4b0bfc521697ea8304041d3e2d6",
+  "public_cases": "/code/ARS/.ars-cache/ahc004-public-v2",
+  "evaluator_cpu": 11,
+  "public_evaluator_cpu_seconds": 0.0,
+  "private_evaluator_cpu_seconds": 0.0,
+  "model_calls": 0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "cached_tokens": 0,
+  "cost_usd": 0.0
+}
