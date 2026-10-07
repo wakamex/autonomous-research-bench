@@ -12,27 +12,27 @@ canonical configuration gives the solver an explicit `time_limit`, separates
 agent rollout from reproduction and grading, and stores timestamped submission
 directories. It creates initial and final workspace snapshots and can create
 intermediate snapshots by message count or elapsed seconds. Missing direct
-submissions are graded as zero. See the locally preserved
-[`PaperBench README`](../sources/time-budget-benchmarks/paperbench.md).
+submissions are graded as zero. See the
+[`PaperBench README`](https://github.com/openai/frontier-evals/blob/main/project/paperbench/README.md).
 
 mini-SWE-agent layers wall-clock, step, and cost limits. It checks limits before
 another model query, emits typed `TimeExceeded` or `LimitsExceeded` outcomes,
 and saves the trajectory from a `finally` block. Its timeout outcome contains an
 empty submission, so durable logging is guaranteed but useful task completion is
-not. See the locally preserved
-[`DefaultAgent reference`](../sources/time-budget-benchmarks/mini.md).
+not. See the
+[`DefaultAgent reference`](https://mini-swe-agent.com/latest/reference/agents/default/).
 
 MLE-Bench standardizes a 24-hour runtime and fixed compute resources, requires a
 CSV artifact, provides structural submission validation, and grades submission
 files independently of the agent implementation. Its current leaderboard also
 separates runs with materially different runtime or test-set access, which is a
 warning that time and feedback policies are part of result comparability. See
-the locally preserved [`MLE-Bench README`](../sources/time-budget-benchmarks/mle.md).
+the [`MLE-Bench README`](https://github.com/openai/mle-bench/).
 
 RE-Bench gives agents open-ended research environments with objective scoring
 tools and compares performance under fixed time budgets. It standardizes the
 task environment but leaves iteration and stopping policy to the agent scaffold.
-See the locally preserved [`RE-Bench README`](../sources/time-budget-benchmarks/rebench.md)
+See the [`RE-Bench README`](https://github.com/METR/RE-Bench/)
 and the [official paper](https://arxiv.org/abs/2411.15114).
 
 OpenHands adds a complementary harness technique rather than a benchmark rule:
@@ -46,7 +46,7 @@ last-second success implies good time awareness. GPT-5.4 reconstructed GPT-2
 inference from raw weights and fixed a minification bug with about 35 seconds
 left in a 15-minute task, but the published prompt and trajectory contain no
 overall countdown or deadline reminder. Harbor supplied the external timeout
-and scored the durable file in the workspace. See the locally preserved
+and scored the durable file in the workspace. See the
 [`gpt2-codegolf case study`](../sources/time-budget-benchmarks/gpt2-codegolf.md).
 
 ## Useful design pattern

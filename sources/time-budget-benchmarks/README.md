@@ -1,8 +1,6 @@
 # Time-budget benchmark sources
 
-Retrieved on 2026-08-13 from primary project documentation using the local
-web-to-Markdown extraction workflow. These are source snapshots, not ARS
-interpretations.
+Retrieved on 2026-08-13 from primary project documentation. The verbatim snapshots stay local and are not tracked, because they are other projects' documentation; the table records each upstream source, its HEAD at retrieval and the snapshot's SHA-256 so a fresh copy can be checked.
 
 | Local snapshot | Upstream source | Upstream HEAD at retrieval | SHA-256 |
 | --- | --- | --- | --- |

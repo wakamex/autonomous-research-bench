@@ -11,3 +11,7 @@ target/
 /sources/atcoder/catalog.json
 /sources/atcoder/submissions-4h/*.csv.gz
 /references/human/submissions/*/*.cpp
+/sources/time-budget-benchmarks/rebench.md
+/sources/time-budget-benchmarks/paperbench.md
+/sources/time-budget-benchmarks/mle.md
+/sources/time-budget-benchmarks/mini.md
