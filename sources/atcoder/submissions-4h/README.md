@@ -22,7 +22,7 @@ confirmed the manifest hashes and row counts, unique submission IDs within each
 contest, exact contest and problem IDs, and timestamps within every declared
 window.
 
-## Proposed ARS-10 at four hours
+## Proposed ARB-10 at four hours
 
 These are cumulative counts at the four-hour cutoff. A scored submission means
 an `AC` result. Other results include failed or invalid submissions such as WA,

@@ -1,5 +1,5 @@
 {
-  "schema_version": "ars.run-event.v1",
+  "schema_version": "arb.run-event.v1",
   "run_id": "example-ahc044-run",
   "sequence": 0,
   "event_type": "run.started",

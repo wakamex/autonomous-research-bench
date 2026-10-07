@@ -143,7 +143,7 @@ pub fn preflight(options: PreflightOptions<'_>) -> Result<Value> {
         evaluator_cpu: options.evaluator_cpu,
     })?;
 
-    let socket_name = format!(".ars-preflight-{}.sock", std::process::id());
+    let socket_name = format!(".arb-preflight-{}.sock", std::process::id());
     let socket = workspace.join(&socket_name);
     let executable = std::env::current_exe()?;
     let mut broker = Command::new(&executable)
@@ -187,7 +187,7 @@ pub fn preflight(options: PreflightOptions<'_>) -> Result<Value> {
         .arg(&workspace)
         .arg("--chdir")
         .arg(&workspace)
-        .args(["--setenv", "ARS_SUBMIT_SOCKET"])
+        .args(["--setenv", "ARB_SUBMIT_SOCKET"])
         .arg(&guest_socket)
         .arg(&executable)
         .arg("submit")

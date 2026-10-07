@@ -195,7 +195,7 @@ pub fn submit(
         "wall_seconds": evaluation.wall_seconds,
         "cpu_seconds": evaluation.cpu_seconds,
         "compile_seconds": evaluation.compile_seconds,
-        "score_basis": format!("native ARS {}-case sum", evaluation.cases),
+        "score_basis": format!("native ARB {}-case sum", evaluation.cases),
     }))
 }
 
@@ -403,7 +403,7 @@ fn append_event(
     let path = run_dir.join("events.jsonl");
     let sequence = read_events(&path)?.len();
     let event = Event {
-        schema_version: "ars.run-event.v1".into(),
+        schema_version: "arb.run-event.v1".into(),
         run_id: state.run_id.clone(),
         sequence,
         event_type: event_type.into(),
@@ -454,7 +454,7 @@ fn evaluation_payload(
         "sandbox": evaluation.sandbox,
         "elapsed_seconds": elapsed_seconds, "remaining_seconds": remaining_seconds,
         "rank": rank.map(|value| value.0), "performance": rank.map(|value| value.1),
-        "score_basis": format!("native ARS {}-case sum", evaluation.cases),
+        "score_basis": format!("native ARB {}-case sum", evaluation.cases),
         "source_sha256": evaluation.source_sha256,
         "candidate_binary_sha256": evaluation.candidate_binary_sha256,
         "tester_sha256": evaluation.tester_sha256,

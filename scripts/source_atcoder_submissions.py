@@ -127,7 +127,7 @@ def main() -> None:
 
     args.output.mkdir(parents=True, exist_ok=True)
     session = requests.Session()
-    session.headers["User-Agent"] = "ARS benchmark research submission metadata snapshot"
+    session.headers["User-Agent"] = "ARB benchmark research submission metadata snapshot"
     records = []
     for index, contest in enumerate(contests, 1):
         contest_id = contest["contest_id"]

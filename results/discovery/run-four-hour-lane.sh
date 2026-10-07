@@ -47,7 +47,7 @@ while (( $(date +%s) < deadline )); do
       command+=(--no-web)
     fi
   else
-    continuation=$(/code/ARS/target/release/ars continuation-prompt --run-dir "$run_dir")
+    continuation=$(/code/ARS/target/release/arb continuation-prompt --run-dir "$run_dir")
     command=("$aop_bin" resume "$resume_id" --timeout "$remaining" --json --prompt "$continuation")
   fi
   "${command[@]}" >"$result" 2>"$stderr"
@@ -75,5 +75,5 @@ while (( $(date +%s) < deadline )); do
 done
 
 if (( ${#results[@]} > 0 )); then
-  /code/ARS/target/release/ars stop --run-dir "$run_dir" "${results[@]}"
+  /code/ARS/target/release/arb stop --run-dir "$run_dir" "${results[@]}"
 fi

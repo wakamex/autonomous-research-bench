@@ -65,12 +65,12 @@ The common pattern is layered:
 Periodic snapshotting protects against process loss, but automatically scoring a
 snapshot changes an explicit-submission benchmark into a workspace-state
 benchmark. PaperBench can use workspace snapshots because the workspace is its
-submission object. ARS is modeled on human contest submissions, so only explicit
+submission object. ARB is modeled on human contest submissions, so only explicit
 candidate submissions should affect the score trajectory.
 
-## Recommended ARS behavior
+## Recommended ARB behavior
 
-ARS should make the run reliable without rescuing poor time management:
+ARB should make the run reliable without rescuing poor time management:
 
 - Archive and privately score a starter candidate at time zero. This guarantees
   a valid trajectory without spending model time on submission plumbing.

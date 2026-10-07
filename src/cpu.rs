@@ -8,7 +8,7 @@ use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use anyhow::{Context, Result, bail};
 
-const PINNED_CPU_ENV: &str = "ARS_EVALUATOR_CPU";
+const PINNED_CPU_ENV: &str = "ARB_EVALUATOR_CPU";
 
 #[derive(Debug)]
 struct CpuSample {
@@ -93,7 +93,7 @@ pub fn plan(count: usize, sample_seconds: f64) -> Result<serde_json::Value> {
         })
         .collect::<Vec<_>>();
     Ok(serde_json::json!({
-        "schema_version": "ars.cpu-plan.v1",
+        "schema_version": "arb.cpu-plan.v1",
         "default_max_concurrent_runs": 10,
         "requested_lanes": count,
         "effective_lanes": lanes.len(),
@@ -117,7 +117,7 @@ pub fn enforce(cpu: usize) -> Result<()> {
     let executable = env::current_exe()?.canonicalize()?;
     let working_directory = env::current_dir()?;
     let nonce = SystemTime::now().duration_since(UNIX_EPOCH)?.as_nanos();
-    let unit = format!("ars-evaluator-{}-{nonce}", std::process::id());
+    let unit = format!("arb-evaluator-{}-{nonce}", std::process::id());
     let mut command = Command::new("systemd-run");
     command
         .args(["--user", "--wait", "--pipe", "--collect", "--quiet"])
@@ -159,10 +159,10 @@ fn verify(cpu: usize) -> Result<()> {
     if !group
         .file_name()
         .and_then(|name| name.to_str())
-        .is_some_and(|name| name.starts_with("ars-evaluator-") && name.ends_with(".service"))
+        .is_some_and(|name| name.starts_with("arb-evaluator-") && name.ends_with(".service"))
     {
         bail!(
-            "process is not inside an ARS evaluator service: {}",
+            "process is not inside an ARB evaluator service: {}",
             group.display()
         );
     }

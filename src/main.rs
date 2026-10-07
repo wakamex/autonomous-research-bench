@@ -16,9 +16,9 @@ use problem::Package;
 
 #[derive(Parser)]
 #[command(
-    name = "ars",
+    name = "arb",
     version,
-    about = "Autonomous Research Speedrun runner and scorer"
+    about = "Autonomous Research Bench runner and scorer"
 )]
 struct Cli {
     #[command(subcommand)]
@@ -353,8 +353,8 @@ fn main() -> Result<()> {
             problem,
             sandbox,
         } => {
-            let default_socket = Path::new("/workspace/.ars-submit.sock");
-            let socket = std::env::var_os("ARS_SUBMIT_SOCKET")
+            let default_socket = Path::new("/workspace/.arb-submit.sock");
+            let socket = std::env::var_os("ARB_SUBMIT_SOCKET")
                 .map(PathBuf::from)
                 .or_else(|| default_socket.exists().then(|| default_socket.to_owned()));
             let result = if let Some(socket) = socket {
@@ -543,7 +543,7 @@ fn benchmark_workers(options: BenchmarkOptions<'_>) -> Result<()> {
         .find_map(|line| line.strip_prefix("model name\t: "))
         .unwrap_or("unknown")
         .to_owned();
-    let report = serde_json::json!({"schema_version": "ars.evaluator-worker-sweep.v2",
+    let report = serde_json::json!({"schema_version": "arb.evaluator-worker-sweep.v2",
         "status": "discovery", "runner": "native-rust", "problem_id": package.problem.id,
         "problem_package_sha256": package.manifest_hash, "source": source,
         "source_sha256": problem::file_sha256(source)?, "cases": package.problem.public_seeds.len(),

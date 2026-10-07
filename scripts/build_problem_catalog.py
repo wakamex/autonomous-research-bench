@@ -1,4 +1,4 @@
-"""Build the human-readable ARS problem catalog from sourced AtCoder metadata."""
+"""Build the human-readable ARB problem catalog from sourced AtCoder metadata."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ LITE = {
 }
 
 # Categories for FULL entries reproduce Table A1 of the ALE-Bench paper. Categories for every other
-# entry are ARS classifications based on the locally snapshotted official English statement.
+# entry are ARB classifications based on the locally snapshotted official English statement.
 ANNOTATIONS = {
     "ahc001": ("Packing", "Place non-overlapping ad rectangles near requested points and areas."),
     "ahc002": ("Routing", "Find a high-value walk without revisiting any underlying floor tile."),
@@ -132,7 +132,7 @@ def main() -> None:
         "",
         "AtCoder officially labels every row here as `Heuristic` and `Rated Range: All`. Its archive and task pages do not publish semantic tags such as routing, packing, or inference.",
         "",
-        "For the 40 ALE-Bench full-set entries, the category reproduces the `Genre` field in Table A1 of the ALE-Bench paper and is marked `Paper`. The remaining 32 categories are ARS classifications based on the official English statement and are marked `ARS`. They are concise research labels, not official AtCoder tags.",
+        "For the 40 ALE-Bench full-set entries, the category reproduces the `Genre` field in Table A1 of the ALE-Bench paper and is marked `Paper`. The remaining 32 categories are ARB classifications based on the official English statement and are marked `ARB`. They are concise research labels, not official AtCoder tags.",
         "",
         "`Full` marks the original 40-problem ALE-Bench set. `Lite` marks its curated 10-problem subset. `Original` means the contest was among the 49 rated candidates available at the paper cutoff; `Added` means it is one of the 23 rated contests held afterward.",
         "",
@@ -154,7 +154,7 @@ def main() -> None:
         contest_id = contest["contest_id"]
         category, description = ANNOTATIONS[contest_id]
         pool = "Original" if contest["start_time"][:10] < PAPER_CUTOFF else "Added"
-        category_source = "Paper" if contest_id in FULL else "ARS"
+        category_source = "Paper" if contest_id in FULL else "ARB"
         task = f"[{contest['task_title']}]({contest['task_url']})"
         lines.append(
             "| "

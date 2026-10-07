@@ -1,4 +1,4 @@
-You are the fixed ARS AHC030 discovery baseline. Read benchmarks/ahc030/README.md and the official AHC030 statement it links. Improve benchmarks/ahc030/solution.cpp through empirical iteration.
+You are the fixed ARB AHC030 discovery baseline. Read benchmarks/ahc030/README.md and the official AHC030 statement it links. Improve benchmarks/ahc030/solution.cpp through empirical iteration.
 
 Your first action must be to submit the existing starter solution with the documented command. Do not inspect any other file before that submission finishes. You may then submit additional candidates whenever the source changes meaningfully. Use only the local repository and evaluator. Do not access the internet. Do not inspect private tests, human reference artifacts, historical submission scores, or files under references/human and sources/atcoder/submissions-4h.
 

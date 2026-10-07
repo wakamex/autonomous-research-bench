@@ -7,7 +7,7 @@ use serde_json::Value;
 #[test]
 fn evaluates_and_classifies_native_candidates() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let binary = env!("CARGO_BIN_EXE_ars");
+    let binary = env!("CARGO_BIN_EXE_arb");
     let temp = tempfile::tempdir().unwrap();
     let seeds = temp.path().join("seeds.txt");
     fs::write(&seeds, "0\n").unwrap();
@@ -80,7 +80,7 @@ fn evaluates_and_classifies_native_candidates() {
 #[test]
 fn broker_records_a_submission_from_a_read_only_outer_filesystem() {
     let root = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let binary = env!("CARGO_BIN_EXE_ars");
+    let binary = env!("CARGO_BIN_EXE_arb");
     let temp = tempfile::tempdir().unwrap();
     let seeds = temp.path().join("seeds.txt");
     fs::write(&seeds, "0\n").unwrap();
@@ -132,7 +132,7 @@ fn broker_records_a_submission_from_a_read_only_outer_filesystem() {
             .unwrap()
             .file_name()
             .to_string_lossy()
-            .starts_with(".ars-preflight-")
+            .starts_with(".arb-preflight-")
     }));
 }
 

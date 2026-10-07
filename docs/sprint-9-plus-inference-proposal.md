@@ -56,9 +56,9 @@ The price of recency is infrastructure work. Only AHC004, AHC030, and AHC044 are
 in ALE-Bench, while the seven newer contests need scorer packaging, isolation,
 and comparability validation.
 
-## Comparison with ARS-10 breadth
+## Comparison with ARB-10 breadth
 
-| Property | Sprint-9 plus Inference | ARS-10 breadth |
+| Property | Sprint-9 plus Inference | ARB-10 breadth |
 | --- | ---: | ---: |
 | Categories represented | 10 of 10 | 10 of 10 |
 | Short contests | 9 | 6 |
@@ -71,7 +71,7 @@ and comparability validation.
 | Existing breadth-oriented curation | No | Yes |
 
 Sprint-9 plus Inference has denser early human data and lower expected
-contamination, but ARS-10 has ready-made infrastructure and deliberately chosen
+contamination, but ARB-10 has ready-made infrastructure and deliberately chosen
 research-behavior coverage. Contest duration alone is not evidence that the new
 suite is cheaper to evaluate.
 

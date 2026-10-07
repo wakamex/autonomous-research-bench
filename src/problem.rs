@@ -123,7 +123,7 @@ impl Package {
         let raw = fs::read(&manifest_path)
             .with_context(|| format!("read {}", manifest_path.display()))?;
         let problem: Problem = serde_json::from_slice(&raw).context("parse problem.json")?;
-        if problem.schema_version != "ars.problem.v1" {
+        if problem.schema_version != "arb.problem.v1" {
             bail!("unsupported problem schema {}", problem.schema_version);
         }
         if problem.kind != "batch" {
@@ -177,7 +177,7 @@ impl Package {
     pub fn build_tools(&self) -> Result<()> {
         let stamp = self
             .tools_source()
-            .join("target/release/.ars-package-sha256");
+            .join("target/release/.arb-package-sha256");
         if self.generator().is_file()
             && self.tester().is_file()
             && fs::read_to_string(&stamp).ok().as_deref() == Some(&self.manifest_hash)

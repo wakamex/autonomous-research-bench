@@ -1,12 +1,12 @@
 # Verifier-guided research branching proposal
 
-Status: discovery proposal. It is not part of the authoritative ARS runner or any promotion protocol.
+Status: discovery proposal. It is not part of the authoritative ARB runner or any promotion protocol.
 
 ## Decision to make
 
-ARS should test whether an LLM verifier can improve autonomous research by choosing which proposed experiment to implement next.
+ARB should test whether an LLM verifier can improve autonomous research by choosing which proposed experiment to implement next.
 
-This is different from using an LLM to select among completed candidate programs. ARS already has an objective public evaluator for that job. On the existing AHC044 Luna run, the public and private scores of the 15 candidates have Spearman rank correlation 0.9991, and candidate 13 is best under both. On the reference Ryzen 9 3950X, the selected 16-worker public evaluator takes a median 19.293 seconds for the 50 cases. A model judge applied after implementation would therefore compete with a fast and nearly perfect task-specific judge.
+This is different from using an LLM to select among completed candidate programs. ARB already has an objective public evaluator for that job. On the existing AHC044 Luna run, the public and private scores of the 15 candidates have Spearman rank correlation 0.9991, and candidate 13 is best under both. On the reference Ryzen 9 3950X, the selected 16-worker public evaluator takes a median 19.293 seconds for the 50 cases. A model judge applied after implementation would therefore compete with a fast and nearly perfect task-specific judge.
 
 The plausible opportunity occurs earlier:
 
@@ -28,7 +28,7 @@ The experiment should determine whether better branch selection saves more resea
 
 [LLM-as-a-Verifier](https://github.com/llm-as-a-verifier/llm-as-a-verifier) uses repeated, criteria-decomposed, probability-weighted model scores to rank candidate trajectories. Its [paper](https://arxiv.org/abs/2607.05391) reports improved best-of-N selection on agentic benchmarks. The related [self-verification result](https://x.com/jackyk02/status/2089421448784023553) uses one model to generate several completed trajectories and rank them with the same model.
 
-ARS is a useful environment for testing the underlying decision policy because it records objective score-versus-time trajectories. It can measure whether a verifier selected a productive idea, how much opportunity it missed relative to the best available branch, and whether the extra inference improved the final result under a fixed wall-clock budget.
+ARB is a useful environment for testing the underlying decision policy because it records objective score-versus-time trajectories. It can measure whether a verifier selected a productive idea, how much opportunity it missed relative to the best available branch, and whether the extra inference improved the final result under a fixed wall-clock budget.
 
 ## Desired end state
 
@@ -37,7 +37,7 @@ A successful verifier-guided policy would:
 - generate a small set of meaningfully different research proposals at selected checkpoints;
 - rank proposals without seeing their eventual evaluator results;
 - select branches with lower regret than ordinary model self-selection;
-- improve ARS score trajectories under the same research deadline;
+- improve ARB score trajectories under the same research deadline;
 - preserve explicit candidate submission, evaluator isolation, and auditability;
 - report all extra calls, tokens, cost, latency, and model concurrency; and
 - remain a harness policy rather than a hidden source of benchmark assistance.
@@ -53,7 +53,7 @@ This proposal does not:
 - add model-generated candidates to the score trajectory without explicit submission;
 - change the benchmark deadline, evaluator allocation, or private-test policy;
 - claim model self-improvement or update model weights;
-- promote the LLM-as-a-Verifier package as an ARS dependency before the method passes the discovery gates; or
+- promote the LLM-as-a-Verifier package as an ARB dependency before the method passes the discovery gates; or
 - use discovery results as promotion evidence.
 
 ## Hypotheses
@@ -66,7 +66,7 @@ Falsifier: continuous verification does not reduce paired selection regret on bl
 
 ### H2: Selection quality survives its inference overhead
 
-Implementing the verifier-selected branch produces a better ARS score trajectory under the same wall-clock deadline than the current single-path research loop.
+Implementing the verifier-selected branch produces a better ARB score trajectory under the same wall-clock deadline than the current single-path research loop.
 
 Falsifier: verification improves offline ranking but its extra latency, tokens, or context growth leaves the end-to-end trajectory unchanged or worse.
 
@@ -127,7 +127,7 @@ This stage is only a plumbing and weak predictive sanity check. Later AHC044 can
 
 This is the first material test.
 
-Create at least 20 proposal sets across frozen research checkpoints. Begin with AHC044 for infrastructure reuse, then add a second packaged problem before making a general ARS claim.
+Create at least 20 proposal sets across frozen research checkpoints. Begin with AHC044 for infrastructure reuse, then add a second packaged problem before making a general ARB claim.
 
 At each checkpoint:
 
@@ -136,7 +136,7 @@ At each checkpoint:
 1. Freeze the proposal set before invoking any ranker or implementation agent.
 1. Rank the same blinded set with every learned baseline. Random-choice outcomes are computed over the frozen set rather than consuming additional model calls.
 1. Independently implement every proposal from the same checkpoint in an isolated worktree with an equal implementation deadline and the same agent configuration.
-1. Submit and evaluate every resulting candidate through the authoritative ARS runner.
+1. Submit and evaluate every resulting candidate through the authoritative ARB runner.
 1. Treat invalid or unsubmitted branches as observed outcomes, not missing data.
 
 Implementing all branches is an offline discovery expense needed to reveal the oracle branch. It is not the proposed live policy.
@@ -159,7 +159,7 @@ Advance to Stage 3 only if all of the following hold:
 
 If the sample is too small or heterogeneous for the interval to stabilize, collect more discovery sets rather than weakening the gate after inspecting the result.
 
-### Stage 3: end-to-end ARS ablation
+### Stage 3: end-to-end ARB ablation
 
 Freeze the most promising Stage 2 policy before launching complete runs.
 
@@ -169,7 +169,7 @@ Compare:
 - self-choice: generate three proposals and let the generator choose one with an ordinary prompt; and
 - verifier-guided: generate the same number of proposals, rank them with the frozen continuous verifier, and implement one.
 
-Every run receives the same ARS wall-clock deadline, evaluator worker allocation, tool access, initial candidate, and model-call concurrency rule. Verifier time is inside the research deadline. Do not compensate the treatment with extra wall time. Report model calls, input, cached and output tokens, cost, evaluator CPU, candidate count, idle time, and time spent generating and ranking proposals.
+Every run receives the same ARB wall-clock deadline, evaluator worker allocation, tool access, initial candidate, and model-call concurrency rule. Verifier time is inside the research deadline. Do not compensate the treatment with extra wall time. Report model calls, input, cached and output tokens, cost, evaluator CPU, candidate count, idle time, and time spent generating and ranking proposals.
 
 Use repeated seeds on at least two problems. Primary outcomes are the complete private score-versus-time curve and time-to-human thresholds. Fixed-checkpoint scores, final best score, and attainment rate are summaries. Analyze whether any improvement comes from better experiment selection, fewer regressions, or simply more generated ideas.
 
@@ -198,7 +198,7 @@ Do not add criteria because they sound generally desirable. A new criterion need
 
 Test model topology separately from verifier methodology:
 
-| Configuration | ARS track implication | What it establishes | | --- | --- | --- | | Qwen3.8-27B generates and verifies sequentially | Single-model system | Same-model local viability | | Qwen3.8-27B generator plus hosted DeepSeek verifier | Unlimited system | Multi-model practical value | | One frozen model and branching policy supplied to every entrant | Potential controlled-model policy after promotion | Harness effect under a common model |
+| Configuration | ARB track implication | What it establishes | | --- | --- | --- | | Qwen3.8-27B generates and verifies sequentially | Single-model system | Same-model local viability | | Qwen3.8-27B generator plus hosted DeepSeek verifier | Unlimited system | Multi-model practical value | | One frozen model and branching policy supplied to every entrant | Potential controlled-model policy after promotion | Harness effect under a common model |
 
 Do not compare a same-model local treatment with an auxiliary hosted verifier and attribute the result only to continuous verification. Model identity, backend behavior, and verifier policy are separate causal factors.
 
@@ -220,7 +220,7 @@ Discovery may use a standalone local harness without changing the run-event sche
 
 If Stage 3 demonstrates value and the policy is promoted, then extend the event schema with explicit proposal-generation and branch-selection events. Do not add new authoritative event types, queues, or recovery machinery during the offline discovery stages.
 
-Hosted verifiers may receive public problem text and candidate proposals during declared discovery runs. Never send private evaluation inputs, hidden seeds, confidential system strategy, credentials, or unpublished competition material to an external verifier. Keep all ARS and ABC26 artifacts local unless the user explicitly approves a specific disclosure.
+Hosted verifiers may receive public problem text and candidate proposals during declared discovery runs. Never send private evaluation inputs, hidden seeds, confidential system strategy, credentials, or unpublished competition material to an external verifier. Keep all ARB and ABC26 artifacts local unless the user explicitly approves a specific disclosure.
 
 ## Stop limits and premise audit
 
@@ -229,7 +229,7 @@ Hosted verifiers may receive public problem text and candidate proposals during 
 - Stop Stage 2 after its declared proposal-set and cost ceiling. Extend it only under a new written hypothesis, not because the result is disappointing.
 - Do not proceed to live integration if continuous verification fails the paired regret gate or has negative estimated wall-clock value.
 - If objective public evaluation becomes cheap enough to test proposals directly, prefer the objective evaluator and retire the verifier hypothesis for that decision point.
-- Treat a benefit confined to one model, problem, proposal family, or external verifier as scoped evidence rather than a general ARS result.
+- Treat a benefit confined to one model, problem, proposal family, or external verifier as scoped evidence rather than a general ARB result.
 
 ## Proposed deliverables
 

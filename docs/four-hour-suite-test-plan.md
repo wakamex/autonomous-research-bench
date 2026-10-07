@@ -4,12 +4,12 @@ Status: planned discovery experiment. No suite has been selected.
 
 ## Decision to make
 
-ARS will test whether its primary speedrun benchmark should use:
+ARB will test whether its primary speedrun benchmark should use:
 
 1. the rule-selected Sprint-9 plus Inference suite, with a Sprint-9 ablation, or
-2. the mixed short and long ARS-10 breadth proposal.
+2. the mixed short and long ARB-10 breadth proposal.
 
-Both candidates will receive the same four-hour agent wall-clock cap per problem. We will select one only after auditing human trajectories, evaluator cost, ranking stability, and coverage. A third outcome, using Sprint as the primary leaderboard and ARS-10 as a separate promotion suite, remains explicitly allowed.
+Both candidates will receive the same four-hour agent wall-clock cap per problem. We will select one only after auditing human trajectories, evaluator cost, ranking stability, and coverage. A third outcome, using Sprint as the primary leaderboard and ARB-10 as a separate promotion suite, remains explicitly allowed.
 
 ## Metric under test
 
@@ -75,18 +75,18 @@ The same discovery results will be aggregated both with and without AHC030.
 This tests whether Inference contributes enough distinct capability signal to
 justify the tenth problem and the only long-contest exception.
 
-### Candidate B: ARS-10 breadth
+### Candidate B: ARB-10 breadth
 
-The current [ARS-10 proposal](ars-10-proposal.md) contains six short and four long contests and covers all ten ALE-Bench genres once.
+The current [ARB-10 proposal](arb-10-proposal.md) contains six short and four long contests and covers all ten ALE-Bench genres once.
 
 Every problem still receives only four hours of agent time. The original long-contest duration is not reproduced.
 
 ### Candidate C: split roles
 
-If neither suite dominates, ARS may use:
+If neither suite dominates, ARB may use:
 
 - Sprint for frequent development and the primary human speedrun leaderboard
-- ARS-10 breadth for less frequent promotion and generalization runs
+- ARB-10 breadth for less frequent promotion and generalization runs
 
 This is a first-class outcome, not a fallback to conceal an inconclusive comparison.
 
@@ -104,7 +104,7 @@ The nine short problems may have lower evaluator cost or simpler operational req
 
 Falsifier: measured evaluator CPU, candidate throughput, model tokens, or operational failure rates are not materially lower than for the mixed suite.
 
-### H3: ARS-10 has better capability coverage
+### H3: ARB-10 has better capability coverage
 
 The mixed suite may reveal system strengths and weaknesses hidden by a short-only suite, especially for inference under feedback and long-contest problem structures.
 
@@ -151,7 +151,7 @@ For each surviving problem:
 7. Freeze the transformation code and source hashes before agent promotion runs.
 
 This best-submission-per-human construction is the only human reference
-population. ARS will not publish separate all-entrant and active-contestant
+population. ARB will not publish separate all-entrant and active-contestant
 percentiles.
 
 ## Phase 3: evaluator cost audit
@@ -201,7 +201,7 @@ Discovery runs may tune the experimental protocol, but they cannot serve as prom
 
 ## Phase 5: suite comparison
 
-Compare Sprint-9, Sprint-9 plus Inference, and ARS-10 breadth using:
+Compare Sprint-9, Sprint-9 plus Inference, and ARB-10 breadth using:
 
 - Spearman and Kendall system-rank correlation with the broader audited pool
 - pairwise ranking inversion rate, especially for close systems
@@ -249,7 +249,7 @@ Numeric thresholds will be fixed after Phase 4, before promotion. The chosen pri
 - meet the declared evaluator and inference budget
 - avoid domination by one problem or one narrow research behavior
 
-If Sprint meets these criteria, it becomes the leading candidate for the primary speedrun suite. If ARS-10 materially improves ranking or capability coverage at acceptable cost, it remains a primary-suite candidate. If the tradeoff is real, use Candidate C and keep the roles separate.
+If Sprint meets these criteria, it becomes the leading candidate for the primary speedrun suite. If ARB-10 materially improves ranking or capability coverage at acceptable cost, it remains a primary-suite candidate. If the tradeoff is real, use Candidate C and keep the roles separate.
 
 ## Stop limits and premise audit
 
@@ -268,6 +268,6 @@ The experiment should produce:
 - evaluator cost and variance measurements
 - frozen discovery and promotion manifests
 - suite-ranking and pairwise-stability analysis
-- a written decision selecting Sprint, ARS-10 breadth, split roles, or neither
+- a written decision selecting Sprint, ARB-10 breadth, split roles, or neither
 
 Until those outputs exist, the four-hour cutoff and both suites remain hypotheses under test.

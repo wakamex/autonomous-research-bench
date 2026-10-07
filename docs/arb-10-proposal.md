@@ -1,8 +1,8 @@
-# ARS-10 discovery suite proposal
+# ARB-10 discovery suite proposal
 
 Status: discovery candidate, not an official benchmark suite.
 
-ARS needs a small suite for frequent, affordable comparisons of complete autonomous research systems. The original ALE-Bench lite set is a strong starting point, but it was selected primarily for difficulty and correlation with aggregate ALE-Bench performance. ARS also needs broad coverage of different research loops and reliable human score-versus-time trajectories.
+ARB needs a small suite for frequent, affordable comparisons of complete autonomous research systems. The original ALE-Bench lite set is a strong starting point, but it was selected primarily for difficulty and correlation with aggregate ALE-Bench performance. ARB also needs broad coverage of different research loops and reliable human score-versus-time trajectories.
 
 This proposal retains seven ALE-Bench lite problems and replaces three duplicated genres so that all ten genres in the ALE-Bench taxonomy appear once.
 
@@ -45,9 +45,9 @@ preserves the underlying timestamped metadata.
 
 ALE-Bench lite contains two Game problems, two Partitioning problems, and two Planning problems. It contains no Covering, Packing, or Scheduling problem. The replacements trade some of the original difficulty-oriented curation for complete genre coverage.
 
-## Why this may fit ARS better
+## Why this may fit ARB better
 
-ARS evaluates the system conducting research rather than only its final program. A compact suite should therefore expose different kinds of research work:
+ARB evaluates the system conducting research rather than only its final program. A compact suite should therefore expose different kinds of research work:
 
 - continuous heuristic and parameter optimization
 - structural algorithm changes
@@ -84,7 +84,7 @@ Discovery results must not become promotion evidence without a separately declar
 
 ## Longer-term suite design
 
-ARS-10 should be an affordable development and screening suite, not the only source of leaderboard evidence. A stronger design would combine:
+ARB-10 should be an affordable development and screening suite, not the only source of leaderboard evidence. A stronger design would combine:
 
 - a stable core for longitudinal comparisons
 - a rotating held-out pool drawn from newer contests

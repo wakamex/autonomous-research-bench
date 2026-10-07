@@ -1,5 +1,5 @@
 {
-  "schema_version": "ars.system-manifest.v1",
+  "schema_version": "arb.system-manifest.v1",
   "name": "aop-codex-fixed-baseline-v1",
   "status": "discovery",
   "harness": "AOP 0.1.1",

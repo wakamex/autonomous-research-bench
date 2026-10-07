@@ -1,8 +1,8 @@
 # Run event schema
 
-ARS runners write append-only JSON Lines using
+ARB runners write append-only JSON Lines using
 [`run-event-v1.schema.json`](../schemas/run-event-v1.schema.json). Each line is
-one event and carries `ars.run-event.v1` as its schema version.
+one event and carries `arb.run-event.v1` as its schema version.
 An individual [`example event`](../examples/run-event-v1.json) is included for
 schema validation.
 

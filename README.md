@@ -1,14 +1,14 @@
-# Autonomous Research Speedrun
+# Autonomous Research Bench
 
 Submit the researcher, not the answer.
 
-Autonomous Research Speedrun, or ARS, is a proposed living benchmark and leaderboard for autonomous research systems. It measures how quickly a complete system can discover competitive solutions to optimization problems.
+Autonomous Research Bench, or ARB, is a proposed living benchmark and leaderboard for autonomous research systems. It measures how quickly a complete system can discover competitive solutions to optimization problems.
 
-Most optimization benchmarks evaluate only the final submitted solution. The model, harness, prompts, memory, experiment loop, and search strategy that produced it are ignored. ARS reverses that relationship:
+Most optimization benchmarks evaluate only the final submitted solution. The model, harness, prompts, memory, experiment loop, and search strategy that produced it are ignored. ARB reverses that relationship:
 
 ```text
 Current:  submit the solution, ignore the harness and model
-ARS:      submit the harness and model, ignore the final solution
+ARB:      submit the harness and model, ignore the final solution
 ```
 
 The goal is to evaluate the researcher itself.
@@ -17,11 +17,11 @@ The goal is to evaluate the researcher itself.
 
 Keller Jordan's modded-nanoGPT work demonstrates a compelling training and optimization speedrun format. An autonomous agent can repeatedly modify code, run experiments, inspect results, and search for improvements. The benchmark supplies the optimization environment, while the autoresearch system supplies the search policy.
 
-That environment is deep and highly optimized. ARS aims to complement it with a broader suite of algorithm-engineering problems and a leaderboard centered on the capabilities of the autonomous research system.
+That environment is deep and highly optimized. ARB aims to complement it with a broader suite of algorithm-engineering problems and a leaderboard centered on the capabilities of the autonomous research system.
 
 ## Initial benchmark suite
 
-The first proposed suite is ARS-AHC, built from AtCoder Heuristic Contest problems.
+The first proposed suite is ARB-AHC, built from AtCoder Heuristic Contest problems.
 
 These problems are a strong fit because they:
 
@@ -32,22 +32,22 @@ These problems are a strong fit because they:
 - support repeated experiments within practical compute budgets
 
 [ALE-Bench](https://github.com/SakanaAI/ALE-Bench) established a useful
-40-problem source dataset. ARS uses its pinned artifacts as provenance and
+40-problem source dataset. ARB uses its pinned artifacts as provenance and
 validation material, but benchmark execution is native and independent of
 ALE-Bench, Docker, and Podman.
 
 ## Native runner
 
-ARS uses one Rust implementation for case preparation, candidate execution,
+ARB uses one Rust implementation for case preparation, candidate execution,
 event recording, private evaluation, human-reference compilation, and
 trajectory scoring:
 
 ```sh
 cargo build --release --locked
-target/release/ars --help
+target/release/arb --help
 ```
 
-Problem packages contain a manifest, public seeds, and any ARS tester adapter. The official generator and tester sources and historical rank data are not redistributed here; fetch them from the archives recorded in each manifest, which the script verifies by SHA-256:
+Problem packages contain a manifest, public seeds, and any ARB tester adapter. The official generator and tester sources and historical rank data are not redistributed here; fetch them from the archives recorded in each manifest, which the script verifies by SHA-256:
 
 ```sh
 uv run scripts/fetch_problem_packages.py
@@ -64,7 +64,7 @@ The initial package is [`problems/ahc044`](problems/ahc044). See the
 
 The main result is wall-clock efficiency against historical human performance.
 
-For each problem, historical AtCoder submissions can be used to reconstruct contestants' best-so-far score trajectories. An ARS run can then be compared with human percentile curves and reported in terms such as:
+For each problem, historical AtCoder submissions can be used to reconstruct contestants' best-so-far score trajectories. An ARB run can then be compared with human percentile curves and reported in terms such as:
 
 ```text
 Time to human 4h P50:  8 minutes
@@ -129,11 +129,11 @@ Reproducible runs should preserve the effective configuration, model identifiers
 Keller-style speedruns
   Deep, highly optimized autoresearch environments
 
-ARS-AHC
+ARB-AHC
   A broad autonomous-research speedrun suite
 ```
 
-ARS is not intended to replace solution leaderboards or static algorithm benchmarks. It asks a different question:
+ARB is not intended to replace solution leaderboards or static algorithm benchmarks. It asks a different question:
 
 > Given a problem, a budget, and access to experiments, how quickly can an autonomous research system make progress?
 
@@ -141,13 +141,13 @@ The ALE-Bench paper and its provenance record are preserved under [`papers`](pap
 
 The [`rated AtCoder heuristic problem catalog`](docs/atcoder-heuristic-catalog.md) documents all 72 rated contests through August 12, 2026, including the original ALE-Bench full and lite selections.
 
-The [`ARS-10 discovery suite proposal`](docs/ars-10-proposal.md) defines a provisional ten-problem subset with complete genre coverage and the validation required before promotion.
+The [`ARB-10 discovery suite proposal`](docs/arb-10-proposal.md) defines a provisional ten-problem subset with complete genre coverage and the validation required before promotion.
 
-The [`four-hour suite test plan`](docs/four-hour-suite-test-plan.md) compares Sprint-9, Sprint-9 plus Inference, and the mixed ARS-10 proposal under an equal four-hour wall-clock cap.
+The [`four-hour suite test plan`](docs/four-hour-suite-test-plan.md) compares Sprint-9, Sprint-9 plus Inference, and the mixed ARB-10 proposal under an equal four-hour wall-clock cap.
 
 The [`Sprint-9 plus Inference proposal`](docs/sprint-9-plus-inference-proposal.md) uses a deterministic latest-per-category rule and tests whether its one long Inference problem should remain after discovery.
 
-The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md) preserve timestamped public submission metadata for all 72 rated contests and summarize the proposed ARS-10 at the cutoff.
+The [`four-hour submission snapshots`](sources/atcoder/submissions-4h/README.md) preserve timestamped public submission metadata for all 72 rated contests and summarize the proposed ARB-10 at the cutoff.
 
 The [`human reference compiler`](docs/human-reference.md) reconstructs fixed-time percentiles and four-hour human thresholds. The [`run event schema`](docs/run-event-schema.md) defines the append-only contract for future runners.
 
@@ -163,7 +163,7 @@ The [`evaluator CPU policy`](docs/evaluator-concurrency.md) gives each run one p
 
 The [`native AHC044 compatibility run`](results/discovery/ahc044-native-runner-v1/README.md) matches all 15 archived private scores and is 6.26 times faster than the comparable ALE-Bench evaluation.
 
-The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARS.
+The [`time-budget management research`](docs/time-budget-management.md) compares long-running agent harnesses and proposes deadline, snapshot, submission, and recovery rules for ARB.
 
 The [`verifier-guided research branching proposal`](docs/verifier-guided-branching.md) tests whether probability-weighted LLM verification can choose productive experiments before implementation. It keeps the objective evaluator authoritative and requires blinded selection and equal-deadline evidence before live runner integration.
 
@@ -171,9 +171,9 @@ The [`Prime Agent system baseline proposal`](docs/prime-agent-system-baseline.md
 
 ## Status
 
-ARS has native packages, fixed-cohort human references, and accepted starter evaluations for all nine Sprint-9 problems. The runner supports the legacy AHC004 generator, strict batch-output judging, and AHC053's interactive protocol. The next milestone is to validate every reconstructed human distribution and the held-out seed policy before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
+ARB has native packages, fixed-cohort human references, and accepted starter evaluations for all nine Sprint-9 problems. The runner supports the legacy AHC004 generator, strict batch-output judging, and AHC053's interactive protocol. The next milestone is to validate every reconstructed human distribution and the held-out seed policy before fixing the initial suite, thresholds, resource policy, and leaderboard protocol.
 
-A later local-model baseline should use ARS as a complete agent task for a
+A later local-model baseline should use ARB as a complete agent task for a
 Qwen3.8-27B wall-clock experiment on one RTX 3090. Using the same
 `UD-Q4_K_XL` weights and Q4 KV cache, compare 170K context with MTP against
 262K context without MTP. Reported generation rates to test are approximately
@@ -186,9 +186,9 @@ At 262K without MTP, also compare `UD-Q4_K_XL` weights with Q4 KV cache against
 better spent on weight fidelity or a more accurate long-context cache, although
 it does not independently isolate the two quantization changes. Record
 end-to-end wall time, prompt ingestion, generation speed, generated tokens,
-tool time, peak VRAM, completion status, ARS score trajectory, and
+tool time, peak VRAM, completion status, ARB score trajectory, and
 time-to-human thresholds across enough independent tasks to expose variance.
-ARS task quality and completion should decide the result rather than tokens per
+ARB task quality and completion should decide the result rather than tokens per
 second alone.
 
 Likely early work includes:
@@ -203,10 +203,10 @@ Likely early work includes:
 
 ## Short description
 
-Autonomous Research Speedrun is a living benchmark for measuring how quickly AI research systems can improve solutions to optimization problems. Its first proposed suite, ARS-AHC, compares complete harness-and-model systems against historical human progress on AtCoder Heuristic Contests.
+Autonomous Research Bench is a living benchmark for measuring how quickly AI research systems can improve solutions to optimization problems. Its first proposed suite, ARB-AHC, compares complete harness-and-model systems against historical human progress on AtCoder Heuristic Contests.
 
 ## License
 
-ARS's own code, documentation, adapters and results are under the [MIT License](LICENSE). The [ALE-Bench paper](papers/ale-bench-2506.09050.pdf) by Imajuku et al. is redistributed unmodified under [CC BY 4.0](LICENSES/CC-BY-4.0.txt).
+ARB's own code, documentation, adapters and results are under the [MIT License](LICENSE). The [ALE-Bench paper](papers/ale-bench-2506.09050.pdf) by Imajuku et al. is redistributed unmodified under [CC BY 4.0](LICENSES/CC-BY-4.0.txt).
 
 Official AtCoder problem tools, statements, standings and submission data are not included. `scripts/fetch_problem_packages.py` downloads the problem tools from the archives recorded in each `problem.json`; ALE-Bench archives are licensed [CC BY-ND 4.0](https://creativecommons.org/licenses/by-nd/4.0/), and AtCoder's own archives remain subject to [AtCoder's terms](https://atcoder.jp/tos?lang=en). The sourcing scripts in `scripts/` regenerate the statements and submission snapshots locally.

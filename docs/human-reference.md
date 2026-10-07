@@ -53,14 +53,14 @@ P99 values are identical. Public P50 differs from the official distribution by
 The validation is not an assertion that the populations are identical. The
 ALE-Bench standings file contains ranks and scores but no user IDs, has 996
 positive ranked positions, and does not contain the highest public submitter's
-score. ARS intentionally uses every public submitter represented by the
+score. ARB intentionally uses every public submitter represented by the
 timestamped source. The artifact records both unmatched multisets and source
 hashes so this choice remains auditable.
 
 Reproduce the fixed-cohort portion with the native runner:
 
 ```sh
-ars build-human-reference \
+arb build-human-reference \
   --problem-id ahc044 \
   --submissions sources/atcoder/submissions-4h/ahc044.csv.gz \
   --problem problems/ahc044 \

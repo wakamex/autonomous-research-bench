@@ -6,7 +6,7 @@
 # ]
 # ///
 
-"""Snapshot official AtCoder metadata and statements for the ARS catalog."""
+"""Snapshot official AtCoder metadata and statements for the ARB catalog."""
 
 from __future__ import annotations
 
@@ -25,7 +25,7 @@ from bs4 import BeautifulSoup, Tag
 
 BASE_URL = "https://atcoder.jp"
 ARCHIVE_URL = f"{BASE_URL}/contests/archive?lang=en&category=0&keyword=&ratedType=4"
-USER_AGENT = "ARS research catalog (local source snapshot; contact via repository owner)"
+USER_AGENT = "ARB research catalog (local source snapshot; contact via repository owner)"
 
 
 @dataclass(frozen=True)

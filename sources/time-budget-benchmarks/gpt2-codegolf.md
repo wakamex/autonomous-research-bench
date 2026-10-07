@@ -66,7 +66,7 @@ There was still time-related machinery outside the model:
   were not an overall deadline countdown or a fixed checkpoint-submission
   policy.
 
-The main lesson for ARS is that this run demonstrates artifact-at-deadline
+The main lesson for ARB is that this run demonstrates artifact-at-deadline
 scoring, not successful deadline-aware prompting. Its last-second success was
 largely accidental with respect to the global clock. A rerun could spend the
 last two minutes on another long verification and lose despite having a useful

@@ -3,7 +3,7 @@ __pycache__/
 *.py[cod]
 /.aop/
 target/
-/.ars-cache/
+/.arb-cache/
 /.env
 /problems/*/tools/
 /problems/*/reference/

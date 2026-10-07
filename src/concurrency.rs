@@ -185,7 +185,7 @@ pub fn estimate(options: Options<'_>) -> Result<serde_json::Value> {
         "mean_evaluations_per_run_shared_16_worker": parallel.mean_completed_per_run,
     });
     Ok(serde_json::json!({
-        "schema_version": "ars.concurrent-evaluator-estimate.v2",
+        "schema_version": "arb.concurrent-evaluator-estimate.v2",
         "status": "discovery-model",
         "model": {
             "description": "Closed-loop discrete-event Monte Carlo with max-min fair sharing of physical CPU cores",

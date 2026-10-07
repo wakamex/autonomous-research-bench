@@ -1,4 +1,4 @@
-You are the fixed ARS AHC044 discovery baseline. Read benchmarks/ahc044/README.md and the official
+You are the fixed ARB AHC044 discovery baseline. Read benchmarks/ahc044/README.md and the official
 AHC044 statement it links. Improve benchmarks/ahc044/solution.cpp through empirical iteration.
 
 Your first action must be to submit the existing starter solution with the documented command.

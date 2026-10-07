@@ -120,7 +120,7 @@ pub fn prepare_cases(package: &Package, seeds: &[u64], output: &Path) -> Result<
         );
     }
     let metadata = serde_json::json!({
-        "schema_version": "ars.cases.v1",
+        "schema_version": "arb.cases.v1",
         "problem_id": package.problem.id,
         "problem_package_sha256": package.manifest_hash,
         "generator_sha256": file_sha256(&package.generator())?,
@@ -151,7 +151,7 @@ pub fn evaluate(
         &fs::read(cases_root.join("cases.json"))
             .with_context(|| format!("case bundle {} has no cases.json", cases_root.display()))?,
     )?;
-    if metadata.schema_version != "ars.cases.v1"
+    if metadata.schema_version != "arb.cases.v1"
         || metadata.problem_id != package.problem.id
         || metadata.problem_package_sha256 != package.manifest_hash
         || metadata.tester_sha256 != file_sha256(&package.tester())?
@@ -633,20 +633,20 @@ fn candidate_invocation(
                     "/tmp".into(),
                     "--ro-bind".into(),
                     binary.into_os_string(),
-                    "/ars-candidate".into(),
+                    "/arb-candidate".into(),
                     "--ro-bind".into(),
                     runner.into_os_string(),
-                    "/ars-runner".into(),
+                    "/arb-runner".into(),
                     "--bind".into(),
                     profile.into_os_string(),
-                    "/ars-profile".into(),
+                    "/arb-profile".into(),
                     "--".into(),
-                    "/ars-runner".into(),
+                    "/arb-runner".into(),
                     "__case-exec".into(),
                     "--binary".into(),
-                    "/ars-candidate".into(),
+                    "/arb-candidate".into(),
                     "--profile".into(),
-                    "/ars-profile".into(),
+                    "/arb-profile".into(),
                 ],
             ))
         }

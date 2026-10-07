@@ -80,7 +80,7 @@
     "score_direction": "maximize"
   },
   "problem_id": "ahc052",
-  "schema_version": "ars.human-reference.v2",
+  "schema_version": "arb.human-reference.v2",
   "source": {
     "submissions_file": "sources/atcoder/submissions-4h/ahc052.csv.gz",
     "submissions_sha256": "e7e9fee245bacca57b8846b65c0aee728fdc45fc094e466e55357a255284eb3d"

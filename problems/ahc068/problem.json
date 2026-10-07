@@ -1,5 +1,5 @@
 {
-  "schema_version": "ars.problem.v1",
+  "schema_version": "arb.problem.v1",
   "id": "ahc068",
   "title": "Rectangle Swap",
   "kind": "batch",

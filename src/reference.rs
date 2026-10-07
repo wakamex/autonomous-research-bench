@@ -200,7 +200,7 @@ pub fn build_human_reference(options: HumanReferenceOptions<'_>) -> Result<Value
         })
         .collect::<Vec<_>>();
     let mut value = json!({
-        "schema_version": "ars.human-reference.v2", "problem_id": problem_id,
+        "schema_version": "arb.human-reference.v2", "problem_id": problem_id,
         "source": {"submissions_file": submissions, "submissions_sha256": file_sha256(submissions)?},
         "method": {
             "population": "fixed cohort of users with at least one submission by the configured cohort cutoff",
@@ -300,7 +300,7 @@ fn validate_standings(
             "p90": nearest_rank(&official_scores.iter().copied().map(Some).collect::<Vec<_>>(), 90, score_direction),
             "p99": nearest_rank(&official_scores.iter().copied().map(Some).collect::<Vec<_>>(), 99, score_direction)
         },
-        "note": "ALE-Bench standings encode final ranked positions without user IDs, while the ARS reference includes every public submitter. Exact population equality is neither expected nor assumed."
+        "note": "ALE-Bench standings encode final ranked positions without user IDs, while the ARB reference includes every public submitter. Exact population equality is neither expected nor assumed."
     });
     if matched_fraction < minimum {
         bail!(
@@ -371,7 +371,7 @@ pub fn replay_score(events_path: &Path, reference_path: &Path, horizon: u64) -> 
             "censor_seconds": if reached.is_none() {Some(horizon)} else {None}})
     }).collect::<Vec<_>>();
     Ok(
-        json!({"schema_version": "ars.run-score.v1", "run_id": events[0].run_id,
+        json!({"schema_version": "arb.run-score.v1", "run_id": events[0].run_id,
         "problem_id": reference["problem_id"], "human_cohort": reference["cohort"],
         "score_direction": score_direction.as_str(), "tie_method": "report strict lower bound, inclusive upper bound, and midrank",
         "checkpoints": checkpoint_results, "time_to_human_4h": thresholds,
@@ -388,8 +388,11 @@ fn validate_events(events: &[Event]) -> Result<()> {
     let mut elapsed = -1.0;
     let mut stopped = false;
     for (sequence, event) in events.iter().enumerate() {
-        if event.schema_version != "ars.run-event.v1"
-            || &event.run_id != run_id
+        // Runs recorded before the ARB rename used the ars prefix.
+        if !matches!(
+            event.schema_version.as_str(),
+            "arb.run-event.v1" | "ars.run-event.v1"
+        ) || &event.run_id != run_id
             || event.sequence != sequence
         {
             bail!("event {sequence} breaks schema, identity, or sequence");
@@ -492,7 +495,7 @@ mod tests {
 
     fn event(sequence: usize, elapsed_seconds: f64, event_type: &str, payload: Value) -> Event {
         Event {
-            schema_version: "ars.run-event.v1".into(),
+            schema_version: "arb.run-event.v1".into(),
             run_id: "minimize-run".into(),
             sequence,
             event_type: event_type.into(),

@@ -29658,7 +29658,7 @@
       ]
     }
   ],
-  "schema_version": "ars.human-reference.v2",
+  "schema_version": "arb.human-reference.v2",
   "problem_id": "ahc044",
   "source": {
     "submissions_file": "sources/atcoder/submissions-4h/ahc044.csv.gz",
@@ -29699,6 +29699,6 @@
       "p90": 148554988,
       "p99": 149730504
     },
-    "note": "ALE-Bench standings encode final ranked positions without user IDs, while the ARS reference includes every public submitter. Exact population equality is neither expected nor assumed."
+    "note": "ALE-Bench standings encode final ranked positions without user IDs, while the ARB reference includes every public submitter. Exact population equality is neither expected nor assumed."
   }
 }

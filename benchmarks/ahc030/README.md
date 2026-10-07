@@ -5,7 +5,7 @@ Read the official English statement at [`../../sources/atcoder/statements/ahc030
 Submit a candidate for timestamped public evaluation with:
 
 ```sh
-ars submit --source benchmarks/ahc030/solution.cpp
+arb submit --source benchmarks/ahc030/solution.cpp
 ```
 
 The submission command archives the exact source before evaluation. Its JSON output contains the 50-case public score plus `elapsed_seconds` and `remaining_seconds` from the benchmark clock. Private scores are calculated only after the run and are never shown to the research system.

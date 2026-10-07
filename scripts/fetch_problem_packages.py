@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # ///
 
-"""Assemble problem packages from their recorded official archives and ARS adapters."""
+"""Assemble problem packages from their recorded official archives and ARB adapters."""
 
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ from pathlib import Path
 
 
 PROBLEMS = Path("problems")
-CACHE = Path(".ars-cache/archives")
-# ALE-Bench archives name the historical reference tables differently from ARS packages.
+CACHE = Path(".arb-cache/archives")
+# ALE-Bench archives name the historical reference tables differently from ARB packages.
 REFERENCE_MEMBERS = {"standings": "standings_scores.csv", "performance": "performance.csv"}
 
 
@@ -31,7 +31,7 @@ def archive_bytes(url: str, expected: str) -> bytes:
         data = cached.read_bytes()
         if sha256(data) == expected:
             return data
-    request = urllib.request.Request(url, headers={"User-Agent": "ARS problem package fetch"})
+    request = urllib.request.Request(url, headers={"User-Agent": "ARB problem package fetch"})
     with urllib.request.urlopen(request, timeout=120) as response:
         data = response.read()
     actual = sha256(data)

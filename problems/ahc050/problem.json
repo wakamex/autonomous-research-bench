@@ -1,5 +1,5 @@
 {
-  "schema_version": "ars.problem.v1",
+  "schema_version": "arb.problem.v1",
   "id": "ahc050",
   "title": "Gamble on Ice",
   "kind": "batch",

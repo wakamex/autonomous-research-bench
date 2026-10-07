@@ -1,6 +1,6 @@
 # AtCoder source snapshot
 
-This directory documents the official source material used to build the ARS catalog of rated AtCoder heuristic contests. The catalog, statements and submission snapshots are generated locally by the sourcing scripts and are not tracked, because AtCoder does not license its pages and data for redistribution.
+This directory documents the official source material used to build the ARB catalog of rated AtCoder heuristic contests. The catalog, statements and submission snapshots are generated locally by the sourcing scripts and are not tracked, because AtCoder does not license its pages and data for redistribution.
 
 ## Scope
 
@@ -21,7 +21,7 @@ The machine-readable [`catalog.json`](catalog.json) records the contest metadata
 
 ## AtCoder labels
 
-AtCoder labels these archive entries as `Heuristic` and gives each a rated range of `All`. The official archive and task pages do not expose semantic problem tags such as routing, packing, or inference. Semantic categories in the ARS catalog therefore come from either Table A1 of the ALE-Bench paper or an explicitly identified ARS classification based on the official statement.
+AtCoder labels these archive entries as `Heuristic` and gives each a rated range of `All`. The official archive and task pages do not expose semantic problem tags such as routing, packing, or inference. Semantic categories in the ARB catalog therefore come from either Table A1 of the ALE-Bench paper or an explicitly identified ARB classification based on the official statement.
 
 ## Refreshing the snapshot
 
