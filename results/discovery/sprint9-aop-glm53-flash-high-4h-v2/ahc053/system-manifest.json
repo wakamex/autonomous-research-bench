@@ -1,0 +1,21 @@
+{
+  "schema_version": "ars.system-manifest.v1",
+  "name": "aop-codex-glm53-flash-high-4h-ahc053-v2",
+  "status": "discovery",
+  "harness": "AOP 0.1.13",
+  "agent": "codex",
+  "inference_provider": "zai-coding-plan",
+  "model": "glm-5.3-flash",
+  "effort": "high",
+  "duration_seconds": 14400,
+  "track": "single-model",
+  "problem_id": "ahc053",
+  "candidate_file": "benchmarks/ahc053/solution.cpp",
+  "public_evaluator": "native ARS submission broker, 50 cases",
+  "private_evaluator": "native ARS, held-out cases after the run",
+  "evaluator_workers": 1,
+  "evaluator_cpu_policy": "one pinned logical CPU selected from the least-used distinct physical cores",
+  "evaluator_cpu": 10,
+  "agent_network_policy": "AOP edit profile with --no-web",
+  "human_steering": false
+}
