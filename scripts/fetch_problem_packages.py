@@ -16,6 +16,7 @@ from pathlib import Path
 
 
 PROBLEMS = Path("problems")
+JUDGES = Path("judges")
 CACHE = Path(".arb-cache/archives")
 # ALE-Bench archives name the historical reference tables differently from ARB packages.
 REFERENCE_MEMBERS = {"standings": "standings_scores.csv", "performance": "performance.csv"}
@@ -62,9 +63,17 @@ def fetch(package: Path) -> int:
     archive = zipfile.ZipFile(io.BytesIO(archive_bytes(provenance["source_url"], provenance["source_sha256"])))
     prefix = tools_prefix(archive.namelist())
     written = 0
+    tools = problem["tools"]
+    tester = f"{tools['source']}/src/bin/tester.rs"
+    judge = JUDGES / f"{tools.get('judge_mode', 'batch')}.rs"
     for relative in problem["package_files"]:
         adapter = package / "adapters" / relative
-        data = adapter.read_bytes() if adapter.is_file() else archive.read(archive_member(problem, relative, prefix))
+        if adapter.is_file():
+            data = adapter.read_bytes()
+        elif relative == tester:
+            data = judge.read_bytes()
+        else:
+            data = archive.read(archive_member(problem, relative, prefix))
         target = package / relative
         if not target.is_file() or target.read_bytes() != data:
             target.parent.mkdir(parents=True, exist_ok=True)

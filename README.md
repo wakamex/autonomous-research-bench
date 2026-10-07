@@ -47,7 +47,7 @@ cargo build --release --locked
 target/release/arb --help
 ```
 
-Problem packages contain a manifest, public seeds, and any ARB tester adapter. The official generator and tester sources and historical rank data are not redistributed here; fetch them from the archives recorded in each manifest, which the script verifies by SHA-256:
+Problem packages contain a manifest and public seeds; ARB's shared judges in `judges/` score every package, and AHC004 keeps one adapter for its older library. The official generator and tester sources and historical rank data are not redistributed here; fetch them from the archives recorded in each manifest, which the script verifies by SHA-256:
 
 ```sh
 uv run scripts/fetch_problem_packages.py

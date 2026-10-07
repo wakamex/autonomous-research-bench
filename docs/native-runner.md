@@ -11,7 +11,7 @@ The `arb` binary owns:
 - official tool builds and deterministic case preparation
 - problem, generator, tester, case-bundle, source, compiler, and candidate hashes
 - one isolated candidate compilation per evaluation
-- batch-output and interactive candidate execution through strict official-tool adapters
+- batch-output and interactive candidate execution through ARB's strict shared judges
 - concurrent case execution
 - wall, CPU, address-space, output, file-descriptor, and process limits
 - bubblewrap filesystem and network isolation
@@ -72,7 +72,7 @@ a native median of 3.082 seconds over three trials, including isolated
 compilation. The comparable ALE-Bench median was 19.293 seconds. That is 6.26
 times faster and reduces wall time by 84.03 percent.
 
-Sprint-9 now has native packages for AHC004, AHC044, AHC050, AHC052, AHC053, AHC062, AHC065, AHC067, and AHC068. The package format declares the two observed generator interfaces and whether judging is batch-output or interactive. AHC053's tester launches the isolated candidate and preserves its required two-stage conversation. Strict tester adapters turn malformed output into `WRONG_ANSWER` instead of accepting the visualizers' zero-score fallback.
+Sprint-9 now has native packages for AHC004, AHC044, AHC050, AHC052, AHC053, AHC062, AHC065, AHC067, and AHC068. The package format declares the two observed generator interfaces and whether judging is batch-output or interactive. Every package is judged by one of two ARB programs that call the official problem library: [`judges/batch.rs`](../judges/batch.rs) scores an output file, and [`judges/interactive.rs`](../judges/interactive.rs) runs the official interaction, including AHC053's two-stage conversation. Both exit with status 1 on any parsing, scoring or interaction error, so malformed output is `WRONG_ANSWER` in every package instead of an official tester's zero-score or missing-score fallback. AHC004's library predates that interface, so it keeps its own strict adapter.
 
 The [Sprint-9 adapter smoke test](../results/discovery/sprint9-native-adapters-v1/README.md) generated and evaluated 50 cases for every problem. All nine starters were accepted under the one-CPU policy.
 
